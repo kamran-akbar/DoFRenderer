@@ -1,0 +1,1859 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Assimp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\CApi\CInterfaceIOWrapper.cpp">
+      <Filter>CApi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\BaseImporter.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\BaseProcess.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\PostStepRegistry.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\ImporterRegistry.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\DefaultIOStream.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\DefaultIOSystem.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\ZipArchiveIOSystem.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Importer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\SGSpatialSort.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\VertexTriangleAdjacency.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\SpatialSort.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\SceneCombiner.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\ScenePreprocessor.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\SkeletonMeshBuilder.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\SplitByBoneCountProcess.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\StandardShapes.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\TargetAnimation.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\RemoveComments.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Subdivision.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\scene.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Bitmap.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Version.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\CreateAnimMesh.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\simd.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\DefaultLogger.cpp">
+      <Filter>Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Exporter.cpp">
+      <Filter>Exporter</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\CApi\AssimpCExport.cpp">
+      <Filter>Exporter</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\CalcTangentsProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ComputeUVMappingProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ConvertToLHProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\EmbedTexturesProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FindDegenerates.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FindInstancesProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FindInvalidDataProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FixNormalsStep.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\DropFaceNormalsProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\GenFaceNormalsProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\GenVertexNormalsProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\PretransformVertices.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ImproveCacheLocality.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\JoinVerticesProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\LimitBoneWeightsProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\RemoveRedundantMaterials.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\RemoveVCProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\SortByPTypeProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\SplitLargeMeshes.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\TextureTransform.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\TriangulateProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ValidateDataStructure.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\OptimizeGraph.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\OptimizeMeshes.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\DeboneProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ProcessHelper.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\MakeVerboseFormat.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ScaleProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\GenBoundingBoxesProcess.cpp">
+      <Filter>PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Material\MaterialSystem.cpp">
+      <Filter>MaterialSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\STEPParser\STEPFileReader.cpp">
+      <Filter>STEPParser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\STEPParser\STEPFileEncoding.cpp">
+      <Filter>STEPParser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AMF\AMFImporter.cpp">
+      <Filter>AMF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AMF\AMFImporter_Geometry.cpp">
+      <Filter>AMF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AMF\AMFImporter_Material.cpp">
+      <Filter>AMF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AMF\AMFImporter_Postprocess.cpp">
+      <Filter>AMF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3DS\3DSConverter.cpp">
+      <Filter>3DS</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3DS\3DSLoader.cpp">
+      <Filter>3DS</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AC\ACLoader.cpp">
+      <Filter>AC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\ASE\ASELoader.cpp">
+      <Filter>ASE</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\ASE\ASEParser.cpp">
+      <Filter>ASE</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assbin\AssbinLoader.cpp">
+      <Filter>ASSBIN</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\B3D\B3DImporter.cpp">
+      <Filter>B3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\BVH\BVHLoader.cpp">
+      <Filter>BVH</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Collada\ColladaLoader.cpp">
+      <Filter>COLLADA</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Collada\ColladaParser.cpp">
+      <Filter>COLLADA</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\DXF\DXFLoader.cpp">
+      <Filter>DXF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\CSM\CSMLoader.cpp">
+      <Filter>CSM</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\HMP\HMPLoader.cpp">
+      <Filter>HMP</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Irr\IRRMeshLoader.cpp">
+      <Filter>IRRMESH</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Irr\IRRShared.cpp">
+      <Filter>IRR</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Irr\IRRLoader.cpp">
+      <Filter>IRR</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWO\LWOAnimation.cpp">
+      <Filter>LWO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWO\LWOBLoader.cpp">
+      <Filter>LWO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWO\LWOLoader.cpp">
+      <Filter>LWO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWO\LWOMaterial.cpp">
+      <Filter>LWO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWS\LWSLoader.cpp">
+      <Filter>LWS</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD2\MD2Loader.cpp">
+      <Filter>MD2</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD3\MD3Loader.cpp">
+      <Filter>MD3</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD5\MD5Loader.cpp">
+      <Filter>MD5</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD5\MD5Parser.cpp">
+      <Filter>MD5</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDC\MDCLoader.cpp">
+      <Filter>MDC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDL\MDLLoader.cpp">
+      <Filter>MDL</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDL\MDLMaterialLoader.cpp">
+      <Filter>MDL</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\NFF\NFFLoader.cpp">
+      <Filter>NFF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\NDO\NDOLoader.cpp">
+      <Filter>NDO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\OFF\OFFLoader.cpp">
+      <Filter>OFF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjFileImporter.cpp">
+      <Filter>OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjFileMtlImporter.cpp">
+      <Filter>OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjFileParser.cpp">
+      <Filter>OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreImporter.cpp">
+      <Filter>OGRE</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreStructs.cpp">
+      <Filter>OGRE</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreBinarySerializer.cpp">
+      <Filter>OGRE</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreXmlSerializer.cpp">
+      <Filter>OGRE</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreMaterial.cpp">
+      <Filter>OGRE</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\OpenGEX\OpenGEXImporter.cpp">
+      <Filter>OPENGEX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ply\PlyLoader.cpp">
+      <Filter>PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ply\PlyParser.cpp">
+      <Filter>PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MS3D\MS3DLoader.cpp">
+      <Filter>MS3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\COB\COBLoader.cpp">
+      <Filter>COB</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderLoader.cpp">
+      <Filter>BLEND</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderDNA.cpp">
+      <Filter>BLEND</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderScene.cpp">
+      <Filter>BLEND</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderModifier.cpp">
+      <Filter>BLEND</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderBMesh.cpp">
+      <Filter>BLEND</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderTessellator.cpp">
+      <Filter>BLEND</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderCustomData.cpp">
+      <Filter>BLEND</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCLoader.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCReaderGen1_2x3.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCReaderGen2_2x3.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCUtil.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCGeometry.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCMaterial.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCProfile.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCCurve.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCBoolean.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCOpenings.cpp">
+      <Filter>IFC</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\XGL\XGLLoader.cpp">
+      <Filter>XGL</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXImporter.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXParser.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXTokenizer.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXConverter.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXUtil.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXDocument.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXProperties.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXMeshGeometry.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXMaterial.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXModel.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXAnimation.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXNodeAttribute.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXDeformer.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXBinaryTokenizer.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXDocumentUtil.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Q3D\Q3DLoader.cpp">
+      <Filter>Q3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Q3BSP\Q3BSPFileParser.cpp">
+      <Filter>Q3BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Q3BSP\Q3BSPFileImporter.cpp">
+      <Filter>Q3BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Raw\RawLoader.cpp">
+      <Filter>RAW</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\SIB\SIBImporter.cpp">
+      <Filter>SIB</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\SMD\SMDLoader.cpp">
+      <Filter>SMD</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\STL\STLLoader.cpp">
+      <Filter>STL</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Terragen\TerragenLoader.cpp">
+      <Filter>TERRAGEN</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Unreal\UnrealLoader.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X\XFileImporter.cpp">
+      <Filter>X</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X\XFileParser.cpp">
+      <Filter>X</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Geometry2D.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Geometry3D.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Group.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Light.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Metadata.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Networking.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Postprocess.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Rendering.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Shape.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Texturing.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\FIReader.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DVocabulary.cpp">
+      <Filter>X3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFCommon.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFImporter.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2Importer.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3MF\D3MFImporter.cpp">
+      <Filter>3MF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3MF\D3MFOpcPackage.cpp">
+      <Filter>3MF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MMD\MMDImporter.cpp">
+      <Filter>MMD</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MMD\MMDPmxParser.cpp">
+      <Filter>MMD</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\StepFile\StepFileImporter.cpp">
+      <Filter>STEP</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\StepFile\StepFileGen1.cpp">
+      <Filter>STEP</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\StepFile\StepFileGen2.cpp">
+      <Filter>STEP</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\StepFile\StepFileGen3.cpp">
+      <Filter>STEP</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3DS\3DSExporter.cpp">
+      <Filter>3DS_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assbin\AssbinExporter.cpp">
+      <Filter>ASSBIN_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assxml\AssxmlExporter.cpp">
+      <Filter>ASSXML_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Collada\ColladaExporter.cpp">
+      <Filter>COLLADA_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjExporter.cpp">
+      <Filter>OBJ_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\OpenGEX\OpenGEXExporter.cpp">
+      <Filter>OPENGEX_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ply\PlyExporter.cpp">
+      <Filter>PLY_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXExporter.cpp">
+      <Filter>FBX_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXExportNode.cpp">
+      <Filter>FBX_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXExportProperty.cpp">
+      <Filter>FBX_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\STL\STLExporter.cpp">
+      <Filter>STL_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X\XFileExporter.cpp">
+      <Filter>X_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DExporter.cpp">
+      <Filter>X3D_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFExporter.cpp">
+      <Filter>GLTF_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2Exporter.cpp">
+      <Filter>GLTF_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3MF\D3MFExporter.cpp">
+      <Filter>3MF_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assjson\cencode.c">
+      <Filter>ASSJSON_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assjson\json_exporter.cpp">
+      <Filter>ASSJSON_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assjson\mesh_splitter.cpp">
+      <Filter>ASSJSON_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Step\StepExporter.cpp">
+      <Filter>STEP_EXPORTER</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\unzip\ioapi.c">
+      <Filter>Contrib\unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\unzip\unzip.c">
+      <Filter>Contrib\unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\common\shapes.cc">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.cc">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\cdt.cc">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\sweep.cc">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.cc">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\clipper\clipper.cpp">
+      <Filter>Contrib\Clipper</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\code\OpenDDLParser.cpp">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\code\DDLNode.cpp">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\code\OpenDDLCommon.cpp">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\code\OpenDDLExport.cpp">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\code\Value.cpp">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\code\OpenDDLStream.cpp">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcArithmeticCodec.cpp">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcDynamicVectorDecoder.cpp">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcDynamicVectorEncoder.cpp">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTools.cpp">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTriangleFans.cpp">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\zip\src\zip.c">
+      <Filter>ziplib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\CApi\CInterfaceIOWrapper.h">
+      <Filter>CApi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\BaseProcess.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Importer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\ScenePrivate.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\DefaultProgressHandler.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\PolyTools.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\IFF.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\VertexTriangleAdjacency.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\ScenePreprocessor.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\SplitByBoneCountProcess.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\TargetAnimation.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\simd.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\DefaultLogger.hpp">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\LogStream.hpp">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Logger.hpp">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\NullLogger.hpp">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\Win32DebugLogStream.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\FileLogStream.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Common\StdOStreamLogStream.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\BlobIOSystem.h">
+      <Filter>Exporter</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\CalcTangentsProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ComputeUVMappingProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ConvertToLHProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\EmbedTexturesProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FindDegenerates.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FindInstancesProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FindInvalidDataProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\FixNormalsStep.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\DropFaceNormalsProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\GenFaceNormalsProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\GenVertexNormalsProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\PretransformVertices.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ImproveCacheLocality.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\JoinVerticesProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\LimitBoneWeightsProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\RemoveRedundantMaterials.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\RemoveVCProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\SortByPTypeProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\SplitLargeMeshes.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\TextureTransform.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\TriangulateProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ValidateDataStructure.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\OptimizeGraph.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\OptimizeMeshes.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\DeboneProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ProcessHelper.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\MakeVerboseFormat.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\ScaleProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\PostProcessing\GenBoundingBoxesProcess.h">
+      <Filter>PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Material\MaterialSystem.h">
+      <Filter>MaterialSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\STEPParser\STEPFileReader.h">
+      <Filter>STEPParser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\STEPParser\STEPFileEncoding.h">
+      <Filter>STEPParser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AMF\AMFImporter.hpp">
+      <Filter>AMF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AMF\AMFImporter_Macro.hpp">
+      <Filter>AMF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AMF\AMFImporter_Node.hpp">
+      <Filter>AMF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3DS\3DSHelper.h">
+      <Filter>3DS</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3DS\3DSLoader.h">
+      <Filter>3DS</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\AC\ACLoader.h">
+      <Filter>AC</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\ASE\ASELoader.h">
+      <Filter>ASE</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\ASE\ASEParser.h">
+      <Filter>ASE</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assbin\AssbinLoader.h">
+      <Filter>ASSBIN</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\B3D\B3DImporter.h">
+      <Filter>B3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\BVH\BVHLoader.h">
+      <Filter>BVH</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Collada\ColladaHelper.h">
+      <Filter>COLLADA</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Collada\ColladaLoader.h">
+      <Filter>COLLADA</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Collada\ColladaParser.h">
+      <Filter>COLLADA</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\DXF\DXFLoader.h">
+      <Filter>DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\DXF\DXFHelper.h">
+      <Filter>DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\CSM\CSMLoader.h">
+      <Filter>CSM</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\HMP\HMPFileData.h">
+      <Filter>HMP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\HMP\HMPLoader.h">
+      <Filter>HMP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\HMP\HalfLifeFileData.h">
+      <Filter>HMP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Irr\IRRMeshLoader.h">
+      <Filter>IRRMESH</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Irr\IRRShared.h">
+      <Filter>IRR</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Irr\IRRLoader.h">
+      <Filter>IRR</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWO\LWOAnimation.h">
+      <Filter>LWO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWO\LWOFileData.h">
+      <Filter>LWO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWO\LWOLoader.h">
+      <Filter>LWO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\LWS\LWSLoader.h">
+      <Filter>LWS</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD2\MD2FileData.h">
+      <Filter>MD2</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD2\MD2Loader.h">
+      <Filter>MD2</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD2\MD2NormalTable.h">
+      <Filter>MD2</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD3\MD3FileData.h">
+      <Filter>MD3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD3\MD3Loader.h">
+      <Filter>MD3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD5\MD5Loader.h">
+      <Filter>MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MD5\MD5Parser.h">
+      <Filter>MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDC\MDCFileData.h">
+      <Filter>MDC</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDC\MDCLoader.h">
+      <Filter>MDC</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDC\MDCNormalTable.h">
+      <Filter>MDC</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDL\MDLDefaultColorMap.h">
+      <Filter>MDL</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDL\MDLFileData.h">
+      <Filter>MDL</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MDL\MDLLoader.h">
+      <Filter>MDL</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\NFF\NFFLoader.h">
+      <Filter>NFF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\NDO\NDOLoader.h">
+      <Filter>NDO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\OFF\OFFLoader.h">
+      <Filter>OFF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjFileData.h">
+      <Filter>OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjFileImporter.h">
+      <Filter>OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjFileMtlImporter.h">
+      <Filter>OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjFileParser.h">
+      <Filter>OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjTools.h">
+      <Filter>OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreImporter.h">
+      <Filter>OGRE</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreStructs.h">
+      <Filter>OGRE</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreParsingUtils.h">
+      <Filter>OGRE</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreBinarySerializer.h">
+      <Filter>OGRE</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ogre\OgreXmlSerializer.h">
+      <Filter>OGRE</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\OpenGEX\OpenGEXImporter.h">
+      <Filter>OPENGEX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\OpenGEX\OpenGEXStructs.h">
+      <Filter>OPENGEX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ply\PlyLoader.h">
+      <Filter>PLY</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ply\PlyParser.h">
+      <Filter>PLY</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MS3D\MS3DLoader.h">
+      <Filter>MS3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\COB\COBLoader.h">
+      <Filter>COB</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\COB\COBScene.h">
+      <Filter>COB</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderLoader.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderDNA.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderDNA.inl">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderScene.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderSceneGen.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderIntermediate.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderModifier.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderBMesh.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderTessellator.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Blender\BlenderCustomData.h">
+      <Filter>BLEND</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCLoader.h">
+      <Filter>IFC</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCReaderGen_2x3.h">
+      <Filter>IFC</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\IFC\IFCUtil.h">
+      <Filter>IFC</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\XGL\XGLLoader.h">
+      <Filter>XGL</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXCompileConfig.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXImporter.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXParser.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXTokenizer.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXImportSettings.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXConverter.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXUtil.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXDocument.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXProperties.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXMeshGeometry.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXCommon.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Q3D\Q3DLoader.h">
+      <Filter>Q3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Q3BSP\Q3BSPFileData.h">
+      <Filter>Q3BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Q3BSP\Q3BSPFileParser.h">
+      <Filter>Q3BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Q3BSP\Q3BSPFileImporter.h">
+      <Filter>Q3BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Raw\RawLoader.h">
+      <Filter>RAW</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\SIB\SIBImporter.h">
+      <Filter>SIB</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\SMD\SMDLoader.h">
+      <Filter>SMD</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\STL\STLLoader.h">
+      <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Terragen\TerragenLoader.h">
+      <Filter>TERRAGEN</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Unreal\UnrealLoader.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X\XFileHelper.h">
+      <Filter>X</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X\XFileImporter.h">
+      <Filter>X</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X\XFileParser.h">
+      <Filter>X</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter.hpp">
+      <Filter>X3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Macro.hpp">
+      <Filter>X3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DImporter_Node.hpp">
+      <Filter>X3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\FIReader.hpp">
+      <Filter>X3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFCommon.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFAsset.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFAsset.inl">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFAssetWriter.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFAssetWriter.inl">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFImporter.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2Asset.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2Asset.inl">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2AssetWriter.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2AssetWriter.inl">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2Importer.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3MF\D3MFImporter.h">
+      <Filter>3MF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3MF\D3MFOpcPackage.h">
+      <Filter>3MF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3MF\3MFXmlTags.h">
+      <Filter>3MF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MMD\MMDCpp14.h">
+      <Filter>MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MMD\MMDImporter.h">
+      <Filter>MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MMD\MMDPmdParser.h">
+      <Filter>MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MMD\MMDPmxParser.h">
+      <Filter>MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\MMD\MMDVmdParser.h">
+      <Filter>MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Step\STEPFile.h">
+      <Filter>STEP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\StepFile\StepFileImporter.h">
+      <Filter>STEP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Importer\StepFile\StepReaderGen.h">
+      <Filter>STEP</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3DS\3DSExporter.h">
+      <Filter>3DS_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assbin\AssbinExporter.h">
+      <Filter>ASSBIN_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assxml\AssxmlExporter.h">
+      <Filter>ASSXML_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Collada\ColladaExporter.h">
+      <Filter>COLLADA_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Obj\ObjExporter.h">
+      <Filter>OBJ_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\OpenGEX\OpenGEXExporter.h">
+      <Filter>OPENGEX_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Ply\PlyExporter.h">
+      <Filter>PLY_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXExporter.h">
+      <Filter>FBX_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXExportNode.h">
+      <Filter>FBX_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\FBX\FBXExportProperty.h">
+      <Filter>FBX_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\STL\STLExporter.h">
+      <Filter>STL_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X\XFileExporter.h">
+      <Filter>X_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\X3D\X3DExporter.hpp">
+      <Filter>X3D_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF\glTFExporter.h">
+      <Filter>GLTF_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\glTF2\glTF2Exporter.h">
+      <Filter>GLTF_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\3MF\D3MFExporter.h">
+      <Filter>3MF_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assjson\cencode.h">
+      <Filter>ASSJSON_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Assjson\mesh_splitter.h">
+      <Filter>ASSJSON_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\Step\StepExporter.h">
+      <Filter>STEP_EXPORTER</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\irrXMLWrapper.h">
+      <Filter>IrrXML</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\unzip\crypt.h">
+      <Filter>Contrib\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\unzip\ioapi.h">
+      <Filter>Contrib\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\unzip\unzip.h">
+      <Filter>Contrib\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\common\shapes.h">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\common\utils.h">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.h">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\cdt.h">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\sweep.h">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.h">
+      <Filter>Contrib\Poly2Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\clipper\clipper.hpp">
+      <Filter>Contrib\Clipper</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\include\openddlparser\OpenDDLParser.h">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\include\openddlparser\OpenDDLParserUtils.h">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\include\openddlparser\OpenDDLCommon.h">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\include\openddlparser\OpenDDLExport.h">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\include\openddlparser\OpenDDLStream.h">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\include\openddlparser\DDLNode.h">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\openddlparser\include\openddlparser\Value.h">
+      <Filter>Contrib\openddl_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcAdjacencyInfo.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcArithmeticCodec.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcBinaryStream.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcCommon.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcDVEncodeParams.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcDynamicVectorDecoder.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcDynamicVectorEncoder.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcDynamicVector.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcFIFO.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcIndexedFaceSet.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcIndexedFaceSet.inl">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcSC3DMCDecoder.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcSC3DMCDecoder.inl">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcSC3DMCEncodeParams.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcSC3DMCEncoder.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcSC3DMCEncoder.inl">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTimer.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTriangleFans.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTriangleListDecoder.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTriangleListDecoder.inl">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTriangleListEncoder.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcTriangleListEncoder.inl">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcVector.h">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\Open3DGC\o3dgcVector.inl">
+      <Filter>Contrib\open3dgc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\zip\src\miniz.h">
+      <Filter>ziplib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\contrib\zip\src\zip.h">
+      <Filter>ziplib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\anim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\aabb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\ai_assert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\color4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\color4.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\build\src\ext\assimp\include\assimp\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\defs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\cfileio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\material.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\matrix3x3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\matrix3x3.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\matrix4x4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\matrix4x4.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\pbrmaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\postprocess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\quaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\quaternion.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\metadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\vector2.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\vector3.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\cimport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\importerdesc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Importer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\ProgressHandler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\IOStream.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\IOSystem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\cexport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Exporter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\DefaultIOStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\DefaultIOSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\ZipArchiveIOSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\SceneCombiner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\fast_atof.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\qnan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\BaseImporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\MemoryIOWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\ParsingUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\StreamReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\StreamWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\StringComparison.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\StringUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\SGSpatialSort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\GenericProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\SpatialSort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\SkeletonMeshBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\SmoothingGroups.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\SmoothingGroups.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\StandardShapes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\RemoveComments.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Subdivision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\LineSplitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\TinyFormatter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\LogAux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Bitmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\XMLTools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\IOStreamBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\CreateAnimMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\MathFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Exceptional.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\ByteSwapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Compiler\pushpack1.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Compiler\poppack1.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\include\assimp\Compiler\pstdint.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\ext\assimp\code\res\assimp.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="3D">
+      <UniqueIdentifier>{6B71C6DA-4E7C-32F0-B2AE-14AFD85E2BB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DS">
+      <UniqueIdentifier>{750D3BBB-0A01-3E0E-B761-AA8CD47BEEC2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DS_EXPORTER">
+      <UniqueIdentifier>{4311BFBD-A521-3D60-86A1-814F92CD90F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3MF">
+      <UniqueIdentifier>{E81AC7D8-7964-32DD-8B7D-AAA368DA3806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3MF_EXPORTER">
+      <UniqueIdentifier>{2A9FE9E8-2C6E-3F13-A41E-B45DB4CCEF99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AC">
+      <UniqueIdentifier>{D8C840AB-717C-3A77-9579-E5AA54BF2E9F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AMF">
+      <UniqueIdentifier>{7706C8EF-51DE-3288-8713-DA753FC907A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ASE">
+      <UniqueIdentifier>{E3BAFFFB-C750-3829-BDBD-2F7C63C1673D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ASSBIN">
+      <UniqueIdentifier>{436F0635-2390-36E7-9CBE-46E611C483C9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ASSBIN_EXPORTER">
+      <UniqueIdentifier>{01B20A1D-D7B9-3A02-ABA7-D154CB7FE733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ASSJSON_EXPORTER">
+      <UniqueIdentifier>{6CE0FAAD-3D54-3047-B07D-17A032B3FBCB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ASSXML_EXPORTER">
+      <UniqueIdentifier>{6A916225-E03C-3CD2-94E1-CFCD3641206F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="B3D">
+      <UniqueIdentifier>{10A4D7DC-E621-345C-A862-E5357B611A14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BLEND">
+      <UniqueIdentifier>{1C89BED1-0FFA-3A88-894C-7B96FA2F9DD8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BVH">
+      <UniqueIdentifier>{AF1DD330-6FF4-32B4-B783-1EB93E869CBD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CApi">
+      <UniqueIdentifier>{A2EA9296-9E50-33AD-93D2-862D127BA209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="COB">
+      <UniqueIdentifier>{9DA4977E-2080-3C33-A8B9-CED601E62FA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="COLLADA">
+      <UniqueIdentifier>{A561809A-EDAC-38B8-B50E-84BF8B28E2C1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="COLLADA_EXPORTER">
+      <UniqueIdentifier>{51657C76-57FC-311E-8497-591BA9673FEB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CSM">
+      <UniqueIdentifier>{027016F2-DDF6-3D6B-B394-F7A773CDCE17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{DDCCE9EF-1813-3F99-9694-2823601B7B38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compiler">
+      <UniqueIdentifier>{9651A0E4-7D6E-32FE-8F5B-107B544E0CFF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib">
+      <UniqueIdentifier>{FF4F6FCB-6F71-3C81-9169-C261AEA05D90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Clipper">
+      <UniqueIdentifier>{DFB51F06-ECE7-3EB5-A9A1-2F5F3F1E7F7F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Poly2Tri">
+      <UniqueIdentifier>{906F8EF2-10CA-319A-8EDB-B7056D3DF2B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\open3dgc">
+      <UniqueIdentifier>{7E08D919-6671-3A01-8341-BF7CCC10D8E9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\openddl_parser">
+      <UniqueIdentifier>{6BDE9E38-DF3C-377E-8C2D-3062CB07DFA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\unzip">
+      <UniqueIdentifier>{8EE324DE-5918-3F4A-BD81-90BC070C1ECF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DXF">
+      <UniqueIdentifier>{6200C5D7-65E4-3476-AD85-C66FAA5FEA29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exporter">
+      <UniqueIdentifier>{CB10F838-332A-3C6B-BC4C-F07BED160D8A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBX">
+      <UniqueIdentifier>{1F00FCA9-6BDF-3119-9222-AFA868E758D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBX_EXPORTER">
+      <UniqueIdentifier>{9714B5F2-2E5F-35C4-B3CF-AE891054163B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLTF">
+      <UniqueIdentifier>{3396B57F-0E0A-384F-AEF0-9C94FCBB1F80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLTF_EXPORTER">
+      <UniqueIdentifier>{C9F7F2F2-0956-325F-976D-336C3833E1B9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HMP">
+      <UniqueIdentifier>{E49EEC66-62C5-3633-A31A-CE51EE0CAB72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{46259767-7A47-3F54-88CF-FB2422D71912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IFC">
+      <UniqueIdentifier>{04A61A4B-4725-37A4-B8F4-AE89D98DF710}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IRR">
+      <UniqueIdentifier>{432A3B64-A857-316F-928E-600ADA4198A8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IRRMESH">
+      <UniqueIdentifier>{D9B4D9D8-BA59-3397-B908-B952C76E8A76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IrrXML">
+      <UniqueIdentifier>{41220E7D-E8F6-3BA6-ABB4-D230F2094E28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LWO">
+      <UniqueIdentifier>{CF473B06-C8D5-3D42-AE97-01DE4CD512BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LWS">
+      <UniqueIdentifier>{F4C4FDFA-2FC8-36DB-ABA9-CCACCE6CFC4E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{FC08767E-D1A1-39EE-8310-05EC844DDD39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MD2">
+      <UniqueIdentifier>{7CCC8801-8D14-397A-B61A-927FE7958C9D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MD3">
+      <UniqueIdentifier>{B5BDE573-6E73-3C92-BF7C-159EA84F0E52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MD5">
+      <UniqueIdentifier>{062E265C-FDD9-31B1-9977-5688E043D375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MDC">
+      <UniqueIdentifier>{AF910D53-7F48-347A-8DE8-E88FDB841BBF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MDL">
+      <UniqueIdentifier>{FE659125-623C-333C-BDCE-EE0614B70219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MMD">
+      <UniqueIdentifier>{49A4DA1E-C5D3-346A-81BF-EBFD914D5A07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MS3D">
+      <UniqueIdentifier>{B130E15C-0D01-36C8-8D4F-A46F05EC869D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MaterialSystem">
+      <UniqueIdentifier>{AF280F6C-A6E7-3DA4-8A49-B2D501F9B880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NDO">
+      <UniqueIdentifier>{4F4D9C62-3042-33D6-B73D-0C3FD544AAEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFF">
+      <UniqueIdentifier>{FD0C7CE6-6807-3B52-BB1B-0D7EECF9D85F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OBJ">
+      <UniqueIdentifier>{2FB4CA1E-D632-352F-A977-82CC3C44BFFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OBJ_EXPORTER">
+      <UniqueIdentifier>{BDEF09C9-ACC8-37FA-8054-1D1B61C469F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OFF">
+      <UniqueIdentifier>{BE6B9E23-69AB-3886-93D3-9AD8D80B5BDB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OGRE">
+      <UniqueIdentifier>{8E3978E7-255B-3A5F-8AED-4EFAE1E7948B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OPENGEX">
+      <UniqueIdentifier>{0381C261-718E-3559-8276-F2931B168654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OPENGEX_EXPORTER">
+      <UniqueIdentifier>{E7BB1C2A-0167-3C99-92C0-3643107C0892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLY">
+      <UniqueIdentifier>{8552E5EC-B01A-3E6E-8982-3C4AC875AE8E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLY_EXPORTER">
+      <UniqueIdentifier>{DB666F88-6B5C-31A0-9846-038E52239FFF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PostProcessing">
+      <UniqueIdentifier>{1ACEB9AC-D023-3E16-BB7F-25CE1A157AD1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Q3BSP">
+      <UniqueIdentifier>{5B06B408-7791-3E61-B22E-45E55F1D6E69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Q3D">
+      <UniqueIdentifier>{EDE9B971-60A6-39F6-97AC-EB0E0A1D6DE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RAW">
+      <UniqueIdentifier>{DB9524AC-6061-33E6-8B23-D0980D192E61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SIB">
+      <UniqueIdentifier>{D4D14CE8-CB97-364A-92CE-37A2D0806101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SMD">
+      <UniqueIdentifier>{EB8E1EC5-4030-3FBA-B909-78B1BB6571EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STEP">
+      <UniqueIdentifier>{E190230D-4A38-3B3E-A7E5-823DAEBD67EC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STEPParser">
+      <UniqueIdentifier>{10CEF469-A373-398B-82AB-F4C5C80A43EB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STEP_EXPORTER">
+      <UniqueIdentifier>{BAA92301-C5FC-38E1-8007-3DBB219CCDD8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STL">
+      <UniqueIdentifier>{3604455F-3F0B-35B0-91D0-FD93A9818AB8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STL_EXPORTER">
+      <UniqueIdentifier>{5ED3DC6E-2492-3B92-AAFA-4C39EB127553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4BB82A20-2A55-37A3-949F-9F43E4C82142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TERRAGEN">
+      <UniqueIdentifier>{DEE028DD-4EDD-3A56-B97A-3201F2A20A07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X">
+      <UniqueIdentifier>{857C8471-B859-374D-BBDC-838F12BAE806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X3D">
+      <UniqueIdentifier>{E3AD2B9C-4B91-391A-8FE8-72C62D04444D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X3D_EXPORTER">
+      <UniqueIdentifier>{E331F4C7-C0D5-32A5-818C-707E0572FC24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XGL">
+      <UniqueIdentifier>{DFE1C97C-ABBF-34D4-816D-EC16EA132CEA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X_EXPORTER">
+      <UniqueIdentifier>{9EC0F190-A651-3F25-A10C-EE7F677A59EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ziplib">
+      <UniqueIdentifier>{C45A1D46-641C-3D96-A702-5FD3D6778A49}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

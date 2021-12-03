@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\Renderer.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\Texture.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\applicatio.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\camera.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\glad.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\light.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\main.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\mesh.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\object.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\shader.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\window.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\Renderer.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\Texture.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\application.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\camera.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\light.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\mesh.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\object.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\shader.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\time.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\window.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\fragmentShader.frag">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\vertexShader.vert">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{46259767-7A47-3F54-88CF-FB2422D71912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{C4550A11-0C4B-38CD-AFAF-8D3F2D388FAC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4BB82A20-2A55-37A3-949F-9F43E4C82142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{DCD95A1D-7C79-306F-9FF6-76F38DC6039D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{D8ABF070-A7C8-315D-A3F9-D5E853CBDA0A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

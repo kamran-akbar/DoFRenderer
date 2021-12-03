@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/FindPackageMessage.cmake
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/src/ext/assimp/cmake-modules/FindRT.cmake
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/src/ext/assimp/code/CMakeLists.txt

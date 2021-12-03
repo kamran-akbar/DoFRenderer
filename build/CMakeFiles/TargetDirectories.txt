@@ -1,0 +1,8 @@
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/CMakeFiles/DoF_Renderer_lib.dir
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/CMakeFiles/DoF_Renderer_exe.dir
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/src/ext/glm/CMakeFiles/glm_static.dir
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/src/ext/glfw/CMakeFiles/ALL_BUILD.dir
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/src/ext/glfw/src/CMakeFiles/update_mappings.dir
+C:/Users/cpkaak/Desktop/CIVIT/CIVIT2/Light field/Read/DoF/DoFRenderer/build/src/ext/glfw/src/CMakeFiles/glfw.dir
