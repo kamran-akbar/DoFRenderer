@@ -25,6 +25,7 @@ namespace DoFRenderer {
 		void deleteBuffer();
 
 		inline std::vector<Mesh *> getMeshes() const { return meshes; }
+		inline shader* getShader() const { return shaderPtr; }
 
 	private:
 		std::string modelPath;
@@ -33,6 +34,7 @@ namespace DoFRenderer {
 		glm::vec3 scale;
 		glm::mat4 transformation;
 		std::vector<Mesh *> meshes;
+		shader* shaderPtr;
 	};
 }
 

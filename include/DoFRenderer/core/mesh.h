@@ -2,13 +2,13 @@
 #include "DoFRenderer/core/Texture.h"
 #include "DoFRenderer/core/shader.h"
 #include "DoFRenderer/core/light.h"
-#include "DoFRenderer/core/shader.h"
 #include "DoFRenderer/core/camera.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/hash.hpp>
 #include <vector>
+#include <unordered_map>
 
 namespace DoFRenderer {
 	class Vertex {
@@ -40,28 +40,28 @@ namespace DoFRenderer {
 	public:
 		Mesh();
 		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
-			std::vector<std::string> texturePaths);
+			std::vector<std::string> texturePaths, std::vector<std::string> textureNames);
 		~Mesh();
-		void prepareObject();
-		void draw();
+		void prepareObject(const shader* shaderPtr);
+		void draw(const shader* shaderPtr);
 		void setMaterial(const Material* material);
-		void setShaderParams(const light* lightPtr, const camera* cameraPtr);
+		void setShaderParams(const light* lightPtr, const camera* cameraPtr, const shader* shaderPtr);
 		void deleteBuffers();
 		inline Material* getMaterial() const { return material; }
-		inline shader* getShader() const { return shaderPtr; }
+		inline int getTextureNumber() { return textures.size(); }
 	
 	private:
-		void setShaderMaterialParams();
+		void setShaderMaterialParams(const shader* shaderPtr);
 
 		unsigned int vertexBuffer;
 		unsigned int vertexArray;
 		unsigned int elementBuffer;
 		std::vector<std::string> texturePaths;
+		std::vector<std::string> textureNames;
 		std::vector<Vertex> vertices;
 		std::vector<Texture> textures;
 		std::vector<unsigned int> indices;
 		Material* material;
-		shader* shaderPtr;
 	};
 
 }

@@ -1,11 +1,13 @@
 #include "DoFRenderer/core/Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
+#include "glad/glad.h"
 
 namespace DoFRenderer {
 	
-	Texture::Texture(std::string filePath, unsigned int wrapMode, unsigned int filterMode, unsigned int format,
-        unsigned int internalFormat, unsigned int type) {
+	Texture::Texture(std::string name, std::string filePath, unsigned int wrapMode,
+        unsigned int filterMode, unsigned int format, unsigned int internalFormat, 
+        unsigned int type) {
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         
@@ -32,7 +34,15 @@ namespace DoFRenderer {
 	}
 
     void Texture::bind(unsigned short i) {
-        glBindTexture(GL_TEXTURE_2D, texture);
         glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D, texture);
+    }
+
+    void Texture::unbind() {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    void Texture::deleteTexture() {
+        glDeleteTextures(1, &texture);
     }
 }

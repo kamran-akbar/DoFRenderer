@@ -20,6 +20,9 @@ namespace DoFRenderer {
 		bool checkWindowClosed();
 		float getAspectRatio() const;
 
+		inline int getWidth() { return width; }
+		inline int getHeight() { return height; }
+
 	private:
 		unsigned int width, height;
 		std::string name;

@@ -13,6 +13,8 @@ namespace DoFRenderer {
 		void run();
 
 	private:
+		static const unsigned int layerCount = 4;
+
 		std::unique_ptr<window> windowPtr;
 		std::unique_ptr<renderer> rendererPtr;
 		std::unique_ptr<camera> cameraPtr;

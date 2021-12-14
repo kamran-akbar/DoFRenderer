@@ -4,21 +4,18 @@ namespace DoFRenderer {
 	Mesh::Mesh() { }
 	
 	Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
-		std::vector<std::string> texturePaths) { 
+		std::vector<std::string> texturePaths, std::vector<std::string> textureNames) { 
 		this->vertices.assign(vertices.begin(), vertices.end());
 		this->indices.assign(indices.begin(), indices.end());
 		this->texturePaths.assign(texturePaths.begin(), texturePaths.end());
-
-		shaderPtr = new shader("../src/shaders/vertexShader.vert",
-					"../src/shaders/fragmentShader.frag");
+		this->textureNames.assign(textureNames.begin(), textureNames.end());
 	}
 	
 	Mesh::~Mesh() {
 		delete material;
-		delete shaderPtr;
 	}
 	
-	void Mesh::prepareObject() { 
+	void Mesh::prepareObject(const shader* shaderPtr) {
 		glGenVertexArrays(1, &vertexArray);
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &elementBuffer);
@@ -39,20 +36,23 @@ namespace DoFRenderer {
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, normal)));
 		glEnableVertexAttribArray(3);
 		for (int i = 0; i < texturePaths.size(); i++) {
-			textures.push_back(Texture(texturePaths[i], GL_REPEAT, GL_LINEAR, GL_RGB, GL_RGB,
+			textures.push_back(Texture(textureNames[i], texturePaths[i], GL_REPEAT, GL_LINEAR, GL_RGB, GL_RGB,
 				GL_UNSIGNED_BYTE));
+			shaderPtr->setInt(textures[i].getName(), i + 1);
 		}
 	}
 	
-	void Mesh::draw() {
-		setShaderMaterialParams();
-
+	void Mesh::draw(const shader* shaderPtr) {
+		setShaderMaterialParams(shaderPtr);
 		for (int i = 0; i < textures.size(); i++) {
-			textures[i].bind(i);
+			textures[i].bind(i + 1);			
 		}
 		glBindVertexArray(vertexArray);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);	
+		for (int i = 0; i < textures.size(); i++) {
+			textures[i].unbind();
+		}
 	}
 	
 	void Mesh::setMaterial(const Material* material) { 
@@ -63,9 +63,7 @@ namespace DoFRenderer {
 		this->material->shininess = material->shininess;
 	}
 	
-	void Mesh::setShaderParams(const light* lightPtr, const camera* cameraPtr) {
-		shaderPtr->use();
-
+	void Mesh::setShaderParams(const light* lightPtr, const camera* cameraPtr, const shader* shaderPtr) {
 		shaderPtr->setMat4("view", cameraPtr->getViewMatrix());
 		shaderPtr->setMat4("projection", cameraPtr->getProjectionMatrix());
 		shaderPtr->setVec3("cameraPos", cameraPtr->getCameraPosition());
@@ -80,7 +78,7 @@ namespace DoFRenderer {
 		shaderPtr->setVec3("light.specular", specular.x, specular.y, specular.z);
 	}
 
-	void Mesh::setShaderMaterialParams() {
+	void Mesh::setShaderMaterialParams(const shader* shaderPtr) {
 		shaderPtr->setVec3("material.ambient", material->ambient.x, material->ambient.y, material->ambient.z);
 		shaderPtr->setVec3("material.diffuse", material->diffuse.x, material->diffuse.y, material->diffuse.z);
 		shaderPtr->setVec3("material.specular", material->specular.x, material->specular.y, material->specular.z);
@@ -88,6 +86,9 @@ namespace DoFRenderer {
 	}
 	
 	void Mesh::deleteBuffers() { 
+		for (int i = 0; i < textures.size(); i++) {
+			textures[i].deleteTexture();
+		}
 		glDeleteVertexArrays(1, &vertexArray);
 		glDeleteBuffers(1, &vertexBuffer);
 		glDeleteBuffers(1, &elementBuffer);

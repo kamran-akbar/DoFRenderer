@@ -6,7 +6,8 @@ namespace DoFRenderer {
 	class camera {
 	public:
 		camera();
-		camera(float fov, float aspectRatio, float near, float far, glm::vec3 position, glm::vec3 forward, glm::vec3 up);
+		camera(float fov, float aspectRatio, float near, float far, glm::vec3 position, 
+			glm::vec3 forward, glm::vec3 up);
 		
 		~camera() {}
 		
@@ -15,6 +16,10 @@ namespace DoFRenderer {
 		glm::mat4 getProjectionMatrix() const;
 		glm::mat4 updateViewMatrix(glm::vec3 position, glm::vec3 forward, glm::vec3 up);
 		glm::mat4 updateProjectionMatrix(float fov, float aspectRatio, float near, float far);
+
+		inline float getFoV() const { return fov; }
+		inline float getNear() const { return near; }
+		inline float getFar() const { return far; }
 		
 	private:
 		float fov;

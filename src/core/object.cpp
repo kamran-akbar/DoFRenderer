@@ -7,6 +7,9 @@
 namespace DoFRenderer {
     
     Object::Object(glm::vec3 translation, glm::vec3 rotationEuler, glm::vec3 scale) {
+        shaderPtr = new shader("../src/shaders/vertexShader.vert",
+            "../src/shaders/geometryShader.geom", "../src/shaders/fragmentShader.frag");
+        
         this->translation = translation;
         this->rotationEuler = rotationEuler;
         transformation = glm::mat4(1.0f);
@@ -19,6 +22,7 @@ namespace DoFRenderer {
     }
 
     Object::~Object() {
+        delete shaderPtr;
         for (Mesh* mesh : meshes) {
             delete mesh;
         }
@@ -48,6 +52,7 @@ namespace DoFRenderer {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
         std::vector<std::string> texturePaths;
+        std::vector<std::string> textureNames;
         int material_id;
 
         // Loop over shapes
@@ -58,6 +63,7 @@ namespace DoFRenderer {
             uniqueVertices.clear();
             indices.clear();
             texturePaths.clear();
+            textureNames.clear();
 
             material_id = -1;
 
@@ -110,9 +116,12 @@ namespace DoFRenderer {
                 // per-face material
                 material_id = shapes[s].mesh.material_ids[f];
             }
-            if(materials[material_id].diffuse_texname != "")
+            if (materials[material_id].diffuse_texname != "") {
                 texturePaths.push_back(materials[material_id].diffuse_texname);
-            meshes.push_back(new Mesh(vertices, indices, texturePaths));
+                textureNames.push_back("diffuseTexture");
+            }
+                
+            meshes.push_back(new Mesh(vertices, indices, texturePaths, textureNames));
             glm::vec3 ambient = {
                 materials[material_id].ambient[0],
                 materials[material_id].ambient[1],
@@ -137,19 +146,21 @@ namespace DoFRenderer {
     
     void Object::prepareObject() {
         for (int i = 0; i < meshes.size(); i++) {
-            meshes[i]->prepareObject();
+            meshes[i]->prepareObject(shaderPtr);
         }
     }
 
     void Object::draw() {
         for (int i = 0; i < meshes.size(); i++) {
-            meshes[i]->draw();
+            shaderPtr->setMat4("model", getTranformation());
+            meshes[i]->draw(shaderPtr);
         }
     }
 
     void Object::setShaderParams(const light* lightPtr, const camera* cameraPtr) {
         for (int i = 0; i < meshes.size(); i++) {
-            meshes[i]->setShaderParams(lightPtr, cameraPtr);
+            shaderPtr->use();
+            meshes[i]->setShaderParams(lightPtr, cameraPtr, shaderPtr);
         }
     }
 

@@ -7,6 +7,9 @@
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\Texture.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\Texture2DArray.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\applicatio.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
@@ -42,6 +45,9 @@
     <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\Texture.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\Texture2DArray.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\application.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
@@ -72,6 +78,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\fragmentShader.frag">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\geometryShader.geom">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\screenShader.frag">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\screenShader.vert">
       <Filter>Source Files\shaders</Filter>
     </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\vertexShader.vert">
