@@ -1,6 +1,8 @@
 #include "DoFRenderer/core/Renderer.h"
 #include "DoFRenderer/core/mesh.h"
 
+#define WORK_GROUP_SIZE 32
+
 namespace DoFRenderer {
 
     renderer::renderer() : windowWidth(0), windowHeight(0), layerCount(0) {
@@ -16,12 +18,18 @@ namespace DoFRenderer {
         for (auto attachment : attachments) {
             delete attachment.second;
         }
+        for (auto texture : textures) {
+            delete texture.second;
+        }
+        for (auto shader : shaders) {
+            delete shader.second;
+        }
         for (Object* obj : objects) {
             delete obj;
         }
     }
 
-    void renderer::generateLayeredFrameBuffer() {
+    void renderer::generateFrameBuffers() {
 
         attachments["colorAttachment"] = new Texture2DArray(
             GL_RGBA8, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
@@ -62,13 +70,23 @@ namespace DoFRenderer {
             objects[i]->prepareObject();
             objects[i]->setShaderParams(lightPtr, cameraPtr);
             objects[i]->getShader()->setInt("prevDepthmap", 0);
+            objects[i]->getShader()->setInt("depthDiscTex", 1);
             objects[i]->getShader()->setVec2("windowDimension", windowWidth, windowHeight);
             objects[i]->getShader()->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
 		}
 	}
 
+    void renderer::prepareDepthDiscontinuity() {
+        shaders["depthDiscShader"] = new shader("../src/shaders/depthDisc.compute");
+        textures["depthDiscTex"] = new Texture(GL_R32F, windowWidth, windowHeight,
+            GL_REPEAT, GL_LINEAR, GL_RED, GL_FLOAT);
+        textures["depthDiscTex"]->bindImageTexture(1, GL_WRITE_ONLY, GL_R32F);
+        shaders["depthDiscShader"]->use();
+        shaders["depthDiscShader"]->setInt("depthmap", 0);
+    }
+
     void renderer::prepareScreenQuad() {
-        screenShader = new shader("../src/shaders/screenShader.vert", 
+        shaders["screenShader"] = new shader("../src/shaders/screenShader.vert",
             "../src/shaders/screenShader.frag");
         
         std::vector<glm::vec4> quadVertices = {
@@ -87,7 +105,10 @@ namespace DoFRenderer {
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(glm::vec2)));
-        screenShader->setInt("screenTexture", 0);
+        shaders["screenShader"]->use();
+        shaders["screenShader"]->setInt("screenTexture", 0);
+        shaders["screenShader"]->setInt("depthTexture", 1);
+        shaders["screenShader"]->setInt("testTex", 2);
     }
 	
 	void renderer::renderLoop() {
@@ -100,8 +121,10 @@ namespace DoFRenderer {
         for (int i = 0; i < objects.size(); i++) {
             objects[i]->getShader()->use();
             attachments["copyDepthAttachment"]->bind(0);
+            textures["depthDiscTex"]->bind(1);
             objects[i]->draw();   
             attachments["copyDepthAttachment"]->unbind();
+            textures["depthDiscTex"]->unbind();
 		}
         attachments["depthAttachment"]->copy(attachments["copyDepthAttachment"]->getID(), 
             GL_TEXTURE_2D_ARRAY, windowWidth, windowHeight, layerCount);
@@ -109,24 +132,42 @@ namespace DoFRenderer {
         glDisable(GL_DEPTH_TEST);
 	}
 
+    void renderer::generateDepthDiscMap() {
+        shaders["depthDiscShader"]->use();
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+        attachments["depthAttachment"]->bind(0);
+        glDispatchCompute(windowWidth / WORK_GROUP_SIZE, windowHeight / WORK_GROUP_SIZE, 1);
+        attachments["depthAttachment"]->unbind();
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+    }
+
     void renderer::quadRenderLoop() {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        screenShader->use();
+        shaders["screenShader"]->use();
         glBindVertexArray(quadVertexArray);
         attachments["colorAttachment"]->bind(0);
+        attachments["depthAttachment"]->bind(1);
+        textures["depthDiscTex"]->bind(2);
         glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
         attachments["colorAttachment"]->unbind();
+        attachments["depthAttachment"]->unbind();
+        textures["depthDiscTex"]->unbind();
+        glBindVertexArray(0);
         timer->tock();
         //std::cout << "fps: " << timer->fps() << std::endl;
     }
 
 	void renderer::deleteBuffers() {
         glDeleteFramebuffers(1, &frameBuffer);
-        attachments["colorAttachment"]->deleteTexture();
-        attachments["depthAttachment"]->deleteTexture();
-        attachments["copyDepthAttachment"]->deleteTexture();
+        for (auto attachment : attachments) {
+            attachment.second->deleteTexture();
+        }
+
+        for (auto texture : textures) {
+            texture.second->deleteTexture();
+        }
+
         glDeleteVertexArrays(1, &quadVertexArray);
         glDeleteBuffers(1, &quadVertexBuffer);
 

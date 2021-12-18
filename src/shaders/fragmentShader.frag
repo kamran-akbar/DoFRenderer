@@ -23,6 +23,7 @@ in GS_OUT
 } frag_in;
 
 uniform sampler2DArray prevDepthmap;
+uniform sampler2D depthDisc;
 
 uniform vec2 windowDimension;
 uniform vec2 cameraFarNear;
@@ -63,6 +64,13 @@ float linearizeDepth(float depth)
 void main()
 {
     vec2 uv = gl_FragCoord.xy / windowDimension.xy;
+    float edge = texture(depthDisc, uv).r;
+    if(gl_Layer >= 1){
+        if(edge == 0.0){
+            discard;
+            return;
+        }
+    }
     float prevDepth = linearizeDepth(texture(prevDepthmap, vec3(uv.xy, gl_Layer - 1)).r);
     float currentDepth = linearizeDepth(gl_FragCoord.z);
     float deltaZ = 0.05;
@@ -73,5 +81,4 @@ void main()
         }
     }
     gl_FragColor = phongShading();
-    
 }

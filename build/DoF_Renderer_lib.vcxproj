@@ -292,6 +292,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\object.cpp" />
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\shader.cpp" />
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\window.cpp" />
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\depthDisc.compute">
+    </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\fragmentShader.frag">
     </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\geometryShader.geom">

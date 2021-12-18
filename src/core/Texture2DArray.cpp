@@ -21,6 +21,10 @@ namespace DoFRenderer {
 		glBindTexture(GL_TEXTURE_2D_ARRAY, id);
 	}
 
+	void Texture2DArray::bindTextureImage(unsigned int binding, unsigned int accessMode, unsigned int format) {
+		glBindImageTexture(binding, id, 0, GL_TRUE, 0, accessMode, format);
+	}
+
 	void Texture2DArray::copy(const unsigned int destID, unsigned int destTarget,
 		unsigned int width, unsigned int height, unsigned int layerCount) {
 		glCopyImageSubData(id, GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0, destID,destTarget, 0, 0, 0, 0, 

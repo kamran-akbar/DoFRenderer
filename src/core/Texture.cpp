@@ -33,9 +33,30 @@ namespace DoFRenderer {
         stbi_image_free(data);
 	}
 
+    Texture::Texture(
+        unsigned int format, unsigned int windowWidth, unsigned int windowHeight,
+        unsigned int wrapMode, unsigned int filterMode, unsigned int internalFormat,
+        unsigned int type) {
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, windowWidth, windowHeight, 0, internalFormat,
+            type, NULL);
+    }
+
     void Texture::bind(unsigned short i) {
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D, texture);
+    }
+
+    void Texture::bindImageTexture(unsigned int binding, unsigned int accessMode, 
+        unsigned int format) {
+        glBindImageTexture(binding, texture, 0, GL_FALSE, 0, accessMode, format);
     }
 
     void Texture::unbind() {

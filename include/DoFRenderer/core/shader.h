@@ -16,6 +16,8 @@ namespace DoFRenderer {
 
         shader(const char* vertexPath, const char* fragmentPath);
         shader(const char* vertexPath, const char* geometryPath, const char* fragmentPath);
+        shader(const char* computePath);
+        
         void use() const;
 
         void setBool(const std::string& name, bool value) const;

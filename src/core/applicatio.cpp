@@ -17,12 +17,13 @@ namespace DoFRenderer {
         cameraPtr = std::make_unique<camera>(camera(45.0f, windowPtr->getAspectRatio(), 1.0f, 10.0f,
             glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
         
-        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 0.5f, -0.5f), glm::vec3(1.0f), glm::vec3(0.2f),
+        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 0.0f, -1.0), glm::vec3(1.0f), glm::vec3(0.2f),
             glm::vec3(1.0f)));
         
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(), windowPtr->getHeight(), layerCount));
         
-        rendererPtr->generateLayeredFrameBuffer();
+        rendererPtr->generateFrameBuffers();
+        rendererPtr->prepareDepthDiscontinuity();
         rendererPtr->prepareRenderPassBuffers(cameraPtr.get(), lightPtr.get());
         rendererPtr->prepareScreenQuad();
 
@@ -30,6 +31,7 @@ namespace DoFRenderer {
         {
             windowPtr->processInput();
             rendererPtr->renderLoop();
+            rendererPtr->generateDepthDiscMap();
             rendererPtr->quadRenderLoop();
             windowPtr->swapChainCall();
         }

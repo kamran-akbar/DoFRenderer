@@ -124,6 +124,44 @@ namespace DoFRenderer {
         glDeleteShader(geometry);
         glDeleteShader(fragment);
     }
+    
+    shader::shader(const char* computePath) {
+        std::string computeCode;
+        std::ifstream cShaderFile;
+
+        cShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        try
+        {
+            cShaderFile.open(computePath);
+            std::stringstream cShaderStream;
+
+            cShaderStream << cShaderFile.rdbuf();
+
+            cShaderFile.close();
+
+            computeCode = cShaderStream.str();
+        }
+        catch (std::ifstream::failure& e)
+        {
+            throw "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ";
+        }
+
+        const char* cShaderCode = computeCode.c_str();
+
+        unsigned int compute;
+
+        compute = glCreateShader(GL_COMPUTE_SHADER);
+        glShaderSource(compute, 1, &cShaderCode, NULL);
+        glCompileShader(compute);
+        checkCompileErrors(compute, "COMPUTE");
+
+        ID = glCreateProgram();
+        glAttachShader(ID, compute);
+        glLinkProgram(ID);
+        checkCompileErrors(ID, "PROGRAM");
+
+        glDeleteShader(compute);
+    }
 
     void shader::use() const
     {

@@ -77,6 +77,9 @@
     <CustomBuild Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\depthDisc.compute">
+      <Filter>Source Files\shaders</Filter>
+    </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\fragmentShader.frag">
       <Filter>Source Files\shaders</Filter>
     </None>

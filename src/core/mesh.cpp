@@ -38,14 +38,14 @@ namespace DoFRenderer {
 		for (int i = 0; i < texturePaths.size(); i++) {
 			textures.push_back(Texture(textureNames[i], texturePaths[i], GL_REPEAT, GL_LINEAR, GL_RGB, GL_RGB,
 				GL_UNSIGNED_BYTE));
-			shaderPtr->setInt(textures[i].getName(), i + 1);
+			shaderPtr->setInt(textures[i].getName(), i + 2);
 		}
 	}
 	
 	void Mesh::draw(const shader* shaderPtr) {
 		setShaderMaterialParams(shaderPtr);
 		for (int i = 0; i < textures.size(); i++) {
-			textures[i].bind(i + 1);			
+			textures[i].bind(i + 2);			
 		}
 		glBindVertexArray(vertexArray);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);

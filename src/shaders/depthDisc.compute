@@ -1,0 +1,14 @@
+#version 450 core
+#define WORK_GROUP_SIZE 32
+
+layout(binding = 0) uniform sampler2DArray depthmap;
+layout(r32f, binding = 1) writeonly uniform image2D depthDisc;
+layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
+
+void main() {
+	vec2 gid = gl_GlobalInvocationID.xy;
+	vec2 dimension = imageSize(depthDisc);
+	vec2 uv = gid / dimension;
+	float depth = texture(depthmap, vec3(uv, 0)).r;
+	imageStore(depthDisc, ivec2(gid), vec4(depth));
+}

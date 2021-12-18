@@ -12,6 +12,7 @@ namespace DoFRenderer {
 		~Texture2DArray() { }
 
 		void bind(int i);
+		void bindTextureImage(unsigned int binding, unsigned int accessMode, unsigned int format);
 		void copy(const unsigned int destID, unsigned int destTarget, unsigned int width,
 			unsigned int height, unsigned int layerCount);
 		void unbind();
