@@ -24,6 +24,9 @@ namespace DoFRenderer {
         for (auto shader : shaders) {
             delete shader.second;
         }
+        for (auto buffer : buffers) {
+            delete buffer.second;
+        }
         for (Object* obj : objects) {
             delete obj;
         }
@@ -57,12 +60,16 @@ namespace DoFRenderer {
     }
 
 	void renderer::prepareRenderPassBuffers(const camera* cameraPtr, const light* lightPtr) {
-        
+        textures["layerCountsTex"] = new Texture(GL_R32I, windowWidth, windowHeight, 
+            GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
+        textures["layerCountsTex"]->bindImageTexture(1, GL_READ_WRITE, GL_R32I);
+
         objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 0.0f), glm::vec3(-90.0f, 0.0f, 40.0f), glm::vec3(3.0f)));
         //objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-15.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
 
         std::vector<std::string> modelsPath = {
             "../models/viking_room.obj"
+            //"../models/untitled.obj"
         };
 
         for (int i = 0; i < objects.size(); i++) {
@@ -70,19 +77,47 @@ namespace DoFRenderer {
             objects[i]->prepareObject();
             objects[i]->setShaderParams(lightPtr, cameraPtr);
             objects[i]->getShader()->setInt("prevDepthmap", 0);
-            objects[i]->getShader()->setInt("depthDiscTex", 1);
+            objects[i]->getShader()->setInt("depthDisc", 1);
             objects[i]->getShader()->setVec2("windowDimension", windowWidth, windowHeight);
-            objects[i]->getShader()->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
+            objects[i]->getShader()->setVec2("cameraFarNear", cameraPtr->getFar(), 
+                cameraPtr->getNear());
 		}
 	}
 
-    void renderer::prepareDepthDiscontinuity() {
+    void renderer::prepareDepthDiscontinuity(const camera* cameraPtr) {
         shaders["depthDiscShader"] = new shader("../src/shaders/depthDisc.compute");
         textures["depthDiscTex"] = new Texture(GL_R32F, windowWidth, windowHeight,
             GL_REPEAT, GL_LINEAR, GL_RED, GL_FLOAT);
-        textures["depthDiscTex"]->bindImageTexture(1, GL_WRITE_ONLY, GL_R32F);
+        textures["depthDiscTex"]->bindImageTexture(0, GL_WRITE_ONLY, GL_R32F);
         shaders["depthDiscShader"]->use();
         shaders["depthDiscShader"]->setInt("depthmap", 0);
+        shaders["depthDiscShader"]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
+        //focal length and focus distance are in meter and aperture is in pixels
+        shaders["depthDiscShader"]->setVec3("focalLength_focusDist_aperture",
+            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+    }
+
+    void renderer::prepareMerging(const camera* cameraPtr) {
+        shaders["mergingShader"] = new shader("../src/shaders/mergeFragments.compute");
+        
+        textures["mergedFragCount"] = new Texture(GL_R32I, windowWidth / 2, 
+            windowHeight / 2, GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
+        textures["mergedFragCount"]->bindImageTexture(2, GL_READ_WRITE, GL_R32I);
+        
+        unsigned int maxFragCount = windowWidth * windowHeight * layerCount;
+
+        buffers["fragColorDepthBuffer"] = new StorageBuffer(3, 
+            maxFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
+        buffers["fragMergingDataBuffer"] = new StorageBuffer(4, 
+            maxFragCount * sizeof(fragmentMergingData), NULL, GL_DYNAMIC_COPY);
+     
+        shaders["mergingShader"]->use();
+        shaders["mergingShader"]->setInt("depthmap", 0);
+        shaders["mergingShader"]->setInt("colorTexture", 1);
+        shaders["mergingShader"]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
+        //focal length and focus distance are in meter and aperture is in pixels
+        shaders["mergingShader"]->setVec3("focalLength_focusDist_aperture",
+            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
     }
 
     void renderer::prepareScreenQuad() {
@@ -141,6 +176,18 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
     }
 
+    void renderer::mergeFragments() {
+        shaders["mergingShader"]->use();
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+        attachments["depthAttachment"]->bind(0);
+        attachments["colorAttachment"]->bind(1);
+        glDispatchCompute(windowWidth / 2, windowHeight / 2, 1);
+        attachments["depthAttachment"]->unbind();
+        attachments["colorAttachment"]->unbind();
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+        std::vector<unsigned int> reset = { 0 };
+    }
+
     void renderer::quadRenderLoop() {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -163,14 +210,14 @@ namespace DoFRenderer {
         for (auto attachment : attachments) {
             attachment.second->deleteTexture();
         }
-
         for (auto texture : textures) {
             texture.second->deleteTexture();
         }
-
+        for (auto buffer : buffers) {
+            buffer.second->deleteBuffer();
+        }
         glDeleteVertexArrays(1, &quadVertexArray);
         glDeleteBuffers(1, &quadVertexBuffer);
-
         for (int i = 0; i < objects.size(); i++) {
             objects[i]->deleteBuffer();
 		}

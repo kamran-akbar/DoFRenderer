@@ -8,7 +8,8 @@ namespace DoFRenderer {
 		camera();
 		camera(float fov, float aspectRatio, float near, float far, glm::vec3 position, 
 			glm::vec3 forward, glm::vec3 up);
-		
+		camera(float fov, float aspectRatio, float near, float far, glm::vec3 position,
+			float focal, float focus, int aperture, glm::vec3 forward, glm::vec3 up);
 		~camera() {}
 		
 		glm::vec3 getCameraPosition() const;
@@ -20,11 +21,16 @@ namespace DoFRenderer {
 		inline float getFoV() const { return fov; }
 		inline float getNear() const { return near; }
 		inline float getFar() const { return far; }
+		inline float getFocalLength() const { return focalLength; }
+		inline float getFocusDist() const { return focusDist; }
+		inline int getAperture() const { return aperture; }
 		
 	private:
 		float fov;
 		float aspectRatio;
 		float near, far;
+		float focalLength, focusDist;
+		int aperture;
 		glm::vec3 position;
 		glm::vec3 forward, up;
 		glm::mat4 viewMatrix;

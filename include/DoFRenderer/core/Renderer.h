@@ -6,6 +6,8 @@
 #include "DoFRenderer/core/time.h"
 #include "DoFRenderer/core/Texture2DArray.h"
 #include "DoFRenderer/core/Texture.h"
+#include "DoFRenderer/core/storageBuffer.h"
+#include "DoFRenderer/core/fragmentData.h"
 #include <iostream>
 #include <unordered_map>
 
@@ -20,10 +22,12 @@ namespace DoFRenderer {
 		~renderer();
 		void generateFrameBuffers();
 		void prepareRenderPassBuffers(const camera* cameraPtr, const light* lightPtr);
-		void prepareDepthDiscontinuity();
+		void prepareDepthDiscontinuity(const camera* cameraPtr);
+		void prepareMerging(const camera* cameraPtr);
 		void prepareScreenQuad();
 		void renderLoop();
 		void generateDepthDiscMap();
+		void mergeFragments();
 		void quadRenderLoop();
 		void deleteBuffers();
 	private:
@@ -32,9 +36,11 @@ namespace DoFRenderer {
 		std::unordered_map<std::string, Texture2DArray*> attachments;
 		std::unordered_map<std::string, shader*> shaders;
 		std::unordered_map<std::string, Texture*> textures;
+		std::unordered_map<std::string, StorageBuffer*> buffers;
 		unsigned int frameBuffer;
 		unsigned int quadVertexArray;
 		unsigned int quadVertexBuffer;
+		unsigned int ssbo;
 		unsigned int windowWidth, windowHeight;
 		unsigned int layerCount;
 		bool once = false;

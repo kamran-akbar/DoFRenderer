@@ -22,8 +22,11 @@ in GS_OUT
 	vec3 worldPos;
 } frag_in;
 
-uniform sampler2DArray prevDepthmap;
+layout(binding = 1, r32i) restrict uniform iimage2D layerCount;
+
 uniform sampler2D depthDisc;
+uniform sampler2DArray prevDepthmap;
+
 
 uniform vec2 windowDimension;
 uniform vec2 cameraFarNear;
@@ -80,5 +83,7 @@ void main()
            return;
         }
     }
+    
+    imageAtomicMax(layerCount, ivec2(gl_FragCoord.xy), gl_Layer);
     gl_FragColor = phongShading();
 }

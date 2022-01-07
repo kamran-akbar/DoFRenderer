@@ -34,6 +34,9 @@
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\shader.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\storageBuffer.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\window.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
@@ -54,6 +57,9 @@
     <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\camera.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\fragmentData.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\light.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
@@ -64,6 +70,9 @@
       <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\shader.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\storageBuffer.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\include\DoFRenderer\core\time.h">
@@ -84,6 +93,9 @@
       <Filter>Source Files\shaders</Filter>
     </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\geometryShader.geom">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\mergeFragments.compute">
       <Filter>Source Files\shaders</Filter>
     </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\screenShader.frag">

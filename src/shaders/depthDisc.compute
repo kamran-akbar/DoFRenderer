@@ -1,14 +1,130 @@
 #version 450 core
 #define WORK_GROUP_SIZE 32
 
-layout(binding = 0) uniform sampler2DArray depthmap;
-layout(r32f, binding = 1) writeonly uniform image2D depthDisc;
 layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
+uniform sampler2DArray depthmap;
+layout(r32f, binding = 0) writeonly uniform image2D depthDisc;
+
+uniform float edgeThreshold = 0.02;
+uniform vec2 cameraFarNear;
+uniform vec3 focalLength_focusDist_aperture;
+shared float localDepths[WORK_GROUP_SIZE + 2][WORK_GROUP_SIZE + 2];
+
+bool applySobelFilter() {
+	uvec2 p = gl_LocalInvocationID.xy + uvec2(1, 1);
+
+	float sx = localDepths[p.x - 1][p.y - 1] + 2 * localDepths[p.x - 1][p.y] + localDepths[p.x - 1][p.y + 1]
+		- (localDepths[p.x + 1][p.y - 1] + 2 * localDepths[p.x + 1][p.y] + localDepths[p.x + 1][p.y + 1]);
+
+	float sy = localDepths[p.x - 1][p.y + 1] + 2 * localDepths[p.x][p.y + 1] + localDepths[p.x + 1][p.y + 1]
+		- (localDepths[p.x - 1][p.y - 1] + 2 * localDepths[p.x][p.y - 1] + localDepths[p.x + 1][p.y - 1]);
+	float g = sx * sx + sy * sy ;
+	if (g > edgeThreshold)
+		return true;
+	return false;
+}
+
+float linearizeDepth(float depth)
+{
+    float far = cameraFarNear.x;
+    float near = cameraFarNear.y;
+    float z = depth * 2.0 - 1.0;
+    return (2.0 * near * far) / (far + near - z * (far - near));
+}
+
+float computeCoC(float depth) {
+    float focalLength = focalLength_focusDist_aperture.x;
+    float focusDist = focalLength_focusDist_aperture.y;
+    float aperture = focalLength_focusDist_aperture.z;
+    float coc = aperture * focalLength * abs(focusDist - depth) / 
+            (depth * (focusDist - focalLength));
+    return coc;
+}
 
 void main() {
 	vec2 gid = gl_GlobalInvocationID.xy;
+	uvec2 tid = gl_LocalInvocationID.xy;
 	vec2 dimension = imageSize(depthDisc);
 	vec2 uv = gid / dimension;
-	float depth = texture(depthmap, vec3(uv, 0)).r;
-	imageStore(depthDisc, ivec2(gid), vec4(depth));
+	float depth = linearizeDepth(texture(depthmap, vec3(uv, 0)).r);
+	localDepths[tid.x + 1][tid.y + 1] = depth;
+    // Handle the edges
+    // Bottom edge
+    if (tid.y == 0) {
+        if (gid.y > 0) {
+            localDepths[tid.x + 1][0] = linearizeDepth(texture(depthmap,
+                vec3((gid.xy + vec2(0, -1)) / dimension, 0)).r);
+            // Lower left corner
+            if (tid.x == 0)
+                if (gid.x > 0)
+                    localDepths[0][0] = linearizeDepth(texture(depthmap,
+                        vec3((gid.xy + vec2(-1, -1)) / dimension, 0)).r);
+                else
+                    localDepths[0][0] = 0.0;
+            // Lower right corner
+            if (tid.x == WORK_GROUP_SIZE - 1)
+                if (gid.x < dimension.x - 1)
+                    localDepths[WORK_GROUP_SIZE + 1][0] = linearizeDepth(texture(depthmap,
+                        vec3((gid.xy + vec2(1, -1)) / dimension, 0)).r);
+                else
+                    localDepths[WORK_GROUP_SIZE + 1][0] = 0.0;
+        }
+        else
+            localDepths[tid.x + 1][0] = 0.0;
+    }
+    // Top edge
+    if (tid.y == WORK_GROUP_SIZE - 1) {
+        if (gid.y < dimension.y - 1) {
+            localDepths[tid.x + 1][WORK_GROUP_SIZE + 1] = linearizeDepth(texture(depthmap,
+                vec3((gid.xy + vec2(0, 1)) / dimension, 0)).r);
+            // Upper left corner
+            if (tid.x == 0)
+                if (gid.x > 0)
+                    localDepths[0][WORK_GROUP_SIZE + 1] = linearizeDepth(texture(depthmap,
+                        vec3((gid.xy + vec2(-1, 1)) / dimension, 0)).r);
+                else
+                    localDepths[0][WORK_GROUP_SIZE + 1] = 0.0;
+            // Upper right corner
+            if (tid.x == WORK_GROUP_SIZE - 1)
+                if (gid.x < dimension.x - 1)
+                    localDepths[WORK_GROUP_SIZE + 1][WORK_GROUP_SIZE + 1] =
+                    linearizeDepth(texture(depthmap, vec3((vec2(gid.xy) + vec2(1, 1)) / dimension, 0)).r);
+                else
+                    localDepths[WORK_GROUP_SIZE + 1][WORK_GROUP_SIZE + 1] = 0.0;
+        }
+        else
+            localDepths[tid.x + 1][WORK_GROUP_SIZE + 1] = 0.0;
+    }
+    // Left edge
+    if (tid.x == 0) {
+        if (gid.x > 0)
+            localDepths[0][tid.y + 1] = linearizeDepth(texture(depthmap,
+                vec3((gid.xy + vec2(-1, 0)) / dimension, 0)).r);
+        else
+            localDepths[0][tid.y + 1] = 0.0;
+    }
+    // Right edge
+    if (tid.x == WORK_GROUP_SIZE - 1) {
+        if (gid.x < dimension.x - 1)
+            localDepths[WORK_GROUP_SIZE + 1][tid.y + 1] = linearizeDepth(texture(depthmap,
+                vec3((gid.xy + vec2(1, 0)) / dimension, 0)).r);
+        else
+            localDepths[WORK_GROUP_SIZE + 1][tid.y + 1] = 0.0;
+    }
+	barrier();
+    bool isEdge = applySobelFilter();
+	if (isEdge) {
+		imageStore(depthDisc, ivec2(gid), vec4(1.0));
+	}
+    barrier();
+    if (isEdge) {
+        float coc = computeCoC(depth);
+        int coc_rad = int(coc * 0.5) + 1;
+        for (int i = -coc_rad; i <= coc_rad; i++) {
+            for (int j = -coc_rad; j <= coc_rad; j++) {
+                imageStore(depthDisc, ivec2(min(max(gid.x + i, 0), dimension.x),
+                    min(max(gid.y + j, 0), dimension.y)), vec4(1.0));
+            }
+        }
+    }
 }

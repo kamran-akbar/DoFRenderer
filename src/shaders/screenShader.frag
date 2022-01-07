@@ -9,6 +9,7 @@ uniform sampler2D testTex;
 uniform sampler2DArray screenTexture;
 uniform sampler2DArray depthTexture;
 
+layout(binding = 2, r32i) restrict uniform iimage2D mergedFragCount;
 
 void main()
 {
@@ -20,6 +21,8 @@ void main()
         float depth = texture(depthTexture, vec3(TexCoords, 0)).r;
         FragColor = vec4(depth);
     }
-    //FragColor = texture(testTex, TexCoords);
+    //int fragCount = imageLoad(mergedFragCount, ivec2(gl_FragCoord.xy / 2.0)).r;
+    //FragColor = vec4(fragCount / 16.0);
+    //FragColor = texture(testTex, TexCoords).rrrr;
     
 } 
