@@ -33,7 +33,6 @@ namespace DoFRenderer {
     }
 
     void renderer::generateFrameBuffers() {
-
         attachments["colorAttachment"] = new Texture2DArray(
             GL_RGBA8, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
         );
@@ -120,6 +119,39 @@ namespace DoFRenderer {
             cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
     }
 
+    void renderer::prepareSplatting(const camera* cameraPtr) {
+        shaders["splattingShader"] = new shader("../src/shaders/splat.compute");
+        const int tileSize = 16;
+        const int tileSpread = 1;
+        unsigned int maxSplattedFragCount =
+            (windowWidth / tileSize) * (windowHeight / tileSize) * 8192;
+        unsigned int tilingSize =
+            (windowWidth / tileSize) * (windowHeight / tileSize);
+        buffers["splattedColorDepthBuffer"] = new StorageBuffer(5,
+            maxSplattedFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
+        buffers["splattedFragInfoBuffer"] = new StorageBuffer(6,
+            maxSplattedFragCount * sizeof(fragmentMergingData), NULL, GL_DYNAMIC_COPY);
+        buffers["tilingCounterBuffer"] = new StorageBuffer(7, 
+            tilingSize * sizeof(unsigned int), NULL, GL_DYNAMIC_COPY);
+        
+        shaders["splattingShader"]->use();
+        shaders["splattingShader"]->setVec3("focalLength_focusDist_aperture",
+            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders["splattingShader"]->setVec2("tile_size_spread",
+            tileSize, tileSpread);
+        shaders["splattingShader"]->setFloat("coc_max", 15);
+    }
+
+    void renderer::prepareSorting(const camera* cameraPtr) {
+        shaders["sortingShader"] = new shader("../src/shaders/sort.compute");
+        shaders["sortingShader"]->use();
+    }
+    
+    void renderer::prepareAccumulation(const camera* cameraPtr) {
+        shaders["accumulationShader"] = new shader("../src/shaders/accumulation.compute");
+        shaders["accumulationShader"]->use();
+    }
+
     void renderer::prepareScreenQuad() {
         shaders["screenShader"] = new shader("../src/shaders/screenShader.vert",
             "../src/shaders/screenShader.frag");
@@ -185,9 +217,34 @@ namespace DoFRenderer {
         attachments["depthAttachment"]->unbind();
         attachments["colorAttachment"]->unbind();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        std::vector<unsigned int> reset = { 0 };
     }
 
+    void renderer::splatFragments() {
+        shaders["splattingShader"]->use();
+        glm::ivec2 mergedImSize = glm::ivec2(windowWidth / 2, windowHeight / 2);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+        glDispatchCompute(mergedImSize.x / 16, mergedImSize.y / 16, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+        //buffers["atomicCounterBuffer"]->bind();
+        //unsigned int* c = (unsigned int*)buffers["atomicCounterBuffer"]->getBufferData();
+        //buffers["atomicCounterBuffer"]->unbind();
+        //std::cout << c[0] << std::endl;
+        const int tileSize = 16;
+        unsigned int tilingSize =
+            (windowWidth / (tileSize)) * (windowHeight / (tileSize));
+        std::vector<unsigned int> reset(tilingSize, 0);
+        buffers["tilingCounterBuffer"]->setBufferData(
+            tilingSize * sizeof(unsigned int), reset.data());
+    }
+
+    void renderer::sortFragments() {
+        shaders["sortingShader"]->use();
+    }
+
+    void renderer::accumulateFreagment() {
+        shaders["accumulationShader"]->use();
+    }
+    
     void renderer::quadRenderLoop() {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);

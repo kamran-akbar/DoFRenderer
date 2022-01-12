@@ -295,6 +295,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\shader.cpp" />
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\storageBuffer.cpp" />
     <ClCompile Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\core\window.cpp" />
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\accumulation.compute">
+    </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\depthDisc.compute">
     </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\fragmentShader.frag">
@@ -306,6 +308,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\screenShader.frag">
     </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\screenShader.vert">
+    </None>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\sort.compute">
+    </None>
+    <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\splat.compute">
     </None>
     <None Include="C:\Users\cpkaak\Desktop\CIVIT\CIVIT2\Light field\Read\DoF\DoFRenderer\src\shaders\vertexShader.vert">
     </None>

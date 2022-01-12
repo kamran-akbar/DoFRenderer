@@ -10,3 +10,9 @@ struct fragmentMergingData {
 	unsigned int mergeID;
 	glm::uvec2 screenCoords;
 };
+
+struct fragmentData {
+	unsigned int red_green;
+	unsigned int blue_mergeID;
+	float depth;
+};

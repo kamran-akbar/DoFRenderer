@@ -1,0 +1,137 @@
+#version 450 core
+#define WORK_GROUP_SIZE 16
+#define MAX_FRAGMENT_COUNT 16
+#define MERGE_FACTOR 2
+#define MAX_FRAGMENT_TILE 8192
+#define TILE_SPREAD 1
+
+struct fragmentColorDepth {
+	vec3 color;
+	float depth;
+};
+
+struct fragmentMergingData {
+	uint mergeID;
+	uvec2 screenCoords;
+};
+layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
+
+layout(binding = 2, r32i) restrict uniform iimage2D mergedFragCount;
+
+layout(std430, binding = 3) buffer fragColorDepthBuffer {
+	fragmentColorDepth mergedColorDepth[];
+};
+
+layout(std430, binding = 4) buffer fragMergingDataBuffer {
+	fragmentMergingData mergedFragsInfo[];
+};
+
+layout(std430, binding = 5) buffer splattedColorDepthBuffer {
+	fragmentColorDepth tiledColorDepth[];
+};
+
+layout(std430, binding = 6) buffer splattedFragInfoBuffer {
+	fragmentMergingData tiledFragData[];
+};
+
+layout(std430, binding = 7) buffer tilingCounterBuffer {
+	uint tilingCounter[];
+};
+
+uniform vec4 focalLength_focusDist_aperture;
+uniform vec2 tile_size_spread;
+uniform float coc_max;
+
+shared float localFragCount[WORK_GROUP_SIZE][WORK_GROUP_SIZE];
+
+float computeCoC(float depth) {
+	float focalLength = focalLength_focusDist_aperture.x;
+	float focusDist = focalLength_focusDist_aperture.y;
+	float aperture = focalLength_focusDist_aperture.z;
+	float coc = aperture * focalLength * abs(focusDist - depth) /
+		(depth * (focusDist - focalLength));
+	return coc;
+}
+
+void main() {
+	int tileSize = int(tile_size_spread.x);
+	int tileSpread = int(tile_size_spread.y);
+	uvec2 dimension = imageSize(mergedFragCount).xy;
+	uvec2 gid = gl_GlobalInvocationID.xy;
+	uvec2 tid = gl_LocalInvocationID.xy;
+	localFragCount[tid.y][tid.x] = imageLoad(mergedFragCount, ivec2(gid)).r;
+	barrier();
+	for (int i = 0; i < localFragCount[tid.y][tid.x]; i++) {
+		uint fragIndex = gid.y * dimension.x * MAX_FRAGMENT_COUNT 
+						 + gid.x * MAX_FRAGMENT_COUNT + i;
+		fragmentColorDepth colorDepthElement = mergedColorDepth[fragIndex];
+		fragmentMergingData fragInfoElement = mergedFragsInfo[fragIndex];
+		uvec2 coord = fragInfoElement.screenCoords;
+		uint mergeID = fragInfoElement.mergeID;
+		ivec2 tileID = ivec2(coord.xy / tileSize);
+		uint tileSizeFactor = tileSize / MERGE_FACTOR;
+		uint tiles_width = (dimension.x % tileSizeFactor == 0) ?
+			dimension.x / tileSizeFactor : dimension.x / tileSizeFactor + 1;
+		uint tiles_height = (dimension.y % tileSizeFactor == 0) ?
+			dimension.y / tileSizeFactor : dimension.y / tileSizeFactor + 1;
+		uint low_x = (tileID.x - tileSpread) < 0 ? -tileID.x : -tileSpread;
+		uint low_y = (tileID.y - tileSpread) < 0 ? -tileID.y : -tileSpread;
+		uint high_x = (tileID.x + tileSpread) >= tiles_width ? tiles_width - 1 
+			- tileID.x : tileSpread;
+		uint high_y = (tileID.y + tileSpread) >= tiles_height ? tiles_height - 1
+			- tileID.y : tileSpread;
+		bool may[2 * TILE_SPREAD + 1][2 * TILE_SPREAD + 1];
+		for (int j = 0; j < 2 * tileSpread + 1; j++) {
+			for (int k = 0; k < 2 * tileSpread + 1; k++) {
+				may[j][k] = false;
+			}
+		}
+		may[tileSpread][tileSpread] = true;
+		float coc = computeCoC(colorDepthElement.depth);
+		coc = min(coc * 0.5 + 0.5, coc_max);
+		vec2 fragCenter = vec2(coord.x + mergeID * 0.5f, coord.y + mergeID * 0.5f);
+		// may be wrong
+		for (int j = 0; j < tileSpread; j++) {
+			int leftBorder = (tileID.x - tileSpread + 1 + j) * tileSize;
+			int rightBorder = (tileID.x + 1 + j) * tileSize;
+			int downBorder = (tileID.y + 1 + j) * tileSize;
+			int topBorder = (tileID.y - tileSpread + 1 + j) * tileSize;
+			float disToLeft = abs(leftBorder - fragCenter.x);
+			float disToRight = abs(rightBorder - fragCenter.x);
+			float disToTop = abs(topBorder - fragCenter.y);
+			float disToDown = abs(downBorder - fragCenter.y);
+			if (disToLeft < coc) may[tileSpread][j] = true;
+			if (disToRight < coc) may[tileSpread][j + tileSpread + 1] = true;
+			if (disToTop < coc) may[j][tileSpread] = true;
+			if (disToDown < coc) may[j + tileSpread + 1][tileSpread] = true;
+		}
+		float cocSq = coc * coc;
+		for (int j = 0; j < 2 * tileSize + 1; j++) {
+			for (int k = 0; k < 2 * tileSize + 1; k++) {
+				if (j == tileSpread || i == tileSpread) continue;
+				int add_x = 0;
+				int add_y = 0;
+				if (j > tileSpread) add_x = -1;
+				if (i > tileSpread) add_y = -1;
+				uvec2 p = uvec2(tileID.x - tileSpread + 1 + add_x + j,
+					tileID.y - tileSpread + 1 + add_y + i) * tileSize;
+				vec2 dis = abs(p - fragCenter);
+				if (dot(dis, dis) < cocSq) may[i][j] = true;
+			}
+		}
+		for (uint x = low_x; x < high_x; x++) {
+			for (uint y = low_y; x < high_y; y++) {
+				if (may[y + tileSpread][x + tileSpread]) {
+					ivec2 index = ivec2(tileID.x + x, tileID.y + y);
+					uint posInTile = atomicAdd(
+						tilingCounter[index.y * tiles_width + index.x], 1);
+					uint writingIndex = index.y * tiles_width * MAX_FRAGMENT_TILE
+						+ index.x * MAX_FRAGMENT_TILE + posInTile;
+					tiledColorDepth[writingIndex] = colorDepthElement;
+					tiledFragData[writingIndex] = fragInfoElement;
+				}
+			}
+		}
+
+	}
+}

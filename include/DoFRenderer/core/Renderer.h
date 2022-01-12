@@ -24,10 +24,16 @@ namespace DoFRenderer {
 		void prepareRenderPassBuffers(const camera* cameraPtr, const light* lightPtr);
 		void prepareDepthDiscontinuity(const camera* cameraPtr);
 		void prepareMerging(const camera* cameraPtr);
+		void prepareSplatting(const camera* cameraPtr);
+		void prepareSorting(const camera* cameraPtr);
+		void prepareAccumulation(const camera* cameraPtr);
 		void prepareScreenQuad();
 		void renderLoop();
 		void generateDepthDiscMap();
 		void mergeFragments();
+		void splatFragments();
+		void sortFragments();
+		void accumulateFreagment();
 		void quadRenderLoop();
 		void deleteBuffers();
 	private:
