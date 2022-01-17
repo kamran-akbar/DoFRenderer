@@ -2,15 +2,17 @@
 #define WORK_GROUP_SIZE 1
 #define MAX_FRAGMENT_COUNT 16
 
+struct fragmentMergingData {
+	uint mergeID;
+	uvec2 screenCoords;
+};
+
 struct fragmentColorDepth {
 	vec3 color;
 	float depth;
 };
 
-struct fragmentMergingData {
-	uint mergeID;
-	uvec2 screenCoords;
-};
+
 layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
 
 layout(binding = 1, r32i) restrict uniform iimage2D layerCount;
@@ -140,6 +142,7 @@ void main() {
 					mergedCol += col;
 				}
 			}
+			
 			mergedCol *= 0.25;
 			colorDepth_out.color = mergedCol;
 			colorDepth_out.depth = maxDepth + 0.01;
@@ -185,7 +188,8 @@ void main() {
 			colorDepth_out.color = col;
 			colorDepth_out.depth = minDepth;
 			mergingData_out.mergeID = 1;
-			mergingData_out.screenCoords = ivec2(gid.x + minDepthIdx.x, gid.y + minDepthIdx.y);
+			mergingData_out.screenCoords = ivec2(gid.x + minDepthIdx.x, 
+				gid.y + minDepthIdx.y);
 			vec3 uvz = vec3(
 				(gid.x + minDepthIdx.x) / dimension.x,
 				(gid.y + minDepthIdx.y) / dimension.y,
@@ -198,6 +202,7 @@ void main() {
 			nextIndex[minDepthIdx.y][minDepthIdx.x] += 1;
 			allfragmentsCount -= 1;
 		}
+		ivec2 coord = ivec2(mergingData_out.screenCoords);
 		uint writingIdx = out_gid.y * threadSize.x * MAX_FRAGMENT_COUNT 
 			+ out_gid.x * MAX_FRAGMENT_COUNT + fragCount;
 		colorDepth[writingIdx] = colorDepth_out;

@@ -104,12 +104,11 @@ namespace DoFRenderer {
         textures["mergedFragCount"]->bindImageTexture(2, GL_READ_WRITE, GL_R32I);
         
         unsigned int maxFragCount = windowWidth * windowHeight * layerCount;
-
         buffers["fragColorDepthBuffer"] = new StorageBuffer(3, 
             maxFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
         buffers["fragMergingDataBuffer"] = new StorageBuffer(4, 
-            maxFragCount * sizeof(fragmentMergingData), NULL, GL_DYNAMIC_COPY);
-     
+            maxFragCount * sizeof(fragmentColorDepth) , NULL, GL_DYNAMIC_COPY);
+
         shaders["mergingShader"]->use();
         shaders["mergingShader"]->setInt("depthmap", 0);
         shaders["mergingShader"]->setInt("colorTexture", 1);
@@ -130,16 +129,18 @@ namespace DoFRenderer {
         buffers["splattedColorDepthBuffer"] = new StorageBuffer(5,
             maxSplattedFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
         buffers["splattedFragInfoBuffer"] = new StorageBuffer(6,
-            maxSplattedFragCount * sizeof(fragmentMergingData), NULL, GL_DYNAMIC_COPY);
+            maxSplattedFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
         buffers["tilingCounterBuffer"] = new StorageBuffer(7, 
             tilingSize * sizeof(unsigned int), NULL, GL_DYNAMIC_COPY);
-        
+        buffers["testBuffer"] = new StorageBuffer(8, sizeof(int),
+            NULL, GL_DYNAMIC_COPY);
+
         shaders["splattingShader"]->use();
         shaders["splattingShader"]->setVec3("focalLength_focusDist_aperture",
             cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
         shaders["splattingShader"]->setVec2("tile_size_spread",
             tileSize, tileSpread);
-        shaders["splattingShader"]->setFloat("coc_max", 15);
+        shaders["splattingShader"]->setFloat("coc_max", 15.0f);
     }
 
     void renderer::prepareSorting(const camera* cameraPtr) {
@@ -225,13 +226,9 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(mergedImSize.x / 16, mergedImSize.y / 16, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        //buffers["atomicCounterBuffer"]->bind();
-        //unsigned int* c = (unsigned int*)buffers["atomicCounterBuffer"]->getBufferData();
-        //buffers["atomicCounterBuffer"]->unbind();
-        //std::cout << c[0] << std::endl;
         const int tileSize = 16;
         unsigned int tilingSize =
-            (windowWidth / (tileSize)) * (windowHeight / (tileSize));
+            (windowWidth / tileSize) * (windowHeight / tileSize);
         std::vector<unsigned int> reset(tilingSize, 0);
         buffers["tilingCounterBuffer"]->setBufferData(
             tilingSize * sizeof(unsigned int), reset.data());
