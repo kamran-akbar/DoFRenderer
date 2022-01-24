@@ -1,7 +1,7 @@
 #include "DoFRenderer/core/Renderer.h"
 #include "DoFRenderer/core/mesh.h"
 
-#define WORK_GROUP_SIZE 32
+#define MAX_FRAGMENT_TILE 8192
 
 namespace DoFRenderer {
 
@@ -99,8 +99,9 @@ namespace DoFRenderer {
     void renderer::prepareMerging(const camera* cameraPtr) {
         shaders["mergingShader"] = new shader("../src/shaders/mergeFragments.compute");
         
-        textures["mergedFragCount"] = new Texture(GL_R32I, windowWidth / 2, 
-            windowHeight / 2, GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
+        textures["mergedFragCount"] = new Texture(GL_R32I, 
+            ceil(windowWidth / mergeFactor), ceil(windowHeight / mergeFactor),
+            GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
         textures["mergedFragCount"]->bindImageTexture(2, GL_READ_WRITE, GL_R32I);
         
         unsigned int maxFragCount = windowWidth * windowHeight * layerCount;
@@ -120,12 +121,10 @@ namespace DoFRenderer {
 
     void renderer::prepareSplatting(const camera* cameraPtr) {
         shaders["splattingShader"] = new shader("../src/shaders/splat.compute");
-        const int tileSize = 16;
-        const int tileSpread = 1;
-        unsigned int maxSplattedFragCount =
-            (windowWidth / tileSize) * (windowHeight / tileSize) * 8192;
         unsigned int tilingSize =
-            (windowWidth / tileSize) * (windowHeight / tileSize);
+            ceil(windowWidth / tileSize) * ceil(windowHeight / tileSize);
+        unsigned int maxSplattedFragCount = tilingSize * MAX_FRAGMENT_TILE;
+        
         buffers["splattedColorDepthBuffer"] = new StorageBuffer(5,
             maxSplattedFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
         buffers["splattedFragInfoBuffer"] = new StorageBuffer(6,
@@ -145,7 +144,22 @@ namespace DoFRenderer {
 
     void renderer::prepareSorting(const camera* cameraPtr) {
         shaders["sortingShader"] = new shader("../src/shaders/sort.compute");
+        unsigned int tilingSize =
+            ceil(windowWidth / tileSize) * ceil(windowHeight / tileSize);
+        unsigned int maxSortedFragCount = tilingSize * MAX_FRAGMENT_TILE;
+
+        buffers["sortedColorDepthBuffer"] = new StorageBuffer(9,
+            maxSortedFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
+        buffers["sortedFragInfoBuffer"] = new StorageBuffer(10,
+            maxSortedFragCount * sizeof(fragmentColorDepth), NULL, GL_DYNAMIC_COPY);
+
         shaders["sortingShader"]->use();
+        shaders["sortingShader"]->setVec3("focalLength_focusDist_aperture",
+            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders["sortingShader"]->setVec2("cameraFarNear", cameraPtr->getFar(),
+            cameraPtr->getNear());
+        shaders["sortingShader"]->setFloat("tileSize", tileSize);
+        shaders["splattingShader"]->setFloat("coc_max", 15.0f);
     }
     
     void renderer::prepareAccumulation(const camera* cameraPtr) {
@@ -204,7 +218,7 @@ namespace DoFRenderer {
         shaders["depthDiscShader"]->use();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
         attachments["depthAttachment"]->bind(0);
-        glDispatchCompute(windowWidth / WORK_GROUP_SIZE, windowHeight / WORK_GROUP_SIZE, 1);
+        glDispatchCompute(windowWidth / 32, windowHeight / 32, 1);
         attachments["depthAttachment"]->unbind();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
     }
@@ -214,7 +228,7 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         attachments["depthAttachment"]->bind(0);
         attachments["colorAttachment"]->bind(1);
-        glDispatchCompute(windowWidth / 2, windowHeight / 2, 1);
+        glDispatchCompute(windowWidth / mergeFactor, windowHeight / mergeFactor, 1);
         attachments["depthAttachment"]->unbind();
         attachments["colorAttachment"]->unbind();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
@@ -222,20 +236,25 @@ namespace DoFRenderer {
 
     void renderer::splatFragments() {
         shaders["splattingShader"]->use();
-        glm::ivec2 mergedImSize = glm::ivec2(windowWidth / 2, windowHeight / 2);
-        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        glDispatchCompute(mergedImSize.x / 16, mergedImSize.y / 16, 1);
-        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        const int tileSize = 16;
         unsigned int tilingSize =
-            (windowWidth / tileSize) * (windowHeight / tileSize);
+            ceil(windowWidth / tileSize) * ceil(windowHeight / tileSize);
         std::vector<unsigned int> reset(tilingSize, 0);
         buffers["tilingCounterBuffer"]->setBufferData(
             tilingSize * sizeof(unsigned int), reset.data());
+        glm::ivec2 mergedImSize = glm::ivec2(ceil(windowWidth / mergeFactor),
+            ceil(windowHeight / mergeFactor));
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+        glDispatchCompute(mergedImSize.x / 16, mergedImSize.y / 16, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
     }
 
     void renderer::sortFragments() {
         shaders["sortingShader"]->use();
+        glm::ivec2 tiledImSize = glm::ivec2(ceil(windowWidth / tileSize), 
+            ceil(windowHeight / tileSize));
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+        glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT); 
     }
 
     void renderer::accumulateFreagment() {

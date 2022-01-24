@@ -14,6 +14,7 @@ struct fragmentMergingData {
 	uint mergeID;
 	uvec2 screenCoords;
 };
+
 layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
 
 layout(binding = 2, r32i) restrict uniform iimage2D mergedFragCount;
@@ -36,10 +37,6 @@ layout(std430, binding = 6) buffer splattedFragInfoBuffer {
 
 layout(std430, binding = 7) buffer tilingCounterBuffer {
 	uint tilingCounter[];
-};
-
-layout(std430, binding = 8) buffer testBuffer {
-	int test[];
 };
 
 uniform vec4 focalLength_focusDist_aperture;
@@ -93,7 +90,8 @@ void main() {
 		may[tileSpread][tileSpread] = true;
 		float coc = computeCoC(colorDepthElement.depth);
 		coc = min(coc * 0.5 + 0.5, coc_max);
-		vec2 fragCenter = vec2(coord.x + mergeID * 0.5f, coord.y + mergeID * 0.5f);
+		vec2 fragCenter = vec2(coord.x + (mergeID - 1.0f) * 0.5f, 
+			coord.y + (mergeID - 1.0f) * 0.5f);
 
 		for (int j = 0; j < tileSpread; j++) {
 			int leftBorder = (tileID.x - tileSpread + 1 + j) * tileSize;

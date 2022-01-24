@@ -49,7 +49,10 @@ namespace DoFRenderer {
 		unsigned int ssbo;
 		unsigned int windowWidth, windowHeight;
 		unsigned int layerCount;
-		bool once = false;
+		int once = 0;
 
+		const int tileSize = 16;
+		const int tileSpread = 1;
+		const int mergeFactor = 2;
 	};
 }
