@@ -162,9 +162,15 @@ namespace DoFRenderer {
         shaders["splattingShader"]->setFloat("coc_max", 15.0f);
     }
     
-    void renderer::prepareAccumulation(const camera* cameraPtr) {
+    void renderer::prepareAccumulation() {
         shaders["accumulationShader"] = new shader("../src/shaders/accumulation.compute");
+
+        textures["finalImage"] = new Texture(GL_RGBA32F, windowWidth, windowHeight,
+            GL_REPEAT, GL_LINEAR, GL_RGBA, GL_FLOAT);
+        textures["finalImage"]->bindImageTexture(3, GL_READ_WRITE, GL_RGBA32F);
+
         shaders["accumulationShader"]->use();
+        shaders["accumulationShader"]->setFloat("tileSize", tileSize);
     }
 
     void renderer::prepareScreenQuad() {
@@ -194,6 +200,7 @@ namespace DoFRenderer {
     }
 	
 	void renderer::renderLoop() {
+        glFinish();
         timer->tick();
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
         glEnable(GL_DEPTH_TEST);
@@ -257,8 +264,13 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT); 
     }
 
-    void renderer::accumulateFreagment() {
+    void renderer::accumulateFragment() {
         shaders["accumulationShader"]->use();
+        glm::ivec2 tiledImSize = glm::ivec2(ceil(windowWidth / tileSize),
+            ceil(windowHeight / tileSize));
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+        glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
     }
     
     void renderer::quadRenderLoop() {
@@ -274,8 +286,9 @@ namespace DoFRenderer {
         attachments["depthAttachment"]->unbind();
         textures["depthDiscTex"]->unbind();
         glBindVertexArray(0);
+        glFinish();
         timer->tock();
-        //std::cout << "fps: " << timer->fps() << std::endl;
+        std::cout << "fps: " << timer->fps() << std::endl;
     }
 
 	void renderer::deleteBuffers() {

@@ -1,11 +1,112 @@
 #version 450 core
-#define WORK_GROUP_SIZE 1
+#define WORK_GROUP_SIZE 16
+#define TILE_SIZE 16
+#define MAX_FRAGMENT_TILE 8192
+
+struct fragmentColorDepth {
+	vec3 color;
+	float depth;
+};
+
+struct fragmentMergingData {
+	uint mergeID;
+	uvec2 screenCoords;
+};
 
 layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
 
-uniform vec2 cameraFarNear;
-uniform vec4 focalLength_focusDist_aperture;
+layout(std430, binding = 7) buffer tilingCounterBuffer {
+	uint tilingCounter[];
+};
+
+layout(std430, binding = 8) buffer testBuffer {
+	int test[];
+};
+
+layout(std430, binding = 9) buffer sortedFragColorDepthBuffer {
+	fragmentColorDepth sortedColorDepth[];
+};
+
+layout(std430, binding = 10) buffer sortedFragInfoBuffer {
+	fragmentMergingData sortedFragData[];
+};
+
+layout(rgba32f, binding = 3) restrict uniform image2D finalImage;
+
+uniform float tileSize;
+
+shared fragmentColorDepth localFrags[TILE_SIZE * TILE_SIZE];
+shared fragmentMergingData localFragsInfo[TILE_SIZE * TILE_SIZE];
 
 void main() {
+	ivec2 imgDim = ivec2((gl_NumWorkGroups * gl_WorkGroupSize).xy);
+	ivec2 tiledImgDim = ivec2(gl_NumWorkGroups.xy);
+	ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+	ivec2 tid = ivec2(gl_LocalInvocationID.xy);
+	ivec2 wid = ivec2(gl_WorkGroupID.xy);
+	int tid_1D = tid.y * int(tileSize) + tid.x;
+	
+	int tileSizeSq = int(tileSize * tileSize);
+	int count = int(tilingCounter[wid.y * tiledImgDim.x + wid.x]);
+	int startLoadIndex = wid.y * tiledImgDim.x * MAX_FRAGMENT_TILE 
+		+ wid.x * MAX_FRAGMENT_TILE;
+	int iterations = count / tileSizeSq;
+	int remainders = count % tileSizeSq;
+	vec4 color = vec4(0.0f);
+	float alpha_dest = 1.0;
 
+	for (int i = 0; i < iterations; i++) {
+		localFrags[tid_1D] = sortedColorDepth[startLoadIndex + i * tileSizeSq
+			+ tid_1D];
+		localFragsInfo[tid_1D] = sortedFragData[startLoadIndex + i * tileSizeSq
+			+ tid_1D];
+		barrier();
+		if (alpha_dest > 0.01) {
+			for (int j = 0; j < tileSizeSq; j++) {
+				fragmentColorDepth frag = localFrags[j];
+				fragmentMergingData fragInfo = localFragsInfo[j];
+				vec2 dir = fragInfo.screenCoords - float(gid);
+				float distCenter = dot(dir, dir);
+				float cocSq = frag.depth;
+				if (distCenter <= cocSq) {
+					float w = alpha_dest * float(fragInfo.mergeID) / 100.0f;
+					color.r += w * frag.color.r;
+					color.g += w * frag.color.g;
+					color.b += w * frag.color.b;
+					color.a = 1.0;
+					alpha_dest -= w;
+				}
+			}
+		}
+		if (alpha_dest <= 0.01) {
+			imageStore(finalImage, gid, color);
+			return;
+		}
+	}
+
+	if (tid_1D < remainders) {
+		localFrags[tid_1D] = sortedColorDepth[startLoadIndex + iterations
+			* tileSizeSq + tid_1D];
+		localFragsInfo[tid_1D] = sortedFragData[startLoadIndex + iterations
+			* tileSizeSq + tid_1D];
+	}
+	barrier();
+	if (alpha_dest > 0.01) {
+		for (int j = 0; j < remainders; j++) {
+			fragmentColorDepth frag = localFrags[j];
+			fragmentMergingData fragInfo = localFragsInfo[j];
+			vec2 dir = fragInfo.screenCoords - float(gid);
+			float distCenter = dot(dir, dir);
+			float cocSq = frag.depth;
+			if (distCenter <= cocSq) {
+				float w = alpha_dest * float(fragInfo.mergeID) / 100.0f;
+				color.r += w * frag.color.r;
+				color.g += w * frag.color.g;
+				color.b += w * frag.color.b;
+				color.a = 1.0;
+				alpha_dest -= w;
+			}
+		}
+	}
+	imageStore(finalImage, gid, color);
 }

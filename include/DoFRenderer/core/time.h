@@ -1,4 +1,5 @@
 #pragma once
+#include <GLFW/glfw3.h>
 #include <chrono>
 #include <ctime>
 
@@ -10,22 +11,20 @@ namespace DoFRenderer {
 		Timer() {}
 		~Timer() {}
 		inline void tick() {
-			startTime = std::chrono::system_clock::now();
+			startTime = glfwGetTime();
 		}
 		inline void tock() { 
-			endTime = std::chrono::system_clock::now();
+			endTime = glfwGetTime();
 		}
 		inline double elapsedTime() { 
-			std::chrono::duration<double> elapsed_seconds = endTime - startTime;
-			return elapsed_seconds.count();
+			return endTime - startTime;
 		}
 		inline double fps() { 
-			std::chrono::duration<double> elapsed_seconds = endTime - startTime;
-			return 1 / elapsed_seconds.count();
+			return 1 / (endTime - startTime);
 		}
 
 	private:
-		timePoint startTime;
-		timePoint endTime;
+		double startTime;
+		double endTime;
 	};
 }

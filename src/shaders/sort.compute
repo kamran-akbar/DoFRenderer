@@ -86,7 +86,7 @@ void precomputeBlurWeight(inout fragmentColorDepth frag,
 	fragInfo.screenCoords = uvec2(float(coord.x) + (float(w) - 1.0f) * 0.5f,
 		float(coord.y) + (float(w) - 1.0f) * 0.5f);
 	fragInfo.mergeID = uint(weight * 100); //preserving floating precision
-	//frag.depth = cocSq;
+	frag.depth = cocSq;
 }
 
 void main() {

@@ -28,6 +28,7 @@ namespace DoFRenderer {
         rendererPtr->prepareMerging(cameraPtr.get());
         rendererPtr->prepareSplatting(cameraPtr.get());
         rendererPtr->prepareSorting(cameraPtr.get());
+        rendererPtr->prepareAccumulation();
         rendererPtr->prepareRenderPassBuffers(cameraPtr.get(), lightPtr.get());
         rendererPtr->prepareScreenQuad();
 
@@ -38,7 +39,8 @@ namespace DoFRenderer {
             rendererPtr->generateDepthDiscMap();
             rendererPtr->mergeFragments();
             rendererPtr->splatFragments();
-            rendererPtr->sortFragments();
+            rendererPtr->sortFragments(); 
+            rendererPtr->accumulateFragment();
             rendererPtr->quadRenderLoop();
             windowPtr->swapChainCall();
         }
