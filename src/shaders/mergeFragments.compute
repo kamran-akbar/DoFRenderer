@@ -1,17 +1,17 @@
 #version 450 core
 #define WORK_GROUP_SIZE 1
 #define MAX_FRAGMENT_COUNT 16
-
-struct fragmentMergingData {
-	uint mergeID;
-	uvec2 screenCoords;
-};
+#define MERGE_FACTOR 2
 
 struct fragmentColorDepth {
 	vec3 color;
 	float depth;
 };
 
+struct fragmentMergingData {
+	uint mergeID;
+	uvec2 screenCoords;
+};
 
 layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
 
@@ -20,11 +20,11 @@ layout(binding = 1, r32i) restrict uniform iimage2D layerCount;
 layout(binding = 2, r32i) restrict uniform iimage2D mergedFragCount;
 
 layout(std430, binding = 3) buffer fragColorDepthBuffer { 
-	fragmentColorDepth colorDepth[];
+	vec4 colorDepth[];
 };
 
 layout(std430, binding = 4) buffer fragMergingDataBuffer {
-	fragmentMergingData mergingData[];
+	uvec4 mergingData[];
 };
 
 uniform sampler2DArray depthmap;
@@ -32,7 +32,7 @@ uniform sampler2DArray colorTexture;
 uniform vec2 cameraFarNear;
 uniform vec4 focalLength_focusDist_aperture;
 
-shared vec4 localValues[WORK_GROUP_SIZE * 2][WORK_GROUP_SIZE * 2];
+shared vec4 localValues[WORK_GROUP_SIZE * MERGE_FACTOR ][WORK_GROUP_SIZE * MERGE_FACTOR];
 
 float luminance(vec3 color) {
 	return color.x * 0.2126 + color.y * 0.7156f + color.z * 0.0722f;
@@ -42,8 +42,7 @@ bool checkMerge(uvec2 tid, inout float maxDepth) {
 	float focalLength = focalLength_focusDist_aperture.x;
 	float focusDistance = focalLength_focusDist_aperture.y;
 	float aperture = focalLength_focusDist_aperture.z;
-	const float color_epsilon = 0.05f;
-	const float merge_epsilon_base = 22.0f;
+	const float merge_epsilon_base = cameraFarNear.x;
 	const float merge_epsilon = merge_epsilon_base / max(2, aperture);
 	const float luminance_epsilon = 0.1f;
 	bool luminance = true;
@@ -61,14 +60,14 @@ bool checkMerge(uvec2 tid, inout float maxDepth) {
 		}
 	}
 	bool cocMerge = false;
-	float minDistFocus = 100;
+	float minDistFocus = cameraFarNear.x;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
 			minDistFocus = min(minDistFocus, abs(
-				abs(localValues[tid.y + i][tid.x + j].a)) - focusDistance);
+				abs(localValues[tid.y + i][tid.x + j].a) - focusDistance));
 		}
 	}
-	float minDep = 100.0;
+	float minDep = cameraFarNear.x;
 	float maxDep = 0.0;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
@@ -165,8 +164,8 @@ void main() {
 							localValues[tid.y + i][tid.x + j].a *= (cameraFar - cameraNear);
 							nextIndex[i][j] += 1;
 							allfragmentsCount -= 1;
-						} while ((lastDepth + deltaZ) > localValues[tid.y + i][tid.x + j].w
-							&& lastDepth < localValues[tid.y + i][tid.x + j].w
+						} while (localValues[tid.y + i][tid.x + j].a < (lastDepth + deltaZ)
+							&& localValues[tid.y + i][tid.x + j].a > lastDepth
 							&& count[i][j] >= nextIndex[i][j]);
 					}
 				}
@@ -174,11 +173,12 @@ void main() {
 
 		}
 		else {
-			float minDepth = 100.0;
+			float minDepth = cameraFarNear.x;
 			ivec2 minDepthIdx = ivec2(0);
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 2; j++) {
-					if (localValues[tid.y + i][tid.x + j].a < minDepth) {
+					if (localValues[tid.y + i][tid.x + j].a < minDepth &&
+						nextIndex[i][j] <= count[i][j]) {
 						minDepth = localValues[tid.y + i][tid.x + j].a;
 						minDepthIdx = ivec2(j, i);
 					}
@@ -203,10 +203,13 @@ void main() {
 			allfragmentsCount -= 1;
 		}
 		ivec2 coord = ivec2(mergingData_out.screenCoords);
-		uint writingIdx = out_gid.y * threadSize.x * MAX_FRAGMENT_COUNT 
-			+ out_gid.x * MAX_FRAGMENT_COUNT + fragCount;
-		colorDepth[writingIdx] = colorDepth_out;
-		mergingData[writingIdx] = mergingData_out;
+		if (fragCount < MAX_FRAGMENT_COUNT) {
+			uint writingIdx = out_gid.y * threadSize.x * MAX_FRAGMENT_COUNT
+				+ out_gid.x * MAX_FRAGMENT_COUNT + fragCount;
+			colorDepth[writingIdx] = vec4(colorDepth_out.color.xyz, colorDepth_out.depth);
+			mergingData[writingIdx] = uvec4(mergingData_out.screenCoords.xy, 
+				mergingData_out.mergeID, 0.0f);
+		}
 		fragCount += 1;
 	}
 	imageStore(mergedFragCount, ivec2(out_gid), ivec4(fragCount));

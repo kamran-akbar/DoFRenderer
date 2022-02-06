@@ -22,6 +22,12 @@ namespace DoFRenderer {
 		projectionMatrix = glm::perspective(fov, aspectRatio, near, far);
 	}
 
+	void camera::setLensVariable(float focal, float focus, int aperture) {
+		this->focalLength = focal;
+		this->focusDist = focus;
+		this->aperture = aperture;
+	}
+
 	glm::vec3 camera::getCameraPosition() const{
 		return position;
 	}

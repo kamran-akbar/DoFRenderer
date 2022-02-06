@@ -36,7 +36,7 @@ uniform Material material;
 uniform Light light;
 
 vec4 phongShading(){
-    vec3 ambient = light.ambient * material.ambient;
+    vec3 ambient = light.ambient * material.diffuse;
 
     vec3 norm = normalize(frag_in.normal);
     vec3 lightDir = normalize(light.position - frag_in.worldPos);
@@ -51,7 +51,7 @@ vec4 phongShading(){
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec3 specular = light.specular * (spec * material.specular); 
 
-    vec3 finalColor = ambient + diffuse + specular;
+    vec3 finalColor =  ambient + diffuse + specular;
     return vec4(finalColor, 1.0);
 }
 
@@ -66,24 +66,27 @@ float linearizeDepth(float depth)
 
 void main()
 {
-    vec2 uv = gl_FragCoord.xy / windowDimension.xy;
-    float edge = texture(depthDisc, uv).r;
     if(gl_Layer >= 1){
+        vec2 uv = gl_FragCoord.xy / windowDimension.xy;
+        float edge = texture(depthDisc, uv).r;
         if(edge == 0.0){
             discard;
             return;
         }
-    }
-    float prevDepth = linearizeDepth(texture(prevDepthmap, vec3(uv.xy, gl_Layer - 1)).r);
-    float currentDepth = linearizeDepth(gl_FragCoord.z);
-    float deltaZ = 0.05;
-    if(gl_Layer >= 1){
+        vec3 viewDir = normalize(cameraPos - frag_in.worldPos);
+        vec3 norm = normalize(frag_in.normal);
+        if(dot(norm, viewDir) <= 0) {
+            discard;
+            return;
+        } 
+        float prevDepth = linearizeDepth(texture(prevDepthmap, vec3(uv.xy, gl_Layer - 1)).r);
+        float currentDepth = linearizeDepth(gl_FragCoord.z);
+        float deltaZ = 0.05;
         if(currentDepth <= prevDepth + deltaZ){
            discard;
            return;
         }
     }
-    
     imageAtomicMax(layerCount, ivec2(gl_FragCoord.xy), gl_Layer);
     gl_FragColor = phongShading();
 }

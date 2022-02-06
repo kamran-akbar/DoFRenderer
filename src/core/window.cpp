@@ -2,9 +2,15 @@
 
 namespace DoFRenderer {
 
-    void framebufferSizeCallback(GLFWwindow* window, int width, int height)
+    static void framebufferSizeCallback(GLFWwindow* window, int width, int height)
     {
         glViewport(0, 0, width, height);
+    }
+
+    static void cursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
+
+        std::cout << "y pos: " << ypos;
+        std::cout << " x pos: " << xpos << std::endl;
     }
 
 	window::window() : height(600), width(800), name("test window") {}
@@ -27,6 +33,7 @@ namespace DoFRenderer {
 
         glfwMakeContextCurrent(instance);
         glfwSetFramebufferSizeCallback(instance, framebufferSizeCallback);
+        glfwSetCursorPosCallback(instance, cursorPosCallback);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {

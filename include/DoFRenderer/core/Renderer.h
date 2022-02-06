@@ -36,6 +36,11 @@ namespace DoFRenderer {
 		void accumulateFragment();
 		void quadRenderLoop();
 		void deleteBuffers();
+
+		void mergeTest();
+		void splatTest();
+		void sortTest();
+		void accumulationTest();
 	private:
 		std::vector<Object*> objects;
 		Timer* timer;
@@ -51,8 +56,8 @@ namespace DoFRenderer {
 		unsigned int layerCount;
 		int once = 0;
 
-		const int tileSize = 16;
-		const int tileSpread = 1;
-		const int mergeFactor = 2;
+		static const int tileSize = 16;
+		static const int tileSpread = 1;
+		static const int mergeFactor = 2;
 	};
 }

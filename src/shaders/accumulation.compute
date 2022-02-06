@@ -2,6 +2,7 @@
 #define WORK_GROUP_SIZE 16
 #define TILE_SIZE 16
 #define MAX_FRAGMENT_TILE 8192
+#define FLOATING_PERCISION 1000.0f
 
 struct fragmentColorDepth {
 	vec3 color;
@@ -24,19 +25,19 @@ layout(std430, binding = 8) buffer testBuffer {
 };
 
 layout(std430, binding = 9) buffer sortedFragColorDepthBuffer {
-	fragmentColorDepth sortedColorDepth[];
+	vec4 sortedColorDepth[];
 };
 
 layout(std430, binding = 10) buffer sortedFragInfoBuffer {
-	fragmentMergingData sortedFragData[];
+	uvec4 sortedFragData[];
 };
 
 layout(rgba32f, binding = 3) restrict uniform image2D finalImage;
 
 uniform float tileSize;
 
-shared fragmentColorDepth localFrags[TILE_SIZE * TILE_SIZE];
-shared fragmentMergingData localFragsInfo[TILE_SIZE * TILE_SIZE];
+shared vec4 localFrags[TILE_SIZE * TILE_SIZE];
+shared uvec4 localFragsInfo[TILE_SIZE * TILE_SIZE];
 
 void main() {
 	ivec2 imgDim = ivec2((gl_NumWorkGroups * gl_WorkGroupSize).xy);
@@ -56,20 +57,26 @@ void main() {
 	float alpha_dest = 1.0;
 
 	for (int i = 0; i < iterations; i++) {
-		localFrags[tid_1D] = sortedColorDepth[startLoadIndex + i * tileSizeSq
-			+ tid_1D];
-		localFragsInfo[tid_1D] = sortedFragData[startLoadIndex + i * tileSizeSq
-			+ tid_1D];
+		localFrags[tid_1D] = sortedColorDepth[startLoadIndex + 
+			i * tileSizeSq + tid_1D];
+		localFragsInfo[tid_1D] = sortedFragData[startLoadIndex
+			+ i * tileSizeSq + tid_1D];
 		barrier();
 		if (alpha_dest > 0.01) {
 			for (int j = 0; j < tileSizeSq; j++) {
-				fragmentColorDepth frag = localFrags[j];
-				fragmentMergingData fragInfo = localFragsInfo[j];
-				vec2 dir = fragInfo.screenCoords - float(gid);
+				fragmentColorDepth frag;
+				frag.color = localFrags[j].rgb;
+				frag.depth = localFrags[j].a;
+				fragmentMergingData fragInfo;
+				fragInfo.screenCoords = localFragsInfo[j].xy;
+				fragInfo.mergeID = localFragsInfo[j].z;
+				vec2 dir = vec2(fragInfo.screenCoords) / FLOATING_PERCISION
+					- vec2(gid);
 				float distCenter = dot(dir, dir);
-				float cocSq = frag.depth;
+				float cocSq = localFragsInfo[j].w / FLOATING_PERCISION;
 				if (distCenter <= cocSq) {
-					float w = alpha_dest * float(fragInfo.mergeID) / 100.0f;
+					float w = alpha_dest * float(fragInfo.mergeID)
+						/ FLOATING_PERCISION;
 					color.r += w * frag.color.r;
 					color.g += w * frag.color.g;
 					color.b += w * frag.color.b;
@@ -93,13 +100,19 @@ void main() {
 	barrier();
 	if (alpha_dest > 0.01) {
 		for (int j = 0; j < remainders; j++) {
-			fragmentColorDepth frag = localFrags[j];
-			fragmentMergingData fragInfo = localFragsInfo[j];
-			vec2 dir = fragInfo.screenCoords - float(gid);
+			fragmentColorDepth frag;
+			frag.color = localFrags[j].rgb;
+			frag.depth = localFrags[j].a;
+			fragmentMergingData fragInfo;
+			fragInfo.screenCoords = localFragsInfo[j].xy;
+			fragInfo.mergeID = localFragsInfo[j].z;
+			vec2 dir = vec2(fragInfo.screenCoords) / FLOATING_PERCISION
+				- vec2(gid);
 			float distCenter = dot(dir, dir);
-			float cocSq = frag.depth;
+			float cocSq = localFragsInfo[j].w / FLOATING_PERCISION;
 			if (distCenter <= cocSq) {
-				float w = alpha_dest * float(fragInfo.mergeID) / 100.0f;
+				float w = alpha_dest * float(fragInfo.mergeID) 
+					/ FLOATING_PERCISION;
 				color.r += w * frag.color.r;
 				color.g += w * frag.color.g;
 				color.b += w * frag.color.b;

@@ -1,6 +1,6 @@
 #include "DoFRenderer/core/storageBuffer.h"
 #include "glad/glad.h"
-
+#include <iostream>
 namespace DoFRenderer {
 	StorageBuffer::StorageBuffer(unsigned int binding, unsigned int dataSize,
 		const void* data, unsigned int bufferUsage) {

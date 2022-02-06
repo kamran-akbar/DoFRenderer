@@ -5,7 +5,8 @@ layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
 uniform sampler2DArray depthmap;
 layout(r32f, binding = 0) writeonly uniform image2D depthDisc;
 
-uniform float edgeThreshold = 0.02;
+
+uniform float edgeThreshold = 0.2;
 uniform vec2 cameraFarNear;
 uniform vec3 focalLength_focusDist_aperture;
 shared float localDepths[WORK_GROUP_SIZE + 2][WORK_GROUP_SIZE + 2];
@@ -37,7 +38,7 @@ float computeCoC(float depth) {
     float focusDist = focalLength_focusDist_aperture.y;
     float aperture = focalLength_focusDist_aperture.z;
     float coc = aperture * focalLength * abs(focusDist - depth) / 
-            (depth * (focusDist - focalLength));
+            (depth * abs(focusDist - focalLength));
     return coc;
 }
 
@@ -116,14 +117,13 @@ void main() {
 	if (isEdge) {
 		imageStore(depthDisc, ivec2(gid), vec4(1.0));
 	}
-    barrier();
-    if (isEdge) {
+    if (isEdge && depth < cameraFarNear.x) {
         float coc = computeCoC(depth);
         int coc_rad = int(coc * 0.5) + 1;
         for (int i = -coc_rad; i <= coc_rad; i++) {
             for (int j = -coc_rad; j <= coc_rad; j++) {
-                imageStore(depthDisc, ivec2(min(max(gid.x + i, 0), dimension.x),
-                    min(max(gid.y + j, 0), dimension.y)), vec4(1.0));
+                imageStore(depthDisc, ivec2(min(max(gid.x + i, 0), dimension.x - 1),
+                    min(max(gid.y + j, 0), dimension.y - 1)), vec4(1.0));
             }
         }
     }

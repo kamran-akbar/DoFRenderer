@@ -1,7 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include <chrono>
-#include <ctime>
+#include <glad/glad.h>
 
 typedef std::chrono::system_clock::time_point timePoint;
 
@@ -11,9 +10,11 @@ namespace DoFRenderer {
 		Timer() {}
 		~Timer() {}
 		inline void tick() {
+			glFinish();
 			startTime = glfwGetTime();
 		}
 		inline void tock() { 
+			glFinish();
 			endTime = glfwGetTime();
 		}
 		inline double elapsedTime() { 

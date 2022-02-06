@@ -15,13 +15,15 @@ namespace DoFRenderer {
         windowPtr->createWindow();
         
         cameraPtr = std::make_unique<camera>(camera(45.0f, windowPtr->getAspectRatio(), 
-            1.0f, 10.0f, glm::vec3(0.0f, 0.0f, -3.0f), 1.0, 5.0, 5,
-            glm::vec3(0.0, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+            1.0f, 100.0f, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0, 0.0f, 1.0f), 
+            glm::vec3(0.0f, 1.0f, 0.0f)));
+        cameraPtr->setLensVariable(4.0, 10.0, 30);
         
-        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 0.0f, -1.0), glm::vec3(1.0f), glm::vec3(0.2f),
+        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 5.0f, -2.0), glm::vec3(1.0f), glm::vec3(0.4f),
             glm::vec3(1.0f)));
         
-        rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(), windowPtr->getHeight(), layerCount));
+        rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(), 
+            windowPtr->getHeight(), layerCount));
         
         rendererPtr->generateFrameBuffers();
         rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
