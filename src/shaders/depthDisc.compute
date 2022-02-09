@@ -7,6 +7,7 @@ layout(r32f, binding = 0) writeonly uniform image2D depthDisc;
 
 
 uniform float edgeThreshold = 0.2;
+uniform int coc_max;
 uniform vec2 cameraFarNear;
 uniform vec3 focalLength_focusDist_aperture;
 shared float localDepths[WORK_GROUP_SIZE + 2][WORK_GROUP_SIZE + 2];
@@ -37,8 +38,8 @@ float computeCoC(float depth) {
     float focalLength = focalLength_focusDist_aperture.x;
     float focusDist = focalLength_focusDist_aperture.y;
     float aperture = focalLength_focusDist_aperture.z;
-    float coc = aperture * focalLength * abs(focusDist - depth) / 
-            (depth * abs(focusDist - focalLength));
+    //float coc = aperture * abs(focusDist - depth) / depth;
+    float coc = aperture * abs(focusDist - depth);
     return coc;
 }
 
@@ -117,9 +118,9 @@ void main() {
 	if (isEdge) {
 		imageStore(depthDisc, ivec2(gid), vec4(1.0));
 	}
-    if (isEdge && depth < cameraFarNear.x) {
+    if (isEdge) {
         float coc = computeCoC(depth);
-        int coc_rad = int(coc * 0.5) + 1;
+        int coc_rad = min(int(coc * 0.5 + 1), coc_max);
         for (int i = -coc_rad; i <= coc_rad; i++) {
             for (int j = -coc_rad; j <= coc_rad; j++) {
                 imageStore(depthDisc, ivec2(min(max(gid.x + i, 0), dimension.x - 1),

@@ -98,6 +98,7 @@ namespace DoFRenderer {
         //focal length and focus distance are in meter and aperture is in pixels
         shaders["depthDiscShader"]->setVec3("focalLength_focusDist_aperture",
             cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders["depthDiscShader"]->setInt("coc_max", 15);
     }
 
     void renderer::prepareMerging(const camera* cameraPtr) {
@@ -279,7 +280,7 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        accumulationTest();
+        //accumulationTest();
     }
     
     void renderer::quadRenderLoop() {
@@ -307,18 +308,21 @@ namespace DoFRenderer {
         buffers["fragColorDepthBuffer"]->bind();
         glm::vec4* colorDepth = (glm::vec4*)buffers["fragColorDepthBuffer"]->getBufferData();
         buffers["fragColorDepthBuffer"]->unbind();
-        int x = 578 * 0.5, y = 442 * 0.5;
-        std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
-        for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
-            int idx = y * 640 * MAX_FRAGMENT_COUNT + x * MAX_FRAGMENT_COUNT
-                + el;
-            std::cout << "Color Depth: " << std::endl;
-            std::cout << colorDepth[idx].x << " " << colorDepth[idx].y << " " <<
-                colorDepth[idx].z << " " << colorDepth[idx].w << std::endl;
-            std::cout << "Merging Data: " << std::endl;
-            std::cout << mergeData[idx].x << " " << mergeData[idx].y << " " <<
-                mergeData[idx].z << std::endl;
+        int y = 343 / 2.0f , x = 568 / 2.0f;
+        if (once == 4) {
+            std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
+            for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
+                int idx = y * 640 * MAX_FRAGMENT_COUNT + x * MAX_FRAGMENT_COUNT
+                    + el;
+                std::cout << "Color Depth: " << std::endl;
+                std::cout << colorDepth[idx].x << " " << colorDepth[idx].y << " " <<
+                    colorDepth[idx].z << " " << colorDepth[idx].w << std::endl;
+                std::cout << "Merging Data: " << std::endl;
+                std::cout << mergeData[idx].x << " " << mergeData[idx].y << " " <<
+                    mergeData[idx].z << std::endl;
+            }
         }
+        once++;
     }
     
     void renderer::splatTest() {
@@ -327,7 +331,7 @@ namespace DoFRenderer {
             ->getBufferData();
         buffers["tilingCounterBuffer"]->unbind();
         const int tileWidth = windowWidth / tileSize;
-        int y = 0 / tileSize, x = 0 / tileSize;
+        int y = 343 / tileSize, x = 568 / tileSize;
         int idx = y * tileWidth + x;
         buffers["splattedColorDepthBuffer"]->bind();
         glm::vec4* colorDepth = (glm::vec4*)buffers["splattedColorDepthBuffer"]
@@ -339,10 +343,6 @@ namespace DoFRenderer {
             ->getBufferData();
         buffers["splattedFragInfoBuffer"]->unbind();
 
-       /* buffers["testBuffer"]->bind();
-        int* test = (int*)buffers["testBuffer"]->getBufferData();
-        buffers["testBuffer"]->unbind();
-        std::cout << test[0] << std::endl;*/
         if (once == 4) {
             std::cout << counter[idx] << std::endl;
             for (int i = 0; i < counter[idx]; i++) {
@@ -357,7 +357,6 @@ namespace DoFRenderer {
             }
         }
         once++;
-
     }
 
     void renderer::sortTest() {
@@ -382,9 +381,10 @@ namespace DoFRenderer {
         buffers["sortedFragInfoBuffer"]->unbind();
 
         int tileWidth = windowWidth / tileSize;
-        int y = 354 / tileSize, x = 584 / tileSize;
+        int y = 343 / tileSize, x = 568 / tileSize;
         int idx = y * tileWidth + x;
-        if (once == 4) {
+        if (once >= 4 && once <= 6) {
+            std::cout << "_____________________________________" << std::endl;
             std::cout << counter[idx] << std::endl;
             for (int i = 0; i < counter[idx]; i++) {
                 int buffIdx = y * tileWidth * MAX_FRAGMENT_TILE + x
@@ -404,7 +404,11 @@ namespace DoFRenderer {
     }
 
     void renderer::accumulationTest() {
-
+        buffers["testBuffer"]->bind();
+        int* test = (int*)buffers["testBuffer"]->getBufferData();
+        buffers["testBuffer"]->unbind();
+        std::cout << test[0] << std::endl;
+       
     }
     
     void renderer::deleteBuffers() {

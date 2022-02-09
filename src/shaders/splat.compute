@@ -39,6 +39,10 @@ layout(std430, binding = 7) buffer tilingCounterBuffer {
 	uint tilingCounter[];
 };
 
+layout(std430, binding = 8) buffer testBuffer {
+	int test[];
+};
+
 uniform vec3 focalLength_focusDist_aperture;
 uniform vec2 tile_size_spread;
 uniform float coc_max;
@@ -49,8 +53,8 @@ float computeCoC(float depth) {
 	float focalLength = focalLength_focusDist_aperture.x;
 	float focusDist = focalLength_focusDist_aperture.y;
 	float aperture = focalLength_focusDist_aperture.z;
-	float coc = aperture * focalLength * abs(focusDist - depth) /
-		(depth * abs(focusDist - focalLength));
+	//float coc = aperture * abs(focusDist - depth) / depth;
+	float coc = aperture * abs(focusDist - depth);
 	return coc;
 }
 
@@ -62,7 +66,9 @@ void main() {
 	ivec2 tid = ivec2(gl_LocalInvocationID.xy);
 	localFragCount[tid.y][tid.x] = imageLoad(mergedFragCount, gid).r;
 	barrier();
+	
 	for (int i = 0; i < localFragCount[tid.y][tid.x]; i++) {
+		
 		uint fragIndex = gid.y * dimension.x * MAX_FRAGMENT_COUNT 
 						 + gid.x * MAX_FRAGMENT_COUNT + i;
 		fragmentColorDepth colorDepthElement;

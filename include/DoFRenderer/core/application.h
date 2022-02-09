@@ -19,6 +19,8 @@ namespace DoFRenderer {
 		std::unique_ptr<renderer> rendererPtr;
 		std::unique_ptr<camera> cameraPtr;
 		std::unique_ptr<light> lightPtr;
+
+		int once = 0;
 	};
 
 }
