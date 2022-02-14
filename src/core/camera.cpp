@@ -14,16 +14,16 @@ namespace DoFRenderer {
 	}
 
 	camera::camera(float fov, float aspectRatio, float near, float far, glm::vec3 position,
-		float focal, float focus, int aperture, glm::vec3 forward, glm::vec3 up) : 
+		float eyeLens, float focus, int aperture, glm::vec3 forward, glm::vec3 up) : 
 		fov(fov), aspectRatio(aspectRatio), near(near), far(far), position(position),
-		focalLength(focal), focusDist(focus), aperture(aperture), forward(glm::normalize(forward)), 
+		eyeLens(eyeLens), focusDist(focus), aperture(aperture), forward(glm::normalize(forward)), 
 		up(glm::normalize(up)) {
 		viewMatrix = glm::lookAt(position, position + forward, up);
 		projectionMatrix = glm::perspective(fov, aspectRatio, near, far);
 	}
 
-	void camera::setLensVariable(float focal, float focus, int aperture) {
-		this->focalLength = focal;
+	void camera::setLensVariable(float eyeLens, float focus, int aperture) {
+		this->eyeLens = eyeLens;
 		this->focusDist = focus;
 		this->aperture = aperture;
 	}

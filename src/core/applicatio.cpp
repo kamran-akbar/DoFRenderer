@@ -17,9 +17,12 @@ namespace DoFRenderer {
         cameraPtr = std::make_unique<camera>(camera(45.0f, windowPtr->getAspectRatio(), 
             1.0f, 100.0f, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0, 0.0f, 1.0f), 
             glm::vec3(0.0f, 1.0f, 0.0f)));
-        cameraPtr->setLensVariable(1.0, 10, 1);
-        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 5.0f, -2.0), glm::vec3(1.0f), glm::vec3(0.4f),
-            glm::vec3(1.0f)));
+        cameraPtr->setLensVariable(20, 50, 50);   
+        //cameraPtr->setLensVariable(20, 28.3519, 50);
+        //cameraPtr->setLensVariable(20, 64.625, 50);
+        //cameraPtr->setLensVariable(20, 70.6714, 50);
+        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 0.0f, -10.0),
+            glm::vec3(1.0f), glm::vec3(0.4f), glm::vec3(1.0f)));
         
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(), 
             windowPtr->getHeight(), layerCount));

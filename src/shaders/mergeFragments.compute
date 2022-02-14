@@ -30,7 +30,7 @@ layout(std430, binding = 4) buffer fragMergingDataBuffer {
 uniform sampler2DArray depthmap;
 uniform sampler2DArray colorTexture;
 uniform vec2 cameraFarNear;
-uniform vec4 focalLength_focusDist_aperture;
+uniform vec4 eyeLens_focusDist_aperture;
 
 shared vec4 localValues[WORK_GROUP_SIZE * MERGE_FACTOR ][WORK_GROUP_SIZE * MERGE_FACTOR];
 
@@ -39,9 +39,9 @@ float luminance(vec3 color) {
 }
 
 bool checkMerge(uvec2 tid, inout float maxDepth) {
-	float focalLength = focalLength_focusDist_aperture.x;
-	float focusDistance = focalLength_focusDist_aperture.y;
-	float aperture = focalLength_focusDist_aperture.z;
+	float focalLength = eyeLens_focusDist_aperture.x;
+	float focusDistance = eyeLens_focusDist_aperture.y;
+	float aperture = eyeLens_focusDist_aperture.z;
 	const float merge_epsilon_base = cameraFarNear.x;
 	const float merge_epsilon = merge_epsilon_base / max(2, aperture);
 	const float luminance_epsilon = 0.1f;

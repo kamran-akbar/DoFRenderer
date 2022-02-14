@@ -2,7 +2,7 @@
 #define WORK_GROUP_SIZE 16
 #define MAX_FRAGMENT_COUNT 16
 #define MERGE_FACTOR 2
-#define MAX_FRAGMENT_TILE 8192
+#define MAX_FRAGMENT_TILE 2048
 #define TILE_SPREAD 1
 
 struct fragmentColorDepth {
@@ -43,18 +43,20 @@ layout(std430, binding = 8) buffer testBuffer {
 	int test[];
 };
 
-uniform vec3 focalLength_focusDist_aperture;
+uniform vec3 eyeLens_focusDist_aperture;
 uniform vec2 tile_size_spread;
 uniform float coc_max;
 
 shared float localFragCount[WORK_GROUP_SIZE][WORK_GROUP_SIZE];
 
 float computeCoC(float depth) {
-	float focalLength = focalLength_focusDist_aperture.x;
-	float focusDist = focalLength_focusDist_aperture.y;
-	float aperture = focalLength_focusDist_aperture.z;
+	float eyeLens = eyeLens_focusDist_aperture.x;
+	float focusDist = eyeLens_focusDist_aperture.y;
+	float aperture = eyeLens_focusDist_aperture.z;
 	//float coc = aperture * abs(focusDist - depth) / depth;
-	float coc = aperture * abs(focusDist - depth);
+	float focal = 1 / ((1 / eyeLens) + (1 / focusDist));
+	float coc = (aperture * focal * abs(focusDist - (depth - eyeLens)))
+		/ ((focusDist - focal) * (depth - eyeLens));
 	return coc;
 }
 
@@ -99,7 +101,7 @@ void main() {
 		}
 		may[tileSpread][tileSpread] = true;
 		float coc = abs(computeCoC(colorDepthElement.depth));
-		coc = min(coc * 0.5 + 1.0f, coc_max);
+		coc = min(coc * 0.5f + 0.5f, coc_max);
 		vec2 fragCenter = vec2(coord.x + (mergeID - 1.0f) * 0.5f, 
 			coord.y + (mergeID - 1.0f) * 0.5f);
 		for (int j = 0; j < tileSpread; j++) {

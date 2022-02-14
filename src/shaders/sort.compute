@@ -1,6 +1,6 @@
 #version 450 core
 #define WORK_GROUP_SIZE 16
-#define MAX_FRAGMENT_TILE 8192
+#define MAX_FRAGMENT_TILE 2048
 #define FLOATING_PERCISION 1000
 
 struct fragmentColorDepth {
@@ -45,18 +45,20 @@ layout(std430, binding = 10) buffer sortedFragInfoBuffer {
 };
 
 uniform vec2 cameraFarNear;
-uniform vec3 focalLength_focusDist_aperture;
+uniform vec3 eyeLens_focusDist_aperture;
 uniform float tileSize;
 uniform float coc_max;
 
 shared sortedFragments localFragments[MAX_FRAGMENT_TILE];
 
 float computeCoC(float depth) {
-	float focalLength = focalLength_focusDist_aperture.x;
-	float focusDist = focalLength_focusDist_aperture.y;
-	float aperture = focalLength_focusDist_aperture.z;
+	float eyeLens = eyeLens_focusDist_aperture.x;
+	float focusDist = eyeLens_focusDist_aperture.y;
+	float aperture = eyeLens_focusDist_aperture.z;
 	//float coc = aperture * abs(focusDist - depth) / depth;
-	float coc = aperture * abs(focusDist - depth);
+	float focal = 1 / ((1 / eyeLens) + (1 / focusDist));
+	float coc = (aperture * focal * abs(focusDist - (depth - eyeLens)))
+		/ ((focusDist - focal) * (depth - eyeLens));
 	return coc;
 }
 
@@ -66,7 +68,7 @@ float precomputeBlurWeight(inout fragmentColorDepth frag,
 	uvec2 coord = fragInfo.screenCoords;
 	int w = int(fragInfo.mergeID);
 	float coc = computeCoC(depth);
-	coc = min(coc * 0.5f + 1.0f, 15);
+	coc = min(coc * 0.5f + 0.5f, coc_max);
 	int merged = w * w;
 	if (w > 1) {
 		coc += (float(w) * 0.5 - 0.5) * 1.4143f;
@@ -89,9 +91,9 @@ float precomputeBlurWeight(inout fragmentColorDepth frag,
 		(float(coord.y) + (float(w) - 1.0f) * 0.5f) * FLOATING_PERCISION
 	);
 	fragInfo.mergeID = uint(weight * FLOATING_PERCISION); //preserving floating precision
-	if (w > 1.0f) {
+	/*if (w > 1.0f) {
 		cocSq = (coc + w / 4.0f) * (coc + w / 4.0f);
-	}
+	}*/
 	return cocSq * FLOATING_PERCISION;
 }
 

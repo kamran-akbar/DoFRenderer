@@ -2,7 +2,7 @@
 #include "DoFRenderer/core/mesh.h"
 
 #define MAX_FRAGMENT_COUNT 16
-#define MAX_FRAGMENT_TILE 8192
+#define MAX_FRAGMENT_TILE 2048
 #define FLOATING_PERCISION 1000.0f
 
 namespace DoFRenderer {
@@ -65,14 +65,14 @@ namespace DoFRenderer {
             GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
         textures["layerCountsTex"]->bindImageTexture(1, GL_READ_WRITE, GL_R32I);
 
-        objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
+        //objects.push_back(new Object(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f), glm::vec3(0.7f)));
         //objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 0.0f), glm::vec3(-90.0f, 0.0f, 40.0f), glm::vec3(3.0f)));
-        //objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-15.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
+        objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-15.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
 
         std::vector<std::string> modelsPath = {
-            "../models/simpleScene.obj"
+            //"../models/simpleScene3.obj"
             //"../models/viking_room.obj"
-            //"../models/untitled.obj"
+            "../models/untitled.obj"
         };
 
         for (int i = 0; i < objects.size(); i++) {
@@ -96,8 +96,8 @@ namespace DoFRenderer {
         shaders["depthDiscShader"]->setInt("depthmap", 0);
         shaders["depthDiscShader"]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
         //focal length and focus distance are in meter and aperture is in pixels
-        shaders["depthDiscShader"]->setVec3("focalLength_focusDist_aperture",
-            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders["depthDiscShader"]->setVec3("eyeLens_focusDist_aperture",
+            cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
         shaders["depthDiscShader"]->setInt("coc_max", 15);
     }
 
@@ -124,8 +124,8 @@ namespace DoFRenderer {
         shaders["mergingShader"]->setInt("colorTexture", 1);
         shaders["mergingShader"]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
         //focal length and focus distance are in meter and aperture is in pixels
-        shaders["mergingShader"]->setVec3("focalLength_focusDist_aperture",
-            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders["mergingShader"]->setVec3("eyeLens_focusDist_aperture",
+            cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
     }
 
     void renderer::prepareSplatting(const camera* cameraPtr) {
@@ -142,8 +142,8 @@ namespace DoFRenderer {
             tilingSize * sizeof(unsigned int), NULL, GL_DYNAMIC_COPY);
 
         shaders["splattingShader"]->use();
-        shaders["splattingShader"]->setVec3("focalLength_focusDist_aperture",
-            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders["splattingShader"]->setVec3("eyeLens_focusDist_aperture",
+            cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
         shaders["splattingShader"]->setVec2("tile_size_spread",
             tileSize, tileSpread);
         shaders["splattingShader"]->setFloat("coc_max", 15.0f);
@@ -161,12 +161,12 @@ namespace DoFRenderer {
             maxSortedFragCount * sizeof(glm::uvec4), NULL, GL_DYNAMIC_COPY);
 
         shaders["sortingShader"]->use();
-        shaders["sortingShader"]->setVec3("focalLength_focusDist_aperture",
-            cameraPtr->getFocalLength(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders["sortingShader"]->setVec3("eyeLens_focusDist_aperture",
+            cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
         shaders["sortingShader"]->setVec2("cameraFarNear", cameraPtr->getFar(),
             cameraPtr->getNear());
         shaders["sortingShader"]->setFloat("tileSize", tileSize);
-        shaders["splattingShader"]->setFloat("coc_max", 15.0f);
+        shaders["sortingShader"]->setFloat("coc_max", 15.0f);
     }
     
     void renderer::prepareAccumulation() {
@@ -210,7 +210,7 @@ namespace DoFRenderer {
         timer->tick();
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
         glEnable(GL_DEPTH_TEST);
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (int i = 0; i < objects.size(); i++) {
@@ -270,7 +270,7 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT); 
-        //sortTest();
+        sortTest();
     }
 
     void renderer::accumulateFragment() {
@@ -297,7 +297,7 @@ namespace DoFRenderer {
         textures["depthDiscTex"]->unbind();
         glBindVertexArray(0);
         timer->tock();
-        //std::cout << "fps: " << timer->fps() << std::endl;
+        std::cout << "fps: " << timer->fps() << std::endl;
     }
 
     void renderer::mergeTest() {
@@ -308,7 +308,7 @@ namespace DoFRenderer {
         buffers["fragColorDepthBuffer"]->bind();
         glm::vec4* colorDepth = (glm::vec4*)buffers["fragColorDepthBuffer"]->getBufferData();
         buffers["fragColorDepthBuffer"]->unbind();
-        int y = 343 / 2.0f , x = 568 / 2.0f;
+        int y = 419 / 2.0f , x = 1097 / 2.0f;
         if (once == 4) {
             std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
             for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
@@ -331,7 +331,7 @@ namespace DoFRenderer {
             ->getBufferData();
         buffers["tilingCounterBuffer"]->unbind();
         const int tileWidth = windowWidth / tileSize;
-        int y = 343 / tileSize, x = 568 / tileSize;
+        int y = 419 / tileSize, x = 1097 / tileSize;
         int idx = y * tileWidth + x;
         buffers["splattedColorDepthBuffer"]->bind();
         glm::vec4* colorDepth = (glm::vec4*)buffers["splattedColorDepthBuffer"]
@@ -381,9 +381,9 @@ namespace DoFRenderer {
         buffers["sortedFragInfoBuffer"]->unbind();
 
         int tileWidth = windowWidth / tileSize;
-        int y = 343 / tileSize, x = 568 / tileSize;
+        int y = 621 / tileSize, x = 903 / tileSize;
         int idx = y * tileWidth + x;
-        if (once >= 4 && once <= 6) {
+        if (once == 4) {
             std::cout << "_____________________________________" << std::endl;
             std::cout << counter[idx] << std::endl;
             for (int i = 0; i < counter[idx]; i++) {

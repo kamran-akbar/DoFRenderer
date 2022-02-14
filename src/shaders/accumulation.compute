@@ -1,7 +1,7 @@
 #version 450 core
 #define WORK_GROUP_SIZE 16
 #define TILE_SIZE 16
-#define MAX_FRAGMENT_TILE 8192
+#define MAX_FRAGMENT_TILE 2048
 #define FLOATING_PERCISION 1000.0f
 
 struct fragmentColorDepth {
@@ -90,5 +90,8 @@ void main() {
 			alpha_dest -= w;
 		}
 	}
+	/*if (tid.x == 0 || tid.y == 0) {
+		color = vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	}*/
 	imageStore(finalImage, gid, color / (1 - alpha_dest));
 }

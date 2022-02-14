@@ -9,7 +9,7 @@ layout(r32f, binding = 0) writeonly uniform image2D depthDisc;
 uniform float edgeThreshold = 0.2;
 uniform int coc_max;
 uniform vec2 cameraFarNear;
-uniform vec3 focalLength_focusDist_aperture;
+uniform vec3 eyeLens_focusDist_aperture;
 shared float localDepths[WORK_GROUP_SIZE + 2][WORK_GROUP_SIZE + 2];
 
 bool applySobelFilter() {
@@ -35,11 +35,13 @@ float linearizeDepth(float depth)
 }
 
 float computeCoC(float depth) {
-    float focalLength = focalLength_focusDist_aperture.x;
-    float focusDist = focalLength_focusDist_aperture.y;
-    float aperture = focalLength_focusDist_aperture.z;
+    float eyeLens = eyeLens_focusDist_aperture.x;
+    float focusDist = eyeLens_focusDist_aperture.y;
+    float aperture = eyeLens_focusDist_aperture.z;
     //float coc = aperture * abs(focusDist - depth) / depth;
-    float coc = aperture * abs(focusDist - depth);
+    float focal = 1 / ((1 / eyeLens) + (1 / focusDist));
+    float coc = (aperture * focal * abs(focusDist - (depth - eyeLens)))
+        / ((focusDist - focal) * (depth - eyeLens));
     return coc;
 }
 
@@ -118,7 +120,7 @@ void main() {
 	if (isEdge) {
 		imageStore(depthDisc, ivec2(gid), vec4(1.0));
 	}
-    if (isEdge) {
+    if (isEdge && depth < cameraFarNear.x) {
         float coc = computeCoC(depth);
         int coc_rad = min(int(coc * 0.5 + 1), coc_max);
         for (int i = -coc_rad; i <= coc_rad; i++) {

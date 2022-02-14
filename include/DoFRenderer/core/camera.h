@@ -23,7 +23,7 @@ namespace DoFRenderer {
 		inline float getFoV() const { return fov; }
 		inline float getNear() const { return near; }
 		inline float getFar() const { return far; }
-		inline float getFocalLength() const { return focalLength; }
+		inline float getEyeLens() const { return eyeLens; }
 		inline float getFocusDist() const { return focusDist; }
 		inline int getAperture() const { return aperture; }
 		
@@ -31,7 +31,7 @@ namespace DoFRenderer {
 		float fov;
 		float aspectRatio;
 		float near, far;
-		float focalLength, focusDist;
+		float eyeLens, focusDist;
 		int aperture;
 		glm::vec3 position;
 		glm::vec3 forward, up;
