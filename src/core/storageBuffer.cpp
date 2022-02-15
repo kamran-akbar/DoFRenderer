@@ -1,6 +1,7 @@
 #include "DoFRenderer/core/storageBuffer.h"
 #include "glad/glad.h"
 #include <iostream>
+
 namespace DoFRenderer {
 	StorageBuffer::StorageBuffer(unsigned int binding, unsigned int dataSize,
 		const void* data, unsigned int bufferUsage) {
@@ -25,12 +26,6 @@ namespace DoFRenderer {
 
 	void StorageBuffer::unbind() {
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-	}
-
-	void* StorageBuffer::getBufferData() const {
-		void* data = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY);
-		glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-		return data;
 	}
 
 	void StorageBuffer::deleteBuffer() {

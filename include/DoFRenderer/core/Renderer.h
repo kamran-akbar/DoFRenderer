@@ -4,10 +4,12 @@
 #include "DoFRenderer/core/shader.h"
 #include "DoFRenderer/core/light.h"
 #include "DoFRenderer/core/time.h"
+#include "DoFRenderer/core/frameBuffer.h"
 #include "DoFRenderer/core/Texture2DArray.h"
 #include "DoFRenderer/core/Texture.h"
 #include "DoFRenderer/core/storageBuffer.h"
 #include "DoFRenderer/core/fragmentData.h"
+#include "DoFRenderer/core/quad.h"
 #include <iostream>
 #include <unordered_map>
 
@@ -35,7 +37,7 @@ namespace DoFRenderer {
 		void sortFragments();
 		void accumulateFragment();
 		void quadRenderLoop();
-		void deleteBuffers();
+		void releaseMemory();
 
 		void mergeTest();
 		void splatTest();
@@ -48,10 +50,8 @@ namespace DoFRenderer {
 		std::unordered_map<std::string, shader*> shaders;
 		std::unordered_map<std::string, Texture*> textures;
 		std::unordered_map<std::string, StorageBuffer*> buffers;
-		unsigned int frameBuffer;
-		unsigned int quadVertexArray;
-		unsigned int quadVertexBuffer;
-		unsigned int ssbo;
+		std::unordered_map<std::string, FrameBuffer*> frameBuffers;
+		std::unordered_map<std::string, Quad*> quads;
 		unsigned int windowWidth, windowHeight;
 		unsigned int layerCount;
 		int once = 0;

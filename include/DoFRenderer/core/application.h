@@ -11,6 +11,8 @@ namespace DoFRenderer {
 	public:
 		~application();
 		void run();
+		void pipelineInitialization();
+		void pipelineLoop();
 
 	private:
 		static const unsigned int layerCount = 4;

@@ -1,5 +1,6 @@
 #include "DoFRenderer/core/Renderer.h"
 #include "DoFRenderer/core/mesh.h"
+#include "DoFRenderer/core/utils.h"
 
 #define MAX_FRAGMENT_COUNT 16
 #define MAX_FRAGMENT_TILE 2048
@@ -32,47 +33,47 @@ namespace DoFRenderer {
         for (Object* obj : objects) {
             delete obj;
         }
+        for (auto frameBuffer : frameBuffers) {
+            delete frameBuffer.second;
+        }
+        for (auto quad : quads) {
+            delete quad.second;
+        }
     }
 
     void renderer::generateFrameBuffers() {
-        attachments["colorAttachment"] = new Texture2DArray(
+        attachments[COLOR_ATTACHMENT] = new Texture2DArray(
             GL_RGBA8, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
         );
         
-        attachments["depthAttachment"] = new Texture2DArray(
+        attachments[DEPTH_ATTACHMENT] = new Texture2DArray(
             GL_DEPTH_COMPONENT24, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
         );
 
-        attachments["copyDepthAttachment"] = new Texture2DArray(
+        attachments[COPY_DEPTH_ATTACHMENT] = new Texture2DArray(
             GL_DEPTH_COMPONENT24, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
         );
 
-        glGenFramebuffers(1, &frameBuffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-
-        glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, attachments["colorAttachment"]->getID(), 0);
-        glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, attachments["depthAttachment"]->getID(), 0);
-        
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
-        }
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        
+        frameBuffers[FOCUS_FRAME] = new FrameBuffer();
+        frameBuffers[FOCUS_FRAME]->attachFrameBuffer(GL_COLOR_ATTACHMENT0,
+            attachments[COLOR_ATTACHMENT]->getID());
+        frameBuffers[FOCUS_FRAME]->attachFrameBuffer(GL_DEPTH_ATTACHMENT,
+            attachments[DEPTH_ATTACHMENT]->getID());
     }
 
 	void renderer::prepareRenderPassBuffers(const camera* cameraPtr, const light* lightPtr) {
-        textures["layerCountsTex"] = new Texture(GL_R32I, windowWidth, windowHeight, 
+        textures[LAYER_COUNT_TEX] = new Texture(GL_R32I, windowWidth, windowHeight, 
             GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
-        textures["layerCountsTex"]->bindImageTexture(1, GL_READ_WRITE, GL_R32I);
+        textures[LAYER_COUNT_TEX]->bindImageTexture(1, GL_READ_WRITE, GL_R32I);
 
-        //objects.push_back(new Object(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f), glm::vec3(0.7f)));
+        objects.push_back(new Object(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f), glm::vec3(0.7f)));
         //objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 0.0f), glm::vec3(-90.0f, 0.0f, 40.0f), glm::vec3(3.0f)));
-        objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-15.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
+        //objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-15.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
 
         std::vector<std::string> modelsPath = {
-            //"../models/simpleScene3.obj"
+            "../models/simpleScene3.obj"
             //"../models/viking_room.obj"
-            "../models/untitled.obj"
+            //"../models/untitled.obj"
         };
 
         for (int i = 0; i < objects.size(); i++) {
@@ -88,172 +89,157 @@ namespace DoFRenderer {
 	}
 
     void renderer::prepareDepthDiscontinuity(const camera* cameraPtr) {
-        shaders["depthDiscShader"] = new shader("../src/shaders/depthDisc.compute");
-        textures["depthDiscTex"] = new Texture(GL_R32F, windowWidth, windowHeight,
+        shaders[DEPTH_DISC_SHADER] = new shader("../src/shaders/depthDisc.compute");
+        textures[DEPTH_DISC_TEX] = new Texture(GL_R32F, windowWidth, windowHeight,
             GL_REPEAT, GL_LINEAR, GL_RED, GL_FLOAT);
-        textures["depthDiscTex"]->bindImageTexture(0, GL_WRITE_ONLY, GL_R32F);
-        shaders["depthDiscShader"]->use();
-        shaders["depthDiscShader"]->setInt("depthmap", 0);
-        shaders["depthDiscShader"]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
+        textures[DEPTH_DISC_TEX]->bindImageTexture(0, GL_WRITE_ONLY, GL_R32F);
+        shaders[DEPTH_DISC_SHADER]->use();
+        shaders[DEPTH_DISC_SHADER]->setInt("depthmap", 0);
+        shaders[DEPTH_DISC_SHADER]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
         //focal length and focus distance are in meter and aperture is in pixels
-        shaders["depthDiscShader"]->setVec3("eyeLens_focusDist_aperture",
+        shaders[DEPTH_DISC_SHADER]->setVec3("eyeLens_focusDist_aperture",
             cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
-        shaders["depthDiscShader"]->setInt("coc_max", 15);
+        shaders[DEPTH_DISC_SHADER]->setInt("coc_max", 15);
     }
 
     void renderer::prepareMerging(const camera* cameraPtr) {
-        shaders["mergingShader"] = new shader("../src/shaders/mergeFragments.compute");
+        shaders[MERGING_SHADER] = new shader("../src/shaders/mergeFragments.compute");
         
-        textures["mergedFragCount"] = new Texture(GL_R32I, 
+        textures[MERGED_FRAG_COUNT] = new Texture(GL_R32I, 
             ceil(windowWidth / mergeFactor), ceil(windowHeight / mergeFactor),
             GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
-        textures["mergedFragCount"]->bindImageTexture(2, GL_READ_WRITE, GL_R32I);
+        textures[MERGED_FRAG_COUNT]->bindImageTexture(2, GL_READ_WRITE, GL_R32I);
         
         unsigned int maxFragCount = windowWidth / mergeFactor * windowHeight / mergeFactor
             * MAX_FRAGMENT_COUNT;
 
-        buffers["fragColorDepthBuffer"] = new StorageBuffer(3, 
+        buffers[FRAG_COLOR_DEPTH_BUFFER] = new StorageBuffer(3, 
             maxFragCount * sizeof(glm::vec4), NULL, GL_DYNAMIC_COPY);
-        buffers["fragMergingDataBuffer"] = new StorageBuffer(4, 
+        buffers[FRAG_COLOR_DEPTH_BUFFER] = new StorageBuffer(4, 
             maxFragCount * sizeof(glm::uvec4) , NULL, GL_DYNAMIC_COPY);
-        buffers["testBuffer"] = new StorageBuffer(8, sizeof(int),
+        buffers[TEST_BUFFER] = new StorageBuffer(8, sizeof(int),
             NULL, GL_DYNAMIC_COPY);
 
-        shaders["mergingShader"]->use();
-        shaders["mergingShader"]->setInt("depthmap", 0);
-        shaders["mergingShader"]->setInt("colorTexture", 1);
-        shaders["mergingShader"]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
+        shaders[MERGING_SHADER]->use();
+        shaders[MERGING_SHADER]->setInt("depthmap", 0);
+        shaders[MERGING_SHADER]->setInt("colorTexture", 1);
+        shaders[MERGING_SHADER]->setVec2("cameraFarNear", cameraPtr->getFar(), cameraPtr->getNear());
         //focal length and focus distance are in meter and aperture is in pixels
-        shaders["mergingShader"]->setVec3("eyeLens_focusDist_aperture",
+        shaders[MERGING_SHADER]->setVec3("eyeLens_focusDist_aperture",
             cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
     }
 
     void renderer::prepareSplatting(const camera* cameraPtr) {
-        shaders["splattingShader"] = new shader("../src/shaders/splat.compute");
+        shaders[SPLATTING_SHADER] = new shader("../src/shaders/splat.compute");
         unsigned int tilingSize =
             ceil(windowWidth / tileSize) * ceil(windowHeight / tileSize);
         unsigned int maxSplattedFragCount = tilingSize * MAX_FRAGMENT_TILE;
         
-        buffers["splattedColorDepthBuffer"] = new StorageBuffer(5,
+        buffers[SPLATTED_COLOR_DEPTH_BUFFER] = new StorageBuffer(5,
             maxSplattedFragCount * sizeof(glm::vec4), NULL, GL_DYNAMIC_COPY);
-        buffers["splattedFragInfoBuffer"] = new StorageBuffer(6,
+        buffers[SPLATTED_FRAG_INFO_BUFFER] = new StorageBuffer(6,
             maxSplattedFragCount * sizeof(glm::uvec4), NULL, GL_DYNAMIC_COPY);
-        buffers["tilingCounterBuffer"] = new StorageBuffer(7, 
+        buffers[TILING_COUNTER_BUFFER] = new StorageBuffer(7, 
             tilingSize * sizeof(unsigned int), NULL, GL_DYNAMIC_COPY);
 
-        shaders["splattingShader"]->use();
-        shaders["splattingShader"]->setVec3("eyeLens_focusDist_aperture",
+        shaders[SPLATTING_SHADER]->use();
+        shaders[SPLATTING_SHADER]->setVec3("eyeLens_focusDist_aperture",
             cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
-        shaders["splattingShader"]->setVec2("tile_size_spread",
+        shaders[SPLATTING_SHADER]->setVec2("tile_size_spread",
             tileSize, tileSpread);
-        shaders["splattingShader"]->setFloat("coc_max", 15.0f);
+        shaders[SPLATTING_SHADER]->setFloat("coc_max", 15.0f);
     }
 
     void renderer::prepareSorting(const camera* cameraPtr) {
-        shaders["sortingShader"] = new shader("../src/shaders/sort.compute");
+        shaders[SORTING_SHADER] = new shader("../src/shaders/sort.compute");
         unsigned int tilingSize =
             ceil(windowWidth / tileSize) * ceil(windowHeight / tileSize);
         unsigned int maxSortedFragCount = tilingSize * MAX_FRAGMENT_TILE;
 
-        buffers["sortedColorDepthBuffer"] = new StorageBuffer(9,
+        buffers[SORTED_COLOR_DEPTH_BUFFER] = new StorageBuffer(9,
             maxSortedFragCount * sizeof(glm::vec4), NULL, GL_DYNAMIC_COPY);
-        buffers["sortedFragInfoBuffer"] = new StorageBuffer(10,
+        buffers[SORTED_FRAG_INFO_BUFFER] = new StorageBuffer(10,
             maxSortedFragCount * sizeof(glm::uvec4), NULL, GL_DYNAMIC_COPY);
 
-        shaders["sortingShader"]->use();
-        shaders["sortingShader"]->setVec3("eyeLens_focusDist_aperture",
+        shaders[SORTING_SHADER]->use();
+        shaders[SORTING_SHADER]->setVec3("eyeLens_focusDist_aperture",
             cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
-        shaders["sortingShader"]->setVec2("cameraFarNear", cameraPtr->getFar(),
+        shaders[SORTING_SHADER]->setVec2("cameraFarNear", cameraPtr->getFar(),
             cameraPtr->getNear());
-        shaders["sortingShader"]->setFloat("tileSize", tileSize);
-        shaders["sortingShader"]->setFloat("coc_max", 15.0f);
+        shaders[SORTING_SHADER]->setFloat("tileSize", tileSize);
+        shaders[SORTING_SHADER]->setFloat("coc_max", 15.0f);
     }
     
     void renderer::prepareAccumulation() {
-        shaders["accumulationShader"] = new shader("../src/shaders/accumulation.compute");
+        shaders[ACCUMULATION_SHADER] = new shader("../src/shaders/accumulation.compute");
 
-        textures["finalImage"] = new Texture(GL_RGBA32F, windowWidth, windowHeight,
+        textures[FINAL_IMAGE] = new Texture(GL_RGBA32F, windowWidth, windowHeight,
             GL_REPEAT, GL_LINEAR, GL_RGBA, GL_FLOAT);
-        textures["finalImage"]->bindImageTexture(3, GL_READ_WRITE, GL_RGBA32F);
+        textures[FINAL_IMAGE]->bindImageTexture(3, GL_READ_WRITE, GL_RGBA32F);
 
-        shaders["accumulationShader"]->use();
-        shaders["accumulationShader"]->setFloat("tileSize", tileSize);
+        shaders[ACCUMULATION_SHADER]->use();
+        shaders[ACCUMULATION_SHADER]->setFloat("tileSize", tileSize);
     }
 
     void renderer::prepareScreenQuad() {
-        shaders["screenShader"] = new shader("../src/shaders/screenShader.vert",
+        shaders[SCREEN_SHADER] = new shader("../src/shaders/screenShader.vert",
             "../src/shaders/screenShader.frag");
         
-        std::vector<glm::vec4> quadVertices = {
-            glm::vec4(-1.0f, 1.0f, 0.0f, 1.0f), glm::vec4(-1.0f, -1.0f, 0.0f, 0.0f),
-            glm::vec4(1.0f, -1.0f, 1.0f, 0.0f), glm::vec4(-1.0f, 1.0f, 0.0f, 1.0f),
-            glm::vec4(1.0f, -1.0f, 1.0f, 0.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
-        };
-
-        glGenVertexArrays(1, &quadVertexArray);
-        glGenBuffers(1, &quadVertexBuffer);
-        glBindVertexArray(quadVertexArray);
-        glBindBuffer(GL_ARRAY_BUFFER, quadVertexBuffer);
-        glBufferData(GL_ARRAY_BUFFER, quadVertices.size() * sizeof(glm::vec4),
-            quadVertices.data(), GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(glm::vec2)));
-        shaders["screenShader"]->use();
-        shaders["screenShader"]->setInt("screenTexture", 0);
-        shaders["screenShader"]->setInt("depthTexture", 1);
-        shaders["screenShader"]->setInt("testTex", 2);
+        quads[SCREEN_QUAD] = new Quad();
+        shaders[SCREEN_SHADER]->use();
+        shaders[SCREEN_SHADER]->setInt("screenTexture", 0);
+        shaders[SCREEN_SHADER]->setInt("depthTexture", 1);
+        shaders[SCREEN_SHADER]->setInt("testTex", 2);
     }
 	
 	void renderer::renderLoop() {
         timer->tick();
-        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+        frameBuffers[FOCUS_FRAME]->bind();
         glEnable(GL_DEPTH_TEST);
 		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (int i = 0; i < objects.size(); i++) {
             objects[i]->getShader()->use();
-            attachments["copyDepthAttachment"]->bind(0);
-            textures["depthDiscTex"]->bind(1);
+            attachments[COPY_DEPTH_ATTACHMENT]->bind(0);
+            textures[DEPTH_DISC_TEX]->bind(1);
             objects[i]->draw();   
-            attachments["copyDepthAttachment"]->unbind();
-            textures["depthDiscTex"]->unbind();
+            attachments[COPY_DEPTH_ATTACHMENT]->unbind();
+            textures[DEPTH_DISC_TEX]->unbind();
 		}
-        attachments["depthAttachment"]->copy(attachments["copyDepthAttachment"]->getID(), 
+        attachments[DEPTH_ATTACHMENT]->copy(attachments["copyDepthAttachment"]->getID(), 
             GL_TEXTURE_2D_ARRAY, windowWidth, windowHeight, layerCount);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        frameBuffers[FOCUS_FRAME]->unbind();
         glDisable(GL_DEPTH_TEST);
 	}
 
     void renderer::generateDepthDiscMap() {
-        shaders["depthDiscShader"]->use();
+        shaders[DEPTH_DISC_SHADER]->use();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
-        attachments["depthAttachment"]->bind(0);
+        attachments[DEPTH_ATTACHMENT]->bind(0);
         glDispatchCompute(windowWidth / 32, windowHeight / 32, 1);
-        attachments["depthAttachment"]->unbind();
+        attachments[DEPTH_ATTACHMENT]->unbind();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
     }
 
     void renderer::mergeFragments() {
-        shaders["mergingShader"]->use();
+        shaders[MERGING_SHADER]->use();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        attachments["depthAttachment"]->bind(0);
-        attachments["colorAttachment"]->bind(1);
+        attachments[DEPTH_ATTACHMENT]->bind(0);
+        attachments[COLOR_ATTACHMENT]->bind(1);
         glDispatchCompute(windowWidth / mergeFactor, windowHeight / mergeFactor, 1);
-        attachments["depthAttachment"]->unbind();
-        attachments["colorAttachment"]->unbind();
+        attachments[DEPTH_ATTACHMENT]->unbind();
+        attachments[COLOR_ATTACHMENT]->unbind();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         //mergeTest();
     }
 
     void renderer::splatFragments() {
-        shaders["splattingShader"]->use();
+        shaders[SPLATTING_SHADER]->use();
         unsigned int tilingSize =
             ceil(windowWidth / tileSize) * ceil(windowHeight / tileSize);
         std::vector<unsigned int> reset(tilingSize, 0);
-        buffers["tilingCounterBuffer"]->setBufferData(
+        buffers[TILING_COUNTER_BUFFER]->setBufferData(
             tilingSize * sizeof(unsigned int), reset.data());
         glm::ivec2 mergedImSize = glm::ivec2(ceil(windowWidth / mergeFactor),
             ceil(windowHeight / mergeFactor));
@@ -264,7 +250,7 @@ namespace DoFRenderer {
     }
 
     void renderer::sortFragments() {
-        shaders["sortingShader"]->use();
+        shaders[SORTING_SHADER]->use();
         glm::ivec2 tiledImSize = glm::ivec2(ceil(windowWidth / tileSize), 
             ceil(windowHeight / tileSize));
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
@@ -274,7 +260,7 @@ namespace DoFRenderer {
     }
 
     void renderer::accumulateFragment() {
-        shaders["accumulationShader"]->use();
+        shaders[ACCUMULATION_SHADER]->use();
         glm::ivec2 tiledImSize = glm::ivec2(ceil(windowWidth / tileSize),
             ceil(windowHeight / tileSize));
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
@@ -286,28 +272,30 @@ namespace DoFRenderer {
     void renderer::quadRenderLoop() {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        shaders["screenShader"]->use();
-        glBindVertexArray(quadVertexArray);
-        attachments["colorAttachment"]->bind(0);
-        attachments["depthAttachment"]->bind(1);
-        textures["depthDiscTex"]->bind(2);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        attachments["colorAttachment"]->unbind();
-        attachments["depthAttachment"]->unbind();
-        textures["depthDiscTex"]->unbind();
-        glBindVertexArray(0);
+        shaders[SCREEN_SHADER]->use();
+        quads[SCREEN_QUAD]->bindVertexArray();
+        attachments[COLOR_ATTACHMENT]->bind(0);
+        attachments[DEPTH_ATTACHMENT]->bind(1);
+        textures[DEPTH_DISC_TEX]->bind(2);
+        quads[SCREEN_QUAD]->draw();
+        attachments[COLOR_ATTACHMENT]->unbind();
+        attachments[DEPTH_ATTACHMENT]->unbind();
+        textures[DEPTH_DISC_TEX]->unbind();
+        quads[SCREEN_QUAD]->unbindVertexArray();
         timer->tock();
         std::cout << "fps: " << timer->fps() << std::endl;
     }
 
     void renderer::mergeTest() {
-        buffers["fragMergingDataBuffer"]->bind();
-        glm::uvec4* mergeData = (glm::uvec4*)buffers["fragMergingDataBuffer"]->getBufferData();
-        buffers["fragMergingDataBuffer"]->unbind();
+        buffers[FRAG_MERGING_DATA_BUFFER]->bind();
+        glm::uvec4* mergeData = buffers[FRAG_MERGING_DATA_BUFFER]
+            ->getBufferData<glm::uvec4>();
+        buffers[FRAG_MERGING_DATA_BUFFER]->unbind();
 
-        buffers["fragColorDepthBuffer"]->bind();
-        glm::vec4* colorDepth = (glm::vec4*)buffers["fragColorDepthBuffer"]->getBufferData();
-        buffers["fragColorDepthBuffer"]->unbind();
+        buffers[FRAG_COLOR_DEPTH_BUFFER]->bind();
+        glm::vec4* colorDepth = buffers[FRAG_COLOR_DEPTH_BUFFER]
+            ->getBufferData<glm::vec4>();
+        buffers[FRAG_COLOR_DEPTH_BUFFER]->unbind();
         int y = 419 / 2.0f , x = 1097 / 2.0f;
         if (once == 4) {
             std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
@@ -326,22 +314,22 @@ namespace DoFRenderer {
     }
     
     void renderer::splatTest() {
-        buffers["tilingCounterBuffer"]->bind();
-        unsigned int* counter = (unsigned int*)buffers["tilingCounterBuffer"]
-            ->getBufferData();
-        buffers["tilingCounterBuffer"]->unbind();
+        buffers[TILING_COUNTER_BUFFER]->bind();
+        unsigned int* counter = buffers[TILING_COUNTER_BUFFER]
+            ->getBufferData<unsigned int>();
+        buffers[TILING_COUNTER_BUFFER]->unbind();
         const int tileWidth = windowWidth / tileSize;
         int y = 419 / tileSize, x = 1097 / tileSize;
         int idx = y * tileWidth + x;
-        buffers["splattedColorDepthBuffer"]->bind();
-        glm::vec4* colorDepth = (glm::vec4*)buffers["splattedColorDepthBuffer"]
-            ->getBufferData();
-        buffers["splattedColorDepthBuffer"]->unbind();
+        buffers[SPLATTED_COLOR_DEPTH_BUFFER]->bind();
+        glm::vec4* colorDepth = buffers[SPLATTED_COLOR_DEPTH_BUFFER]
+            ->getBufferData<glm::vec4>();
+        buffers[SPLATTED_COLOR_DEPTH_BUFFER]->unbind();
 
-        buffers["splattedFragInfoBuffer"]->bind();
-        glm::uvec4* fragInfo = (glm::uvec4*)buffers["splattedFragInfoBuffer"]
-            ->getBufferData();
-        buffers["splattedFragInfoBuffer"]->unbind();
+        buffers[SPLATTED_FRAG_INFO_BUFFER]->bind();
+        glm::uvec4* fragInfo = buffers[SPLATTED_FRAG_INFO_BUFFER]
+            ->getBufferData<glm::uvec4>();
+        buffers[SPLATTED_FRAG_INFO_BUFFER]->unbind();
 
         if (once == 4) {
             std::cout << counter[idx] << std::endl;
@@ -360,25 +348,25 @@ namespace DoFRenderer {
     }
 
     void renderer::sortTest() {
-        buffers["tilingCounterBuffer"]->bind();
-        unsigned int* counter = (unsigned int*)buffers["tilingCounterBuffer"]
-            ->getBufferData();
-        buffers["tilingCounterBuffer"]->unbind();
+        buffers[TILING_COUNTER_BUFFER]->bind();
+        unsigned int* counter = buffers[TILING_COUNTER_BUFFER]
+            ->getBufferData<unsigned int>();
+        buffers[TILING_COUNTER_BUFFER]->unbind();
 
-        buffers["splattedColorDepthBuffer"]->bind();
-        glm::vec4* splatDepCol = (glm::vec4*)buffers["splattedColorDepthBuffer"]
-            ->getBufferData();
-        buffers["splattedColorDepthBuffer"]->unbind();
+        buffers[SPLATTED_COLOR_DEPTH_BUFFER]->bind();
+        glm::vec4* splatDepCol = buffers[SPLATTED_COLOR_DEPTH_BUFFER]
+            ->getBufferData<glm::vec4>();
+        buffers[SPLATTED_COLOR_DEPTH_BUFFER]->unbind();
 
-        buffers["sortedColorDepthBuffer"]->bind();
-        glm::vec4* colorDepth = (glm::vec4*)buffers["sortedColorDepthBuffer"]
-            ->getBufferData();
-        buffers["sortedColorDepthBuffer"]->unbind();
+        buffers[SORTED_COLOR_DEPTH_BUFFER]->bind();
+        glm::vec4* colorDepth = buffers[SORTED_COLOR_DEPTH_BUFFER]
+            ->getBufferData<glm::vec4>();
+        buffers[SORTED_COLOR_DEPTH_BUFFER]->unbind();
         
-        buffers["sortedFragInfoBuffer"]->bind();
-        glm::uvec4* fragInfo = (glm::uvec4*)buffers["sortedFragInfoBuffer"]
-            ->getBufferData();
-        buffers["sortedFragInfoBuffer"]->unbind();
+        buffers[SORTED_FRAG_INFO_BUFFER]->bind();
+        glm::uvec4* fragInfo = buffers[SORTED_FRAG_INFO_BUFFER]
+            ->getBufferData<glm::uvec4>();
+        buffers[SORTED_FRAG_INFO_BUFFER]->unbind();
 
         int tileWidth = windowWidth / tileSize;
         int y = 621 / tileSize, x = 903 / tileSize;
@@ -404,15 +392,16 @@ namespace DoFRenderer {
     }
 
     void renderer::accumulationTest() {
-        buffers["testBuffer"]->bind();
-        int* test = (int*)buffers["testBuffer"]->getBufferData();
-        buffers["testBuffer"]->unbind();
+        buffers[TEST_BUFFER]->bind();
+        int* test = buffers[TEST_BUFFER]->getBufferData<int>();
+        buffers[TEST_BUFFER]->unbind();
         std::cout << test[0] << std::endl;
-       
     }
     
-    void renderer::deleteBuffers() {
-        glDeleteFramebuffers(1, &frameBuffer);
+    void renderer::releaseMemory() {
+        for (auto frameBuffer : frameBuffers) {
+            frameBuffer.second->deleteFrameBuffer();
+        }
         for (auto attachment : attachments) {
             attachment.second->deleteTexture();
         }
@@ -422,8 +411,9 @@ namespace DoFRenderer {
         for (auto buffer : buffers) {
             buffer.second->deleteBuffer();
         }
-        glDeleteVertexArrays(1, &quadVertexArray);
-        glDeleteBuffers(1, &quadVertexBuffer);
+        for (auto quad : quads) {
+            quad.second->releaseMemory();
+        }
         for (int i = 0; i < objects.size(); i++) {
             objects[i]->deleteBuffer();
 		}
