@@ -5,7 +5,6 @@ out vec4 FragColor;
 
 in vec2 TexCoords;
 
-uniform sampler2D testTex;
 uniform sampler2DArray screenTexture;
 uniform sampler2DArray depthTexture;
 layout(rgba32f, binding = 3) restrict uniform image2D finalImage;
@@ -22,7 +21,6 @@ void main()
         float depth = texture(depthTexture, vec3(TexCoords, 0)).r;
         FragColor = vec4(depth);
     }
-    FragColor = imageLoad(finalImage, ivec2(gl_FragCoord.xy));
+    //FragColor = imageLoad(finalImage, ivec2(gl_FragCoord.xy));
     //FragColor = imageLoad(depthDisc, ivec2(gl_FragCoord.xy)).rrrr;
-    //FragColor = texture(testTex, TexCoords).rrrr;
 } 

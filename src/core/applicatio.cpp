@@ -25,7 +25,7 @@ namespace DoFRenderer {
         windowPtr = std::make_unique<window>(window(1280, 800, "DoF Renderer"));
         windowPtr->createWindow();
         cameraPtr = std::make_unique<camera>(camera(45.0f, windowPtr->getAspectRatio(),
-            1.0f, 100.0f, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0, 0.0f, 1.0f),
+            1.0f, 100.0f, glm::vec3(0.0, 0.0f, -3.0f), glm::vec3(0.0, 0.0f, 1.0f),
             glm::vec3(0.0f, 1.0f, 0.0f)));
         //cameraPtr->setLensVariable(20, 50, 20);   
         cameraPtr->setLensVariable(20, 28.3519, 50);
@@ -36,23 +36,31 @@ namespace DoFRenderer {
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(),
             windowPtr->getHeight(), layerCount));
         rendererPtr->generateFrameBuffers();
-        rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
-        rendererPtr->prepareMerging(cameraPtr.get());
-        rendererPtr->prepareSplatting(cameraPtr.get());
-        rendererPtr->prepareSorting(cameraPtr.get());
-        rendererPtr->prepareAccumulation();
+        //rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
+        //rendererPtr->prepareMerging(cameraPtr.get());
+        //rendererPtr->prepareSplatting(cameraPtr.get());
+        //rendererPtr->prepareSorting(cameraPtr.get());
+        //rendererPtr->prepareAccumulation();
         rendererPtr->prepareRenderPassBuffers(cameraPtr.get(), lightPtr.get());
         rendererPtr->prepareScreenQuad();
     }
     
     void application::pipelineLoop() {
-        
-        rendererPtr->renderLoop();
-        rendererPtr->generateDepthDiscMap();
-        rendererPtr->mergeFragments();
-        rendererPtr->splatFragments();
-        rendererPtr->sortFragments();
-        rendererPtr->accumulateFragment();
+        if(step < 1.0f) counter++;
+        cameraPtr->interpPosition(glm::vec3(-1.32f, 0.0f, -3.0f),
+            glm::vec3(1.32f, 0.0f, -3.0f), step);
+        step += 0.0015f;
+        step = glm::max(glm::min(step, 1.0f), 0.0f);
+        storingFrame = step >= 1.0f ? false : true;
+        counter = glm::min(counter, int(2.64f / 0.004f));
+        std::cout << counter << std::endl;
+        rendererPtr->renderLoop(cameraPtr.get());
+        //rendererPtr->generateDepthDiscMap();
+        //rendererPtr->mergeFragments();
+        //rendererPtr->splatFragments();
+        //rendererPtr->sortFragments();
+        //rendererPtr->accumulateFragment();
+        //rendererPtr->storeFrame(storingFrame, std::to_string(counter) + ".png");
         rendererPtr->quadRenderLoop();
     }
 }

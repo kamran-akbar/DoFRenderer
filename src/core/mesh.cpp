@@ -64,18 +64,23 @@ namespace DoFRenderer {
 	}
 	
 	void Mesh::setShaderParams(const light* lightPtr, const camera* cameraPtr, const shader* shaderPtr) {
-		shaderPtr->setMat4("view", cameraPtr->getViewMatrix());
-		shaderPtr->setMat4("projection", cameraPtr->getProjectionMatrix());
-		shaderPtr->setVec3("cameraPos", cameraPtr->getCameraPosition());
+		if (cameraPtr != nullptr) {
+			shaderPtr->setMat4("view", cameraPtr->getViewMatrix());
+			shaderPtr->setMat4("projection", cameraPtr->getProjectionMatrix());
+			shaderPtr->setVec3("cameraPos", cameraPtr->getCameraPosition());
+		}
 
-		glm::vec3 position = lightPtr->getPosition();
-		glm::vec3 ambient = lightPtr->getAmbient();
-		glm::vec3 diffuse = lightPtr->getDiffuse();
-		glm::vec3 specular = lightPtr->getSpecular();
-		shaderPtr->setVec3("light.position", position.x, position.y, position.z);
-		shaderPtr->setVec3("light.ambient", ambient.x, ambient.y, ambient.z);
-		shaderPtr->setVec3("light.diffuse", diffuse.x, diffuse.y, diffuse.z);
-		shaderPtr->setVec3("light.specular", specular.x, specular.y, specular.z);
+		if (lightPtr != nullptr) {
+			glm::vec3 position = lightPtr->getPosition();
+			glm::vec3 ambient = lightPtr->getAmbient();
+			glm::vec3 diffuse = lightPtr->getDiffuse();
+			glm::vec3 specular = lightPtr->getSpecular();
+			shaderPtr->setVec3("light.position", position.x, position.y, position.z);
+			shaderPtr->setVec3("light.ambient", ambient.x, ambient.y, ambient.z);
+			shaderPtr->setVec3("light.diffuse", diffuse.x, diffuse.y, diffuse.z);
+			shaderPtr->setVec3("light.specular", specular.x, specular.y, specular.z);
+
+		}
 	}
 
 	void Mesh::setShaderMaterialParams(const shader* shaderPtr) {

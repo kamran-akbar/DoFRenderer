@@ -19,7 +19,12 @@ namespace DoFRenderer {
 		);
 
 		void bind(unsigned short i);
-		void bindImageTexture(unsigned int binding, unsigned int accessMode, unsigned int format);
+		void bindImageTexture(unsigned int binding, unsigned int accessMode,
+			unsigned int format);
+		void getTextureImage(unsigned int format, unsigned int type, 
+			unsigned int level, unsigned int bufferSize, void* data);
+		void saveImagePNG(std::string filename, unsigned int width, 
+			unsigned int height, unsigned int channel);
 		void unbind();
 		void deleteTexture();
 

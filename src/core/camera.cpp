@@ -28,6 +28,16 @@ namespace DoFRenderer {
 		this->aperture = aperture;
 	}
 
+	void camera::setPosition(glm::vec3 position) {
+		updateViewMatrix(position, this->forward, this->up);
+	}
+
+	void camera::interpPosition(glm::vec3 start, glm::vec3 end, float step) {
+		step = glm::clamp(step, 0.0f, 1.0f);
+		glm::vec3 newPosition = (1.0f - step) * start + step * end;
+		setPosition(newPosition);
+	}
+
 	glm::vec3 camera::getCameraPosition() const{
 		return position;
 	}

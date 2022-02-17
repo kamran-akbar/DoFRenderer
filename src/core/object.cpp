@@ -164,6 +164,20 @@ namespace DoFRenderer {
         }
     }
 
+    void Object::setShaderCameraParams(const camera* cameraPtr) {
+        for (int i = 0; i < meshes.size(); i++) {
+            shaderPtr->use();
+            meshes[i]->setShaderParams(nullptr, cameraPtr, shaderPtr);
+        }
+    }
+
+    void Object::setShaderLightParams(const light* lightPtr) {
+        for (int i = 0; i < meshes.size(); i++) {
+            shaderPtr->use();
+            meshes[i]->setShaderParams(lightPtr, nullptr, shaderPtr);
+        }
+    }
+
     glm::mat4 Object::getTranformation() {
         return transformation;
     }

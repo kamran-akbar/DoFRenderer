@@ -1,6 +1,8 @@
 #include "DoFRenderer/core/Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb/stb_image_write.h"
 #include "glad/glad.h"
 
 namespace DoFRenderer {
@@ -57,6 +59,21 @@ namespace DoFRenderer {
     void Texture::bindImageTexture(unsigned int binding, unsigned int accessMode, 
         unsigned int format) {
         glBindImageTexture(binding, texture, 0, GL_FALSE, 0, accessMode, format);
+    }
+
+    void Texture::getTextureImage(unsigned int format, unsigned int type,
+        unsigned int level, unsigned int bufferSize, void* data) {
+        glGetTextureImage(texture, level, format, type, bufferSize, data);
+    }
+
+    void Texture::saveImagePNG(std::string filename, unsigned int width,
+        unsigned int height, unsigned int channel) {
+        unsigned int buffSize = width * height * channel * sizeof(unsigned char);
+        unsigned char* pixels = new unsigned char[buffSize / sizeof(unsigned char)];
+        getTextureImage(GL_RGBA, GL_UNSIGNED_BYTE, 0, buffSize, pixels);
+        stbi_write_png(filename.c_str(), width, height, channel, pixels, 
+            width * channel);
+        stbi_image_free(pixels);
     }
 
     void Texture::unbind() {

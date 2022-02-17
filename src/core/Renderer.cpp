@@ -192,7 +192,7 @@ namespace DoFRenderer {
         shaders[SCREEN_SHADER]->setInt("testTex", 2);
     }
 	
-	void renderer::renderLoop() {
+	void renderer::renderLoop(const camera* cameraPtr) {
         timer->tick();
         frameBuffers[FOCUS_FRAME]->bind();
         glEnable(GL_DEPTH_TEST);
@@ -201,11 +201,12 @@ namespace DoFRenderer {
 
         for (int i = 0; i < objects.size(); i++) {
             objects[i]->getShader()->use();
+            objects[i]->setShaderCameraParams(cameraPtr);
             attachments[COPY_DEPTH_ATTACHMENT]->bind(0);
-            textures[DEPTH_DISC_TEX]->bind(1);
+            //textures[DEPTH_DISC_TEX]->bind(1);
             objects[i]->draw();   
             attachments[COPY_DEPTH_ATTACHMENT]->unbind();
-            textures[DEPTH_DISC_TEX]->unbind();
+            //textures[DEPTH_DISC_TEX]->unbind();
 		}
         attachments[DEPTH_ATTACHMENT]->copy(attachments["copyDepthAttachment"]->getID(), 
             GL_TEXTURE_2D_ARRAY, windowWidth, windowHeight, layerCount);
@@ -256,7 +257,7 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT); 
-        sortTest();
+        //sortTest();
     }
 
     void renderer::accumulateFragment() {
@@ -266,9 +267,16 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        //accumulationTest();
+        accumulationTest();
     }
     
+    void renderer::storeFrame(bool shouldStore, std::string name) {
+        if (shouldStore) {
+            textures[FINAL_IMAGE]->saveImagePNG("../samples/" + name, 
+                windowWidth, windowHeight, 4);
+        }
+    }
+
     void renderer::quadRenderLoop() {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -276,14 +284,12 @@ namespace DoFRenderer {
         quads[SCREEN_QUAD]->bindVertexArray();
         attachments[COLOR_ATTACHMENT]->bind(0);
         attachments[DEPTH_ATTACHMENT]->bind(1);
-        textures[DEPTH_DISC_TEX]->bind(2);
         quads[SCREEN_QUAD]->draw();
         attachments[COLOR_ATTACHMENT]->unbind();
         attachments[DEPTH_ATTACHMENT]->unbind();
-        textures[DEPTH_DISC_TEX]->unbind();
         quads[SCREEN_QUAD]->unbindVertexArray();
         timer->tock();
-        std::cout << "fps: " << timer->fps() << std::endl;
+        //std::cout << "fps: " << timer->fps() << std::endl;
     }
 
     void renderer::mergeTest() {
@@ -392,10 +398,11 @@ namespace DoFRenderer {
     }
 
     void renderer::accumulationTest() {
-        buffers[TEST_BUFFER]->bind();
-        int* test = buffers[TEST_BUFFER]->getBufferData<int>();
-        buffers[TEST_BUFFER]->unbind();
-        std::cout << test[0] << std::endl;
+        /*if (once == 4) {
+            textures[FINAL_IMAGE]->saveImagePNG("../samples/sample.png", windowWidth,
+                windowHeight, 4);
+        }
+        once++;*/
     }
     
     void renderer::releaseMemory() {

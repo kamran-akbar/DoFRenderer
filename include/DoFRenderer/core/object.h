@@ -18,6 +18,8 @@ namespace DoFRenderer {
 		void prepareObject();
 		void draw();
 		void setShaderParams(const light* lightPtr, const camera* cameraPtr);
+		void setShaderCameraParams(const camera* cameraPtr);
+		void setShaderLightParams(const light* lightPtr);
 		glm::mat4 getTranformation();
 		glm::mat4 updateTranslation(glm::vec3 translation);
 		glm::mat4 updateRotatation(glm::vec3 rotationEuler);

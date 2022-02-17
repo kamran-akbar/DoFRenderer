@@ -30,12 +30,13 @@ namespace DoFRenderer {
 		void prepareSorting(const camera* cameraPtr);
 		void prepareAccumulation();
 		void prepareScreenQuad();
-		void renderLoop();
+		void renderLoop(const camera* cameraPtr);
 		void generateDepthDiscMap();
 		void mergeFragments();
 		void splatFragments();
 		void sortFragments();
 		void accumulateFragment();
+		void storeFrame(bool shouldStore, std::string name);
 		void quadRenderLoop();
 		void releaseMemory();
 
