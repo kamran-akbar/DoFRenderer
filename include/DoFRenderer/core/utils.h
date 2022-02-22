@@ -21,3 +21,9 @@
 #define FINAL_IMAGE "finalImage"
 #define SCREEN_SHADER "screenShader"
 #define SCREEN_QUAD "screenQuad"
+#define MAX_FRAGMENT_COUNT 16
+#define MAX_FRAGMENT_TILE 2048
+#define FLOATING_PERCISION 1000.0f
+#define COC_MAX 10
+#define SPLAT_WORK_GROUP_SIZE 8
+#define DEPTH_DISC_WORK_GROUP_SIZE 32

@@ -71,6 +71,7 @@ namespace DoFRenderer {
         unsigned int buffSize = width * height * channel * sizeof(unsigned char);
         unsigned char* pixels = new unsigned char[buffSize / sizeof(unsigned char)];
         getTextureImage(GL_RGBA, GL_UNSIGNED_BYTE, 0, buffSize, pixels);
+        stbi_flip_vertically_on_write(true);
         stbi_write_png(filename.c_str(), width, height, channel, pixels, 
             width * channel);
         stbi_image_free(pixels);

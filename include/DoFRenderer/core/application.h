@@ -4,6 +4,7 @@
 #include "DoFRenderer/core/shader.h"
 #include "DoFRenderer/core/camera.h"
 #include "DoFRenderer/core/light.h"
+#include "glm/glm.hpp"
 
 
 namespace DoFRenderer {
@@ -13,6 +14,7 @@ namespace DoFRenderer {
 		void run();
 		void pipelineInitialization();
 		void pipelineLoop();
+		void sampleDenseLightField(glm::vec3 cameraStart, glm::vec3 cameraEnd);
 
 	private:
 		static const unsigned int layerCount = 4;

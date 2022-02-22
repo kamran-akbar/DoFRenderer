@@ -1,5 +1,5 @@
 #version 450 core
-#define WORK_GROUP_SIZE 16
+#define WORK_GROUP_SIZE 8
 #define MAX_FRAGMENT_COUNT 16
 #define MERGE_FACTOR 2
 #define MAX_FRAGMENT_TILE 2048
@@ -65,12 +65,10 @@ void main() {
 	int tileSpread = int(tile_size_spread.y);
 	ivec2 dimension = imageSize(mergedFragCount).xy;
 	ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+	if (gid.x >= dimension.x || gid.y >= dimension.y) return;
 	ivec2 tid = ivec2(gl_LocalInvocationID.xy);
 	localFragCount[tid.y][tid.x] = imageLoad(mergedFragCount, gid).r;
-	barrier();
-	
 	for (int i = 0; i < localFragCount[tid.y][tid.x]; i++) {
-		
 		uint fragIndex = gid.y * dimension.x * MAX_FRAGMENT_COUNT 
 						 + gid.x * MAX_FRAGMENT_COUNT + i;
 		fragmentColorDepth colorDepthElement;
@@ -138,12 +136,14 @@ void main() {
 					ivec2 index = ivec2(tileID.x + x, tileID.y + y);
 					uint posInTile = atomicAdd(
 						tilingCounter[index.y * tiles_width + index.x], 1);
-					uint writingIndex = index.y * tiles_width * MAX_FRAGMENT_TILE
-						+ index.x * MAX_FRAGMENT_TILE + posInTile;
-					tiledColorDepth[writingIndex] = vec4(colorDepthElement.color.xyz,
-						colorDepthElement.depth);
-					tiledFragData[writingIndex] = uvec4(fragInfoElement.screenCoords.xy,
-						fragInfoElement.mergeID, 0.0f);
+					if (posInTile < MAX_FRAGMENT_TILE) {
+						uint writingIndex = index.y * tiles_width * MAX_FRAGMENT_TILE
+							+ index.x * MAX_FRAGMENT_TILE + posInTile;
+						tiledColorDepth[writingIndex] = vec4(colorDepthElement.color.xyz,
+							colorDepthElement.depth);
+						tiledFragData[writingIndex] = uvec4(fragInfoElement.screenCoords.xy,
+							fragInfoElement.mergeID, 0.0f);
+					}
 				}
 			}
 		}

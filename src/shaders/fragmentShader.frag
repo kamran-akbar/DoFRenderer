@@ -66,7 +66,7 @@ float linearizeDepth(float depth)
 
 void main()
 {
-    /*if(gl_Layer >= 1){
+    if(gl_Layer >= 1){
         vec2 uv = gl_FragCoord.xy / windowDimension.xy;
         float edge = texture(depthDisc, uv).r;
         if(edge == 0.0){
@@ -87,6 +87,6 @@ void main()
            return;
         }
     }
-    imageAtomicMax(layerCount, ivec2(gl_FragCoord.xy), gl_Layer);*/
+    imageAtomicMax(layerCount, ivec2(gl_FragCoord.xy), gl_Layer);
     gl_FragColor = phongShading();
 }

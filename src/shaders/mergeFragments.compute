@@ -49,7 +49,7 @@ bool checkMerge(uvec2 tid, inout float maxDepth) {
 	int nextIdx = 1;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			int next_i = (nextIdx / 2) % 2;
+			int next_i = (nextIdx / 2);
 			int next_j = nextIdx % 2;
 			if (abs(luminance(localValues[tid.y + i][tid.x + j].rgb) 
 				- luminance(localValues[tid.y + next_i][tid.x + next_j].rgb)) 
@@ -94,6 +94,7 @@ void main() {
 	uvec2 out_gid = gl_GlobalInvocationID.xy;
 	uvec2 threadSize = (gl_NumWorkGroups * gl_WorkGroupSize).xy;
 	vec2 dimension = imageSize(layerCount).xy;
+	if (gid.x >= dimension.x || gid.y >= dimension.y) return;
 	vec2 uv00 = gid / dimension;
 	vec2 uv01 = vec2(gid.x + 1, gid.y) / dimension;
 	vec2 uv10 = vec2(gid.x, gid.y + 1) / dimension;
@@ -213,5 +214,4 @@ void main() {
 		fragCount += 1;
 	}
 	imageStore(mergedFragCount, ivec2(out_gid), ivec4(fragCount));
-	
 }

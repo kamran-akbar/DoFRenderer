@@ -49,9 +49,11 @@ void main() {
 	vec2 gid = gl_GlobalInvocationID.xy;
 	uvec2 tid = gl_LocalInvocationID.xy;
 	vec2 dimension = imageSize(depthDisc);
+    if (gid.x >= dimension.x || gid.y >= dimension.y) return;
 	vec2 uv = gid / dimension;
 	float depth = linearizeDepth(texture(depthmap, vec3(uv, 0)).r);
 	localDepths[tid.x + 1][tid.y + 1] = depth;
+    imageStore(depthDisc, ivec2(gid.xy), vec4(0.0));
     // Handle the edges
     // Bottom edge
     if (tid.y == 0) {

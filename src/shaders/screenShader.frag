@@ -21,6 +21,6 @@ void main()
         float depth = texture(depthTexture, vec3(TexCoords, 0)).r;
         FragColor = vec4(depth);
     }
-    //FragColor = imageLoad(finalImage, ivec2(gl_FragCoord.xy));
+    FragColor = imageLoad(finalImage, ivec2(gl_FragCoord.xy));
     //FragColor = imageLoad(depthDisc, ivec2(gl_FragCoord.xy)).rrrr;
 } 

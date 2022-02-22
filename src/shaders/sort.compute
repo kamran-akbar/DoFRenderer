@@ -46,6 +46,7 @@ layout(std430, binding = 10) buffer sortedFragInfoBuffer {
 
 uniform vec2 cameraFarNear;
 uniform vec3 eyeLens_focusDist_aperture;
+uniform vec2 windowDimension;
 uniform float tileSize;
 uniform float coc_max;
 
@@ -98,16 +99,16 @@ float precomputeBlurWeight(inout fragmentColorDepth frag,
 }
 
 void main() {
-	ivec2 imgDim= ivec2((gl_NumWorkGroups * gl_WorkGroupSize).xy);
-	ivec2 tiledImgDim= ivec2(gl_NumWorkGroups.xy);
-	
+	ivec2 imgDim= ivec2(windowDimension.xy);
+	ivec2 tiledImgDim= ivec2(ceil(imgDim / tileSize));
 	ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+	if (gid.x >= imgDim.x || gid.y >= imgDim.y) return;
 	ivec2 tid = ivec2(gl_LocalInvocationID.xy);
 	int tid_1D = int(tid.y * tileSize + tid.x);
 	ivec2 wid = ivec2(gl_WorkGroupID.xy);
 
 	int tileSizeSq = int(tileSize * tileSize);
-	int count = int(tilingCounter[wid.y * tiledImgDim.x + wid.x]);
+	int count = min(int(tilingCounter[wid.y * tiledImgDim.x + wid.x]), MAX_FRAGMENT_TILE);
 	int writingIndexStart = wid.y * tiledImgDim.x * MAX_FRAGMENT_TILE
 		+ wid.x * MAX_FRAGMENT_TILE;
 	int fragTileDivision = count / tileSizeSq;
@@ -161,8 +162,8 @@ void main() {
 					localFragments[index] = localFragments[compareIndex];
 					localFragments[compareIndex] = temp;
 				}
+				barrier();
 			}
-			barrier();
 		}
 	}
 
@@ -187,7 +188,6 @@ void main() {
 				uvec4(fragInfo.screenCoords, fragInfo.mergeID, cocSq);
 		}
 	}
-
 	if (tid_1D < fragTileRemainder) {
 		uint writingIndex = fragTileDivision * tileSizeSq + tid_1D;
 		uint readingIndex = localFragments[writingIndex].index;
