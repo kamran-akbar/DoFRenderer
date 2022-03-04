@@ -10,9 +10,9 @@ namespace DoFRenderer {
 	Texture::Texture(std::string name, std::string filePath, unsigned int wrapMode,
         unsigned int filterMode, unsigned int format, unsigned int internalFormat, 
         unsigned int type) {
+
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
-        
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);	
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
         
@@ -23,13 +23,19 @@ namespace DoFRenderer {
         stbi_set_flip_vertically_on_load(true); 
        
         unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
-        if (data)
-        {
+        if (nrChannels == 3) {
+            internalFormat = GL_RGB;
+            format = GL_RGB;
+        }
+        else if (nrChannels == 4) {
+            internalFormat = GL_RGBA;
+            format = GL_RGBA;
+        }
+        if (data) {
             glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, data);
             glGenerateMipmap(GL_TEXTURE_2D);
         }
-        else
-        {
+        else {
             throw "Failed to load texture";
         }
         stbi_image_free(data);

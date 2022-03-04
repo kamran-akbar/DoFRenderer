@@ -1,6 +1,6 @@
 #version 450 core
 #define WORK_GROUP_SIZE 16
-#define MAX_FRAGMENT_TILE 2048
+#define MAX_FRAGMENT_TILE 8192
 #define FLOATING_PERCISION 1000
 
 struct fragmentColorDepth {
@@ -92,13 +92,16 @@ float precomputeBlurWeight(inout fragmentColorDepth frag,
 		(float(coord.y) + (float(w) - 1.0f) * 0.5f) * FLOATING_PERCISION
 	);
 	fragInfo.mergeID = uint(weight * FLOATING_PERCISION); //preserving floating precision
-	/*if (w > 1.0f) {
+	if (w > 1.0f) {
 		cocSq = (coc + w / 4.0f) * (coc + w / 4.0f);
-	}*/
+	}
 	return cocSq * FLOATING_PERCISION;
 }
 
 void main() {
+	float eyeLens = eyeLens_focusDist_aperture.x;
+	float focusDist = eyeLens_focusDist_aperture.y;
+
 	ivec2 imgDim= ivec2(windowDimension.xy);
 	ivec2 tiledImgDim= ivec2(ceil(imgDim / tileSize));
 	ivec2 gid = ivec2(gl_GlobalInvocationID.xy);

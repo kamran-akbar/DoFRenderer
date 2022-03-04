@@ -36,16 +36,19 @@ namespace DoFRenderer {
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, normal)));
 		glEnableVertexAttribArray(3);
 		for (int i = 0; i < texturePaths.size(); i++) {
-			textures.push_back(Texture(textureNames[i], texturePaths[i], GL_REPEAT, GL_LINEAR, GL_RGB, GL_RGB,
+			textures.push_back(Texture(textureNames[i], texturePaths[i], GL_REPEAT, GL_LINEAR, GL_RGBA, GL_RGBA,
 				GL_UNSIGNED_BYTE));
-			shaderPtr->setInt(textures[i].getName(), i + 2);
 		}
 	}
 	
 	void Mesh::draw(const shader* shaderPtr) {
+		
 		setShaderMaterialParams(shaderPtr);
+		int texOffset = 0;
 		for (int i = 0; i < textures.size(); i++) {
-			textures[i].bind(i + 2);			
+			texOffset = stoi(textureNames[i]);
+			shaderPtr->setInt("diffuseTexture", i + 2 + texOffset);
+			textures[i].bind(i + 2 + texOffset);
 		}
 		glBindVertexArray(vertexArray);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
@@ -79,7 +82,6 @@ namespace DoFRenderer {
 			shaderPtr->setVec3("light.ambient", ambient.x, ambient.y, ambient.z);
 			shaderPtr->setVec3("light.diffuse", diffuse.x, diffuse.y, diffuse.z);
 			shaderPtr->setVec3("light.specular", specular.x, specular.y, specular.z);
-
 		}
 	}
 

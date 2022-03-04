@@ -18,7 +18,7 @@ namespace DoFRenderer {
 		void swapChainCall();
 		GLFWwindow* getWindowInstance();
 		bool checkWindowClosed();
-		float getAspectRatio() const;
+		float getAspectRatio(float factor) const;
 
 		inline int getWidth() { return width; }
 		inline int getHeight() { return height; }

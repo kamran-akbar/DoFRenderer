@@ -37,6 +37,8 @@ namespace DoFRenderer {
 		glm::mat4 transformation;
 		std::vector<Mesh *> meshes;
 		shader* shaderPtr;
+
+		int textureNumber = 0;
 	};
 }
 

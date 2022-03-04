@@ -27,10 +27,14 @@ layout(std430, binding = 4) buffer fragMergingDataBuffer {
 	uvec4 mergingData[];
 };
 
+layout(std430, binding = 8) buffer testBuffer {
+	int test[];
+};
+
 uniform sampler2DArray depthmap;
 uniform sampler2DArray colorTexture;
 uniform vec2 cameraFarNear;
-uniform vec4 eyeLens_focusDist_aperture;
+uniform vec3 eyeLens_focusDist_aperture;
 
 shared vec4 localValues[WORK_GROUP_SIZE * MERGE_FACTOR ][WORK_GROUP_SIZE * MERGE_FACTOR];
 
@@ -43,13 +47,13 @@ bool checkMerge(uvec2 tid, inout float maxDepth) {
 	float focusDistance = eyeLens_focusDist_aperture.y;
 	float aperture = eyeLens_focusDist_aperture.z;
 	const float merge_epsilon_base = cameraFarNear.x;
-	const float merge_epsilon = merge_epsilon_base / max(2, aperture);
+	const float merge_epsilon = merge_epsilon_base / max(aperture, 2.0f);
 	const float luminance_epsilon = 0.1f;
 	bool luminance = true;
 	int nextIdx = 1;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			int next_i = (nextIdx / 2);
+			int next_i = (nextIdx / 2) % 2;
 			int next_j = nextIdx % 2;
 			if (abs(luminance(localValues[tid.y + i][tid.x + j].rgb) 
 				- luminance(localValues[tid.y + next_i][tid.x + next_j].rgb)) 
@@ -84,6 +88,14 @@ bool checkMerge(uvec2 tid, inout float maxDepth) {
 	return false;
 }
 
+float linearizeDepth(float depth)
+{
+	float far = cameraFarNear.x;
+	float near = cameraFarNear.y;
+	float z = depth * 2.0 - 1.0;
+	return (2.0 * near * far) / (far + near - z * (far - near));
+}
+
 void main() {
 	int count[2][2];
 	int nextIndex[2][2];
@@ -109,25 +121,25 @@ void main() {
 	localValues[tid.y][tid.x + 1].rgb = texture(colorTexture, vec3(uv01, 0)).rgb;
 	localValues[tid.y + 1][tid.x].rgb = texture(colorTexture, vec3(uv10, 0)).rgb;
 	localValues[tid.y + 1][tid.x + 1].rgb = texture(colorTexture, vec3(uv11, 0)).rgb;
+
 	//load depth values
-	localValues[tid.y][tid.x].a = texture(depthmap, vec3(uv00, 0)).r;
-	localValues[tid.y][tid.x + 1].a = texture(depthmap, vec3(uv01, 0)).r;
-	localValues[tid.y + 1][tid.x].a = texture(depthmap, vec3(uv10, 0)).r;
-	localValues[tid.y + 1][tid.x + 1].a = texture(depthmap, vec3(uv11, 0)).r;
+	localValues[tid.y][tid.x].a = linearizeDepth(
+		texture(depthmap, vec3(uv00, 0)).r);
+	localValues[tid.y][tid.x + 1].a = linearizeDepth(
+		texture(depthmap, vec3(uv01, 0)).r);
+	localValues[tid.y + 1][tid.x].a = linearizeDepth(
+		texture(depthmap, vec3(uv10, 0)).r);
+	localValues[tid.y + 1][tid.x + 1].a = linearizeDepth(
+		texture(depthmap, vec3(uv11, 0)).r);
 	//next fragment index
 	nextIndex[0][0] = 1;
 	nextIndex[0][1] = 1;
 	nextIndex[1][0] = 1;
 	nextIndex[1][1] = 1;
-	//move depth from [0, 1] to camera space
-	localValues[tid.y][tid.x].a *= (cameraFar - cameraNear);
-	localValues[tid.y][tid.x + 1].a *= (cameraFar - cameraNear);
-	localValues[tid.y + 1][tid.x].a *= (cameraFar - cameraNear);
-	localValues[tid.y + 1][tid.x + 1].a *= (cameraFar - cameraNear);
 
 	int allfragmentsCount = count[0][0] + count[0][1] + count[1][0] + count[1][1];
-	
 	int fragCount = 0;
+
 	while (allfragmentsCount > 0) {
 		float maxDepth = 0.0;
 		fragmentColorDepth colorDepth_out;
@@ -161,8 +173,8 @@ void main() {
 								nextIndex[i][j]
 							);
 							localValues[tid.y + i][tid.x + j].rgb = texture(colorTexture, uvz).rgb;
-							localValues[tid.y + i][tid.x + j].a = texture(depthmap, uvz).r;
-							localValues[tid.y + i][tid.x + j].a *= (cameraFar - cameraNear);
+							localValues[tid.y + i][tid.x + j].a = 
+								linearizeDepth(texture(depthmap, uvz).r);
 							nextIndex[i][j] += 1;
 							allfragmentsCount -= 1;
 						} while (localValues[tid.y + i][tid.x + j].a < (lastDepth + deltaZ)
@@ -199,7 +211,7 @@ void main() {
 			localValues[tid.y + minDepthIdx.y][tid.x + minDepthIdx.x].rgb = 
 				texture(colorTexture, uvz).rgb;
 			localValues[tid.y + minDepthIdx.y][tid.x + minDepthIdx.x].a =
-				texture(depthmap, uvz).r * (cameraFar - cameraNear);
+				linearizeDepth(texture(depthmap, uvz).r);
 			nextIndex[minDepthIdx.y][minDepthIdx.x] += 1;
 			allfragmentsCount -= 1;
 		}

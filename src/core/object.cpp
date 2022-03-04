@@ -118,9 +118,10 @@ namespace DoFRenderer {
             }
             if (materials[material_id].diffuse_texname != "") {
                 texturePaths.push_back(materials[material_id].diffuse_texname);
-                textureNames.push_back("diffuseTexture");
+                textureNames.push_back(std::to_string(textureNumber));
+                textureNumber++;
             }
-                
+
             meshes.push_back(new Mesh(vertices, indices, texturePaths, textureNames));
             glm::vec3 ambient = {
                 materials[material_id].ambient[0],

@@ -1,8 +1,9 @@
 #version 450 core
 #define WORK_GROUP_SIZE 16
 #define TILE_SIZE 16
-#define MAX_FRAGMENT_TILE 2048
+#define MAX_FRAGMENT_TILE 8192
 #define FLOATING_PERCISION 1000.0f
+#define SHARED_SIZE 2048
 
 struct fragmentColorDepth {
 	vec3 color;
@@ -36,30 +37,19 @@ layout(rgba32f, binding = 3) restrict uniform image2D finalImage;
 
 uniform float tileSize;
 
-shared vec4 localFrags[MAX_FRAGMENT_TILE];
-shared uvec4 localFragsInfo[MAX_FRAGMENT_TILE];
+shared vec4 localFrags[SHARED_SIZE];
+shared uvec4 localFragsInfo[SHARED_SIZE];
 
-void main() {
-	ivec2 imgDim = imageSize(finalImage);
-	ivec2 tiledImgDim = ivec2(ceil(imgDim / tileSize));
-	ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
-	if (gid.x >= imgDim.x || gid.y >= imgDim.y) return;
-	ivec2 tid = ivec2(gl_LocalInvocationID.xy);
-	ivec2 wid = ivec2(gl_WorkGroupID.xy);
-	int tid_1D = tid.y * int(tileSize) + tid.x;
-	
-	int tileSizeSq = int(tileSize * tileSize);
-	int count = min(int(tilingCounter[wid.y * tiledImgDim.x + wid.x]), MAX_FRAGMENT_TILE);
-	int startLoadIndex = wid.y * tiledImgDim.x * MAX_FRAGMENT_TILE 
-		+ wid.x * MAX_FRAGMENT_TILE;
-	int iterations = count / tileSizeSq;
-	int remainders = count % tileSizeSq;
-	vec4 color = vec4(0.0f);
-	float alpha_dest = 1.0;
+void blendFragmentsData(inout vec4 color, inout float alpha_dest,
+	int startLoadIndex, int tid_1D, ivec2 gid, int tileSizeSq, int fragNumber) 
+{
+	int iterations = fragNumber / tileSizeSq;
+	int remainders = fragNumber % tileSizeSq;
+
 	for (int i = 0; i < iterations; i++) {
-		localFrags[i * tileSizeSq + tid_1D] = 
+		localFrags[i * tileSizeSq + tid_1D] =
 			sortedColorDepth[startLoadIndex + i * tileSizeSq + tid_1D];
-		localFragsInfo[i * tileSizeSq + tid_1D] = 
+		localFragsInfo[i * tileSizeSq + tid_1D] =
 			sortedFragData[startLoadIndex + i * tileSizeSq + tid_1D];
 	}
 	if (tid_1D < remainders) {
@@ -69,7 +59,7 @@ void main() {
 			sortedFragData[startLoadIndex + iterations * tileSizeSq + tid_1D];
 	}
 	barrier();
-	for (int i = 0; i < count; i++) {
+	for (int i = 0; i < fragNumber; i++) {
 		fragmentColorDepth frag;
 		frag.color = localFrags[i].rgb;
 		frag.depth = localFrags[i].a;
@@ -90,8 +80,33 @@ void main() {
 			alpha_dest -= w;
 		}
 	}
-	/*if (tid.x == 0 || tid.y == 0) {
-		color = vec4(0.0f, 1.0f, 0.0f, 1.0f);
-	}*/
-	imageStore(finalImage, gid, color / (1 - alpha_dest) );
+}
+
+void main() {
+	ivec2 imgDim = imageSize(finalImage);
+	ivec2 tiledImgDim = ivec2(ceil(imgDim / tileSize));
+	ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+	if (gid.x >= imgDim.x || gid.y >= imgDim.y) return;
+	ivec2 tid = ivec2(gl_LocalInvocationID.xy);
+	ivec2 wid = ivec2(gl_WorkGroupID.xy);
+	int tid_1D = tid.y * int(tileSize) + tid.x;
+	
+	int tileSizeSq = int(tileSize * tileSize);
+	int count = min(int(tilingCounter[wid.y * tiledImgDim.x + wid.x]), MAX_FRAGMENT_TILE);
+	int startLoadIndex = wid.y * tiledImgDim.x * MAX_FRAGMENT_TILE 
+		+ wid.x * MAX_FRAGMENT_TILE;
+	int fragNum = min(count, SHARED_SIZE);
+	vec4 color = vec4(0.0f);
+	float alpha_dest = 1.0;
+	do {
+		blendFragmentsData(color, alpha_dest, startLoadIndex, tid_1D,
+			gid, tileSizeSq, fragNum);
+		barrier();
+		startLoadIndex += fragNum;
+		count -= fragNum;
+		fragNum = min(count, SHARED_SIZE);
+		break;
+	} while (count > 0);
+	
+	imageStore(finalImage, gid, color / (1-alpha_dest));
 }

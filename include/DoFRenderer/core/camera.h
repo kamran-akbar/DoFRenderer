@@ -14,7 +14,10 @@ namespace DoFRenderer {
 
 		void setLensVariable(float focal, float focus, int aperture);
 		void setPosition(glm::vec3 position);
+		void setPositionForward(glm::vec3 position, glm::vec3 forward);
 		void interpPosition(glm::vec3 start, glm::vec3 end, float step);
+		void interpPosition(glm::vec3 start, glm::vec3 end, glm::vec3 startForward,
+			glm::vec3 endForward, float step);
 
 		glm::vec3 getCameraPosition() const;
 		glm::mat4 getViewMatrix() const;

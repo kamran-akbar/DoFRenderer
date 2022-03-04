@@ -7,19 +7,23 @@ namespace DoFRenderer {
 		projectionMatrix(glm::mat4(1.0f)) {}
 
 	camera::camera(float fov, float aspectRatio, float near, float far, glm::vec3 position, glm::vec3 forward,
-		glm::vec3 up) : fov(fov), aspectRatio(aspectRatio), near(near), far(far), position(position),
+		glm::vec3 up) : aspectRatio(aspectRatio), near(near), far(far), position(position),
 		forward(glm::normalize(forward)), up(glm::normalize(up)) {
+		this->fov = glm::radians(fov);
 		viewMatrix = glm::lookAt(position, position + forward, up);
-		projectionMatrix = glm::perspective(fov, aspectRatio, near, far);
+		projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, 
+			near, far);
 	}
 
 	camera::camera(float fov, float aspectRatio, float near, float far, glm::vec3 position,
 		float eyeLens, float focus, int aperture, glm::vec3 forward, glm::vec3 up) : 
-		fov(fov), aspectRatio(aspectRatio), near(near), far(far), position(position),
+		aspectRatio(aspectRatio), near(near), far(far), position(position),
 		eyeLens(eyeLens), focusDist(focus), aperture(aperture), forward(glm::normalize(forward)), 
 		up(glm::normalize(up)) {
+		this->fov = glm::radians(fov);
 		viewMatrix = glm::lookAt(position, position + forward, up);
-		projectionMatrix = glm::perspective(fov, aspectRatio, near, far);
+		projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, 
+			near, far);
 	}
 
 	void camera::setLensVariable(float eyeLens, float focus, int aperture) {
@@ -32,10 +36,22 @@ namespace DoFRenderer {
 		updateViewMatrix(position, this->forward, this->up);
 	}
 
+	void camera::setPositionForward(glm::vec3 position, glm::vec3 forward) {
+		updateViewMatrix(position, forward, this->up);
+	}
+
 	void camera::interpPosition(glm::vec3 start, glm::vec3 end, float step) {
 		step = glm::clamp(step, 0.0f, 1.0f);
 		glm::vec3 newPosition = (1.0f - step) * start + step * end;
 		setPosition(newPosition);
+	}
+
+	void camera::interpPosition(glm::vec3 start, glm::vec3 end, glm::vec3 startForward,
+		glm::vec3 endForward, float step) {
+		step = glm::clamp(step, 0.0f, 1.0f);
+		glm::vec3 newPosition = (1.0f - step) * start + step * end;
+		glm::vec3 newForward = (1.0f - step) * startForward + step * endForward;
+		setPositionForward(newPosition, newForward);
 	}
 
 	glm::vec3 camera::getCameraPosition() const{
@@ -59,7 +75,7 @@ namespace DoFRenderer {
 	}
 
 	glm::mat4 camera::updateProjectionMatrix(float fov, float aspectRatio, float near, float far) {
-		this->fov = fov;
+		this->fov = glm::radians(fov);
 		this->aspectRatio = aspectRatio;
 		this->near = near;
 		this->far = far;

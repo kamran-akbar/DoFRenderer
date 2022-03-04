@@ -14,7 +14,16 @@ namespace DoFRenderer {
 		void run();
 		void pipelineInitialization();
 		void pipelineLoop();
-		void sampleDenseLightField(glm::vec3 cameraStart, glm::vec3 cameraEnd);
+		void sampleDenseParallelLightField(
+			glm::vec3 cameraStart, 
+			glm::vec3 cameraEnd
+		);
+		void sampleDenseShearedLightField(
+			glm::vec3 cameraStart, 
+			glm::vec3 cameraEnd, 
+			glm::vec3 forwardStart,
+			glm::vec3 forwardEnd
+		);
 
 	private:
 		static const unsigned int layerCount = 4;

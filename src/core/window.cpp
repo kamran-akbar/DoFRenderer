@@ -34,7 +34,6 @@ namespace DoFRenderer {
         glfwMakeContextCurrent(instance);
         glfwSetFramebufferSizeCallback(instance, framebufferSizeCallback);
         glfwSetCursorPosCallback(instance, cursorPosCallback);
-
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
             throw "Failed to initialize GLAD";
@@ -63,8 +62,8 @@ namespace DoFRenderer {
         return glfwWindowShouldClose(instance);
     }
 
-    float window::getAspectRatio() const{
-        return (float)width / (float)height;
+    float window::getAspectRatio(float factor) const{
+        return (float)width / (float)height / factor;
     }
     
 }

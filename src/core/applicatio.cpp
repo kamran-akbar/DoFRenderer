@@ -27,13 +27,13 @@ namespace DoFRenderer {
     void application::pipelineInitialization() {
         windowPtr = std::make_unique<window>(window(1280, 720, "DoF Renderer"));
         windowPtr->createWindow();
-        cameraPtr = std::make_unique<camera>(camera(45.0f, windowPtr->getAspectRatio(),
-            1.0f, 100.0f, glm::vec3(0.0, 0.0f, -3.0f), glm::vec3(0.0, 0.0f, 1.0f),
+        /*cameraPtr = std::make_unique<camera>(camera(20.0f, windowPtr->getAspectRatio(1.0f),
+            0.01f, 100.0f, glm::vec3(0.0f, 0.0f, -7.5f), glm::vec3(0.0f, 0.0f, 1.0f),
+            glm::vec3(0.0f, 1.0f, 0.0f)));*/
+        cameraPtr = std::make_unique<camera>(camera(45.0f, windowPtr->getAspectRatio(1.0f),
+            0.01f, 600.0f, glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f),
             glm::vec3(0.0f, 1.0f, 0.0f)));
-        //cameraPtr->setLensVariable(20, 10, 50);   
-        //cameraPtr->setLensVariable(20, 28.3519, 50);
-        cameraPtr->setLensVariable(20, 64.625, 50);
-        //cameraPtr->setLensVariable(20, 84.6714, 50);
+        cameraPtr->setLensVariable(3.0f, 20.0, 50);   
         lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 5.0f, -10.0),
             glm::vec3(1.0f), glm::vec3(0.4f), glm::vec3(1.0f)));
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(),
@@ -56,14 +56,23 @@ namespace DoFRenderer {
         rendererPtr->sortFragments();
         rendererPtr->accumulateFragment();
         rendererPtr->quadRenderLoop();
-        //this->sampleDenseLightField(glm::vec3(1.32f, 0.0f, -3.0f),
-        //    glm::vec3(-1.32f, 0.0f, -3.0f));
+        /*this->sampleDenseParallelLightField(
+            glm::vec3(5.0f, 0.0f, -7.5f),
+            glm::vec3(-5.0f, 0.0f, -7.5f)
+        );*/
+        /*this->sampleDenseShearedLightField(
+            glm::vec3(4.1f, 0.0f, -7.5f),
+            glm::vec3(-4.1f, 0.0f, -7.5f),
+            glm::vec3(-0.45f, 0.0f, 1.0f),
+            glm::vec3(0.45f, 0.0f, 1.0f)
+        );*/
     }
 
-    void application::sampleDenseLightField(glm::vec3 cameraStart, glm::vec3 cameraEnd) {
+    void application::sampleDenseParallelLightField(
+        glm::vec3 cameraStart, 
+        glm::vec3 cameraEnd) {
         if (step < 1.0f) counter++;
-        cameraPtr->interpPosition(glm::vec3(-1.32f, 0.0f, -3.0f),
-            glm::vec3(1.32f, 0.0f, -3.0f), step);
+        cameraPtr->interpPosition(cameraStart, cameraEnd, step);
         step += 0.0015f;
         step = glm::max(glm::min(step, 1.0f), 0.0f);
         storingFrame = step >= 1.0f ? false : true;
@@ -73,4 +82,26 @@ namespace DoFRenderer {
         std::cout << ss.str() << std::endl;
         rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
     }
+
+    void application::sampleDenseShearedLightField(
+        glm::vec3 cameraStart,
+        glm::vec3 cameraEnd,
+        glm::vec3 forwardStart,
+        glm::vec3 forwardEnd) {
+        if (step < 1.0f) counter++;
+        cameraPtr->interpPosition(
+            cameraStart, cameraEnd, 
+            glm::normalize(forwardStart),
+            glm::normalize(forwardEnd), step
+        );
+        step += 0.0015f;
+        step = glm::max(glm::min(step, 1.0f), 0.0f);
+        storingFrame = step >= 1.0f ? false : true;
+        counter = glm::min(counter, 660);
+        std::stringstream ss;
+        ss << std::setfill('0') << std::setw(4) << counter;
+        std::cout << ss.str() << std::endl;
+        rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
+    }
+
 }

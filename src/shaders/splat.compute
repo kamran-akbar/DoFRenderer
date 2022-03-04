@@ -2,7 +2,7 @@
 #define WORK_GROUP_SIZE 8
 #define MAX_FRAGMENT_COUNT 16
 #define MERGE_FACTOR 2
-#define MAX_FRAGMENT_TILE 2048
+#define MAX_FRAGMENT_TILE 8192
 #define TILE_SPREAD 1
 
 struct fragmentColorDepth {
@@ -130,13 +130,14 @@ void main() {
 				if (dot(dis, dis) < cocSq) may[j][k] = true;
 			}
 		}
+		uint posInTile;
 		for (int x = low_x; x <= high_x; x++) {
 			for (int y = low_y; y <= high_y; y++) {
 				if (may[y + tileSpread][x + tileSpread]) {
-					ivec2 index = ivec2(tileID.x + x, tileID.y + y);
-					uint posInTile = atomicAdd(
-						tilingCounter[index.y * tiles_width + index.x], 1);
 					if (posInTile < MAX_FRAGMENT_TILE) {
+						ivec2 index = ivec2(tileID.x + x, tileID.y + y);
+						uint posInTile = atomicAdd(
+							tilingCounter[index.y * tiles_width + index.x], 1);
 						uint writingIndex = index.y * tiles_width * MAX_FRAGMENT_TILE
 							+ index.x * MAX_FRAGMENT_TILE + posInTile;
 						tiledColorDepth[writingIndex] = vec4(colorDepthElement.color.xyz,

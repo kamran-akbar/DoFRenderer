@@ -49,7 +49,7 @@ namespace DoFRenderer {
         attachments[COPY_DEPTH_ATTACHMENT] = new Texture2DArray(
             GL_DEPTH_COMPONENT24, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
         );
-
+        glViewport(0, 0, windowWidth, windowHeight);
         frameBuffers[FOCUS_FRAME] = new FrameBuffer();
         frameBuffers[FOCUS_FRAME]->attachFrameBuffer(GL_COLOR_ATTACHMENT0,
             attachments[COLOR_ATTACHMENT]->getID());
@@ -62,14 +62,16 @@ namespace DoFRenderer {
             GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
         textures[LAYER_COUNT_TEX]->bindImageTexture(1, GL_READ_WRITE, GL_R32I);
 
-        //objects.push_back(new Object(glm::vec3(1.0f, 0.0f, 5.0f), glm::vec3(0.0f), glm::vec3(0.7f)));
-        //objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 0.0f), glm::vec3(-90.0f, 0.0f, 40.0f), glm::vec3(3.0f)));
-        objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-15.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
+        //objects.push_back(new Object(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 90, 0.0f), glm::vec3(1.0f)));
+        //objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 2.0f), glm::vec3(-90.0f, 0.0f, 40.0f), glm::vec3(3.0f)));
+        //objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-7.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
+        objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(0.0f, 270, 0.0f), glm::vec3(1.0f)));
 
         std::vector<std::string> modelsPath = {
-            //"../models/simpleScene2.obj"
+            //"../models/bar_plane.obj",
             //"../models/viking_room.obj"
-            "../models/untitled.obj"
+            //"../models/untitled2.obj"
+            "../models/sponza.obj"
         };
 
         for (int i = 0; i < objects.size(); i++) {
@@ -193,7 +195,7 @@ namespace DoFRenderer {
         timer->tick();
         frameBuffers[FOCUS_FRAME]->bind();
         glEnable(GL_DEPTH_TEST);
-		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+		glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (int i = 0; i < objects.size(); i++) {
@@ -271,7 +273,7 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        accumulationTest();
+        //accumulationTest();
     }
     
     void renderer::storeFrame(bool shouldStore, std::string name) {
@@ -306,12 +308,13 @@ namespace DoFRenderer {
         glm::vec4* colorDepth = buffers[FRAG_COLOR_DEPTH_BUFFER]
             ->getBufferData<glm::vec4>();
         buffers[FRAG_COLOR_DEPTH_BUFFER]->unbind();
-        int y = 319 / 2.0f , x = 632 / 2.0f;
-        if (once == 4) {
+        buffers[TEST_BUFFER]->bind();
+        int y = (windowHeight - 358) / mergeFactor , x = 286 / mergeFactor;
+        if (once == 9) {
             std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
             for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
-                int idx = y * 640 * MAX_FRAGMENT_COUNT + x * MAX_FRAGMENT_COUNT
-                    + el;
+                int idx = y * windowWidth * 0.5f * MAX_FRAGMENT_COUNT + 
+                    x * MAX_FRAGMENT_COUNT + el;
                 std::cout << "Color Depth: " << std::endl;
                 std::cout << colorDepth[idx].x << " " << colorDepth[idx].y << " " <<
                     colorDepth[idx].z << " " << colorDepth[idx].w << std::endl;
@@ -329,7 +332,7 @@ namespace DoFRenderer {
             ->getBufferData<unsigned int>();
         buffers[TILING_COUNTER_BUFFER]->unbind();
         const int tileWidth = windowWidth / tileSize;
-        int y = 439 / tileSize, x = 583 / tileSize;
+        int y = (windowHeight - 325) / tileSize, x = 1276 / tileSize;
         int idx = y * tileWidth + x;
         buffers[SPLATTED_COLOR_DEPTH_BUFFER]->bind();
         glm::vec4* colorDepth = buffers[SPLATTED_COLOR_DEPTH_BUFFER]
@@ -341,9 +344,9 @@ namespace DoFRenderer {
             ->getBufferData<glm::uvec4>();
         buffers[SPLATTED_FRAG_INFO_BUFFER]->unbind();
 
-        if (once >= 0) {
+        if (once == 4) {
             std::cout << counter[idx] << std::endl;
-            /*for (int i = 0; i < counter[idx]; i++) {
+            for (int i = 0; i < counter[idx]; i++) {
                 int buffIndex = y * tileWidth * MAX_FRAGMENT_TILE + x * MAX_FRAGMENT_TILE + i;
                 std::cout << "Color and Depth: " << std::endl;
                 std::cout << colorDepth[buffIndex].x << " " << colorDepth[buffIndex].y
@@ -352,7 +355,7 @@ namespace DoFRenderer {
                 std::cout << "Frag Info: " << std::endl;
                 std::cout << fragInfo[buffIndex].x << " " << fragInfo[buffIndex].y << " "
                     << " " << fragInfo[buffIndex].z << std::endl;
-            }*/
+            }
         }
         once++;
     }
@@ -377,11 +380,10 @@ namespace DoFRenderer {
         glm::uvec4* fragInfo = buffers[SORTED_FRAG_INFO_BUFFER]
             ->getBufferData<glm::uvec4>();
         buffers[SORTED_FRAG_INFO_BUFFER]->unbind();
-
-        int tileWidth = windowWidth / tileSize;
-        int y = 439 / tileSize, x = 583 / tileSize;
+        int tileWidth = ceil(windowWidth / tileSize);
+        int y = (windowHeight - 468) / tileSize, x = 701 / tileSize;
         int idx = y * tileWidth + x;
-        if (once == 10) {
+        if (once == 4) {
             std::cout << "_____________________________________" << std::endl;
             std::cout << counter[idx] << std::endl;
             for (int i = 0; i < counter[idx]; i++) {
@@ -402,11 +404,10 @@ namespace DoFRenderer {
     }
 
     void renderer::accumulationTest() {
-        /*if (once == 4) {
-            textures[FINAL_IMAGE]->saveImagePNG("../samples/sample.png", windowWidth,
-                windowHeight, 4);
-        }
-        once++;*/
+        buffers[TEST_BUFFER]->bind();
+        int* test = buffers[TEST_BUFFER]->getBufferData<int>();
+        buffers[TEST_BUFFER]->unbind();
+        std::cout << test[0] << std::endl;
     }
     
     void renderer::releaseMemory() {
