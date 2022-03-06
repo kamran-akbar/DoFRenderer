@@ -3,12 +3,10 @@
 namespace DoFRenderer {
 	Mesh::Mesh() { }
 	
-	Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
-		std::vector<std::string> texturePaths, std::vector<std::string> textureNames) { 
+	Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+	{
 		this->vertices.assign(vertices.begin(), vertices.end());
 		this->indices.assign(indices.begin(), indices.end());
-		this->texturePaths.assign(texturePaths.begin(), texturePaths.end());
-		this->textureNames.assign(textureNames.begin(), textureNames.end());
 	}
 	
 	Mesh::~Mesh() {
@@ -35,26 +33,20 @@ namespace DoFRenderer {
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, normal)));
 		glEnableVertexAttribArray(3);
-		for (int i = 0; i < texturePaths.size(); i++) {
-			textures.push_back(Texture(textureNames[i], texturePaths[i], GL_REPEAT, GL_LINEAR, GL_RGBA, GL_RGBA,
-				GL_UNSIGNED_BYTE));
-		}
 	}
 	
 	void Mesh::draw(const shader* shaderPtr) {
 		
 		setShaderMaterialParams(shaderPtr);
-		int texOffset = 0;
 		for (int i = 0; i < textures.size(); i++) {
-			texOffset = stoi(textureNames[i]);
-			shaderPtr->setInt("diffuseTexture", i + 2 + texOffset);
-			textures[i].bind(i + 2 + texOffset);
+			shaderPtr->setInt(textures[i]->getName(), i + 2 + textures[i]->getTexNum());
+			textures[i]->bind(i + 2 + textures[i]->getTexNum());
 		}
 		glBindVertexArray(vertexArray);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);	
 		for (int i = 0; i < textures.size(); i++) {
-			textures[i].unbind();
+			textures[i]->unbind();
 		}
 	}
 	
@@ -64,6 +56,12 @@ namespace DoFRenderer {
 		this->material->diffuse = material->diffuse;
 		this->material->specular = material->specular;
 		this->material->shininess = material->shininess;
+	}
+
+	void Mesh::setTexture(const Texture* texture) {
+		Texture* tex = new Texture(texture->getName(), texture->getID(),
+			texture->getTexNum());
+		textures.push_back(tex);
 	}
 	
 	void Mesh::setShaderParams(const light* lightPtr, const camera* cameraPtr, const shader* shaderPtr) {
@@ -94,7 +92,7 @@ namespace DoFRenderer {
 	
 	void Mesh::deleteBuffers() { 
 		for (int i = 0; i < textures.size(); i++) {
-			textures[i].deleteTexture();
+			textures[i]->deleteTexture();
 		}
 		glDeleteVertexArrays(1, &vertexArray);
 		glDeleteBuffers(1, &vertexBuffer);

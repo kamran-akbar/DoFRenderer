@@ -7,10 +7,14 @@
 
 namespace DoFRenderer {
 	
-	Texture::Texture(std::string name, std::string filePath, unsigned int wrapMode,
-        unsigned int filterMode, unsigned int format, unsigned int internalFormat, 
-        unsigned int type) {
+    Texture::Texture(std::string name, unsigned int id, unsigned int number) :
+        name(name), texture(id), number(number) { }
 
+	Texture::Texture(std::string name, std::string filePath, unsigned int number,
+        unsigned int wrapMode, unsigned int filterMode, unsigned int format, 
+        unsigned int internalFormat, unsigned int type) {
+        this->name = name;
+        this->number = number;
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);	
@@ -32,7 +36,8 @@ namespace DoFRenderer {
             format = GL_RGBA;
         }
         if (data) {
-            glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, data);
+            glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, 
+                format, type, data);
             glGenerateMipmap(GL_TEXTURE_2D);
         }
         else {

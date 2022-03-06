@@ -40,9 +40,9 @@ namespace DoFRenderer {
 		void quadRenderLoop();
 		void releaseMemory();
 
-		void mergeTest();
-		void splatTest();
-		void sortTest();
+		void mergeTest(int coordX, int coordY);
+		void splatTest(int coordX, int coordY);
+		void sortTest(int coordX, int coordY);
 		void accumulationTest();
 	private:
 		std::vector<Object*> objects;

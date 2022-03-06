@@ -6,11 +6,12 @@ namespace DoFRenderer {
 	
 	class Texture {
 	public:
-		Texture() : texture(-1) {}
+		Texture() { }
+		Texture(std::string name, unsigned int id, unsigned int texNum);
 		Texture(
-			std::string name, std::string filepath, unsigned int wrapMode, 
-			unsigned int filterMode, unsigned int format, unsigned int internalFormat, 
-			unsigned int type
+			std::string name, std::string filepath, unsigned int number,
+			unsigned int wrapMode, unsigned int filterMode, unsigned int format, 
+			unsigned int internalFormat, unsigned int type
 		);
 		Texture(
 			unsigned int format, unsigned int windowWidth, unsigned int windowHeight, 
@@ -28,11 +29,13 @@ namespace DoFRenderer {
 		void unbind();
 		void deleteTexture();
 
-		inline std::string getName() { return name; }
+		inline std::string getName() const { return name; }
 		inline unsigned int getID() const { return texture; }
+		inline unsigned int getTexNum() const { return number; }
 
 	private:
 		unsigned int texture;
+		unsigned int number;
 		std::string name;
 	};
 }

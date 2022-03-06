@@ -39,12 +39,12 @@ namespace DoFRenderer {
 	class Mesh {
 	public:
 		Mesh();
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
-			std::vector<std::string> texturePaths, std::vector<std::string> textureNames);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
 		~Mesh();
 		void prepareObject(const shader* shaderPtr);
 		void draw(const shader* shaderPtr);
 		void setMaterial(const Material* material);
+		void setTexture(const Texture* texture);
 		void setShaderParams(const light* lightPtr, const camera* cameraPtr, const shader* shaderPtr);
 		void deleteBuffers();
 		inline Material* getMaterial() const { return material; }
@@ -56,10 +56,8 @@ namespace DoFRenderer {
 		unsigned int vertexBuffer;
 		unsigned int vertexArray;
 		unsigned int elementBuffer;
-		std::vector<std::string> texturePaths;
-		std::vector<std::string> textureNames;
 		std::vector<Vertex> vertices;
-		std::vector<Texture> textures;
+		std::vector<Texture *> textures;
 		std::vector<unsigned int> indices;
 		Material* material;
 	};

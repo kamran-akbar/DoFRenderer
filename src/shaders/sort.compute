@@ -136,7 +136,7 @@ void main() {
 		sortedFrag.depth = 1e6;
 		localFragments[i * tileSizeSq + tid_1D] = sortedFrag;
 	}
-
+	barrier();
 	if (tid_1D < fragTileRemainder) {
 		sortedFragments sortedFrag;
 		sortedFrag.index = fragTileDivision * tileSizeSq + tid_1D;
@@ -165,11 +165,10 @@ void main() {
 					localFragments[index] = localFragments[compareIndex];
 					localFragments[compareIndex] = temp;
 				}
-				barrier();
 			}
+			barrier();
 		}
 	}
-
 	//write the sorted fragment to the main buffer
 	for (int i = 0; i < fragTileDivision; i++) {
 		uint writingIndex = i * tileSizeSq + tid_1D;
@@ -191,6 +190,7 @@ void main() {
 				uvec4(fragInfo.screenCoords, fragInfo.mergeID, cocSq);
 		}
 	}
+	barrier();
 	if (tid_1D < fragTileRemainder) {
 		uint writingIndex = fragTileDivision * tileSizeSq + tid_1D;
 		uint readingIndex = localFragments[writingIndex].index;

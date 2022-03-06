@@ -61,19 +61,30 @@ namespace DoFRenderer {
         textures[LAYER_COUNT_TEX] = new Texture(GL_R32I, windowWidth, windowHeight, 
             GL_REPEAT, GL_LINEAR, GL_RED_INTEGER, GL_INT);
         textures[LAYER_COUNT_TEX]->bindImageTexture(1, GL_READ_WRITE, GL_R32I);
-
-        //objects.push_back(new Object(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 90, 0.0f), glm::vec3(1.0f)));
-        //objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 2.0f), glm::vec3(-90.0f, 0.0f, 40.0f), glm::vec3(3.0f)));
-        //objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(-7.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
-        objects.push_back(new Object(glm::vec3(0.0f), glm::vec3(0.0f, 270, 0.0f), glm::vec3(1.0f)));
-
-        std::vector<std::string> modelsPath = {
-            //"../models/bar_plane.obj",
-            //"../models/viking_room.obj"
-            //"../models/untitled2.obj"
-            "../models/sponza.obj"
-        };
-
+        std::vector<std::string> modelsPath;
+        switch (SCENE_NUM) {
+        case 1:
+            objects.push_back(new Object(glm::vec3(0.0f, 0.0f, 0.0f), 
+                glm::vec3(0.0f, 90, 0.0f), glm::vec3(1.0f)));
+            modelsPath.push_back("../models/bar_plane.obj");
+            break;
+        case 2:
+            objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 2.0f), 
+                glm::vec3(-90.0f, 0.0f, 40.0f), glm::vec3(3.0f)));
+            modelsPath.push_back("../models/viking_room.obj");
+            break;
+        case 3:
+            objects.push_back(new Object(glm::vec3(0.0f),
+                glm::vec3(-7.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
+            modelsPath.push_back("../models/untitled2.obj");
+            break;
+        case 4:
+            objects.push_back(new Object(glm::vec3(0.0f), 
+                glm::vec3(0.0f, 270, 0.0f), glm::vec3(1.0f)));
+            modelsPath.push_back("../models/sponza.obj");
+            break;
+        }
+        
         for (int i = 0; i < objects.size(); i++) {
             objects[i]->loadModel(modelsPath[i]);
             objects[i]->prepareObject();
@@ -263,7 +274,7 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT); 
-        //sortTest();
+        //sortTest(121, 26);
     }
 
     void renderer::accumulateFragment() {
@@ -298,7 +309,7 @@ namespace DoFRenderer {
         //std::cout << "fps: " << timer->fps() << std::endl;
     }
 
-    void renderer::mergeTest() {
+    void renderer::mergeTest(int coordX, int coordY) {
         buffers[FRAG_MERGING_DATA_BUFFER]->bind();
         glm::uvec4* mergeData = buffers[FRAG_MERGING_DATA_BUFFER]
             ->getBufferData<glm::uvec4>();
@@ -309,7 +320,8 @@ namespace DoFRenderer {
             ->getBufferData<glm::vec4>();
         buffers[FRAG_COLOR_DEPTH_BUFFER]->unbind();
         buffers[TEST_BUFFER]->bind();
-        int y = (windowHeight - 358) / mergeFactor , x = 286 / mergeFactor;
+        int y = (windowHeight - 1 - coordY) / mergeFactor , 
+            x = coordX / mergeFactor;
         if (once == 9) {
             std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
             for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
@@ -326,13 +338,13 @@ namespace DoFRenderer {
         once++;
     }
     
-    void renderer::splatTest() {
+    void renderer::splatTest(int coordX, int coordY) {
         buffers[TILING_COUNTER_BUFFER]->bind();
         unsigned int* counter = buffers[TILING_COUNTER_BUFFER]
             ->getBufferData<unsigned int>();
         buffers[TILING_COUNTER_BUFFER]->unbind();
         const int tileWidth = windowWidth / tileSize;
-        int y = (windowHeight - 325) / tileSize, x = 1276 / tileSize;
+        int y = (windowHeight - 1 - coordY) / tileSize, x = coordX / tileSize;
         int idx = y * tileWidth + x;
         buffers[SPLATTED_COLOR_DEPTH_BUFFER]->bind();
         glm::vec4* colorDepth = buffers[SPLATTED_COLOR_DEPTH_BUFFER]
@@ -360,7 +372,7 @@ namespace DoFRenderer {
         once++;
     }
 
-    void renderer::sortTest() {
+    void renderer::sortTest(int coordX, int coordY) {
         buffers[TILING_COUNTER_BUFFER]->bind();
         unsigned int* counter = buffers[TILING_COUNTER_BUFFER]
             ->getBufferData<unsigned int>();
@@ -381,12 +393,12 @@ namespace DoFRenderer {
             ->getBufferData<glm::uvec4>();
         buffers[SORTED_FRAG_INFO_BUFFER]->unbind();
         int tileWidth = ceil(windowWidth / tileSize);
-        int y = (windowHeight - 468) / tileSize, x = 701 / tileSize;
+        int y = (windowHeight - 1 - coordY) / tileSize, x = coordX / tileSize;
         int idx = y * tileWidth + x;
-        if (once == 4) {
+        if (once >= 4 && once <= 10) {
             std::cout << "_____________________________________" << std::endl;
             std::cout << counter[idx] << std::endl;
-            for (int i = 0; i < counter[idx]; i++) {
+            for (int i = 0; i < 1; i++) {
                 int buffIdx = y * tileWidth * MAX_FRAGMENT_TILE + x
                     * MAX_FRAGMENT_TILE + i;
                 std::cout << "Fragment: " << i << std::endl;

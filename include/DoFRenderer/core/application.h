@@ -34,6 +34,8 @@ namespace DoFRenderer {
 		std::unique_ptr<light> lightPtr;
 		float step = 0.0f;
 		bool storingFrame = false;
+		bool isFrameChanged = false;
+		unsigned int frame = 0;
 		int counter = -1;
 	};
 

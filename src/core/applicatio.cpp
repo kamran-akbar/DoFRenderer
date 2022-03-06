@@ -1,4 +1,5 @@
 #include "DoFRenderer/core/application.h"
+#include "DoFRenderer/core/utils.h"
 #include <string>
 #include <sstream>
 #include <iomanip>
@@ -27,14 +28,24 @@ namespace DoFRenderer {
     void application::pipelineInitialization() {
         windowPtr = std::make_unique<window>(window(1280, 720, "DoF Renderer"));
         windowPtr->createWindow();
-        /*cameraPtr = std::make_unique<camera>(camera(20.0f, windowPtr->getAspectRatio(1.0f),
-            0.01f, 100.0f, glm::vec3(0.0f, 0.0f, -7.5f), glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f)));*/
-        cameraPtr = std::make_unique<camera>(camera(45.0f, windowPtr->getAspectRatio(1.0f),
-            0.01f, 600.0f, glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f)));
-        cameraPtr->setLensVariable(3.0f, 20.0, 50);   
-        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 5.0f, -10.0),
+        if (SCENE_NUM >= 1 && SCENE_NUM <= 3) {
+            cameraPtr = std::make_unique<camera>(camera(
+                20, windowPtr->getAspectRatio(1.0f), 0.01f, 100.0f, 
+                glm::vec3(0.0f, 0.0f, -7.5f), glm::vec3(0.0f, 0.0f, 1.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f)
+            ));
+            cameraPtr->setLensVariable(3.0f, 6.0f, 50.0f);
+        }
+        else if (SCENE_NUM == 4) {
+            cameraPtr = std::make_unique<camera>(camera(
+                45.0f, windowPtr->getAspectRatio(1.0f), 0.01f, 600.0f,
+                glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f)
+            ));
+            cameraPtr->setLensVariable(50.0f, 500, 50);
+        }
+        
+        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 45.0f, 0.0),
             glm::vec3(1.0f), glm::vec3(0.4f), glm::vec3(1.0f)));
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(),
             windowPtr->getHeight(), layerCount));
@@ -50,11 +61,14 @@ namespace DoFRenderer {
     
     void application::pipelineLoop() {
         rendererPtr->renderLoop(cameraPtr.get());
-        rendererPtr->generateDepthDiscMap();
-        rendererPtr->mergeFragments();
-        rendererPtr->splatFragments();
-        rendererPtr->sortFragments();
-        rendererPtr->accumulateFragment();
+        rendererPtr->renderLoop(cameraPtr.get());
+        if (frame == 10 || isFrameChanged) {
+            //isFrameChanged = true;
+            rendererPtr->mergeFragments();
+            rendererPtr->splatFragments();
+            rendererPtr->sortFragments();
+            rendererPtr->accumulateFragment();
+        }
         rendererPtr->quadRenderLoop();
         /*this->sampleDenseParallelLightField(
             glm::vec3(5.0f, 0.0f, -7.5f),
@@ -66,6 +80,7 @@ namespace DoFRenderer {
             glm::vec3(-0.45f, 0.0f, 1.0f),
             glm::vec3(0.45f, 0.0f, 1.0f)
         );*/
+        frame++;
     }
 
     void application::sampleDenseParallelLightField(
@@ -81,6 +96,7 @@ namespace DoFRenderer {
         ss << std::setfill('0') << std::setw(4) << counter;
         std::cout << ss.str() << std::endl;
         rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
+        isFrameChanged = true;
     }
 
     void application::sampleDenseShearedLightField(
@@ -102,6 +118,7 @@ namespace DoFRenderer {
         ss << std::setfill('0') << std::setw(4) << counter;
         std::cout << ss.str() << std::endl;
         rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
+        isFrameChanged = true;
     }
 
 }

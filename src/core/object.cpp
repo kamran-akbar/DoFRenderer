@@ -1,8 +1,9 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tinyobjloader/tiny_obj_loader.h>
-
 #include "DoFRenderer/core/object.h"
+#include <iostream>
 #include <unordered_map>
+#include <algorithm>
 
 namespace DoFRenderer {
     
@@ -51,8 +52,8 @@ namespace DoFRenderer {
         std::unordered_map<Vertex, unsigned int> uniqueVertices;
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        std::vector<std::string> texturePaths;
-        std::vector<std::string> textureNames;
+        std::unordered_map<int, Material*> allMaterials;
+        std::unordered_map<int, Texture*> allTextures;
         int material_id;
 
         // Loop over shapes
@@ -62,8 +63,6 @@ namespace DoFRenderer {
             vertices.clear();
             uniqueVertices.clear();
             indices.clear();
-            texturePaths.clear();
-            textureNames.clear();
 
             material_id = -1;
 
@@ -91,7 +90,7 @@ namespace DoFRenderer {
                         };
                     }
 
-                    // Check if `texcoord_index` is zero or positive. negative = no texcoord data
+                    // Check if texcoord_index is zero or positive. negative = no texcoord data
                     if (idx.texcoord_index >= 0) {
                         vertex.uv = {
                             attrib.texcoords[2 * size_t(idx.texcoord_index) + 0],
@@ -116,13 +115,7 @@ namespace DoFRenderer {
                 // per-face material
                 material_id = shapes[s].mesh.material_ids[f];
             }
-            if (materials[material_id].diffuse_texname != "") {
-                texturePaths.push_back(materials[material_id].diffuse_texname);
-                textureNames.push_back(std::to_string(textureNumber));
-                textureNumber++;
-            }
-
-            meshes.push_back(new Mesh(vertices, indices, texturePaths, textureNames));
+            meshes.push_back(new Mesh(vertices, indices));
             glm::vec3 ambient = {
                 materials[material_id].ambient[0],
                 materials[material_id].ambient[1],
@@ -139,8 +132,28 @@ namespace DoFRenderer {
                 materials[material_id].specular[2]
             };
             float shininess = materials[material_id].shininess;
-            Material* material = new Material(ambient, diffuse, specular, shininess);
-            meshes[meshes.size() - 1]->setMaterial(material);
+            if (allMaterials.find(material_id) == allMaterials.end()) {
+                allMaterials[material_id] = new Material(ambient, diffuse,
+                    specular, shininess);
+            }
+            if (materials[material_id].diffuse_texname != "") {
+                if (allTextures.find(material_id) == allTextures.end()) {
+                    allTextures[material_id] = new Texture(
+                        "diffuseTexture",
+                        materials[material_id].diffuse_texname,
+                        textureNumber,
+                        GL_REPEAT,
+                        GL_LINEAR,
+                        GL_RGBA,
+                        GL_RGBA,
+                        GL_UNSIGNED_BYTE
+                    );
+                    textureNumber++;
+                }
+                meshes[meshes.size() - 1]->setTexture(allTextures[material_id]);
+            }
+            meshes[meshes.size() - 1]->setMaterial(allMaterials[material_id]);
+            
         }
 
     }

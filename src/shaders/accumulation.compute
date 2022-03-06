@@ -66,8 +66,7 @@ void blendFragmentsData(inout vec4 color, inout float alpha_dest,
 		fragmentMergingData fragInfo;
 		fragInfo.screenCoords = localFragsInfo[i].xy;
 		fragInfo.mergeID = localFragsInfo[i].z;
-		vec2 dir = vec2(fragInfo.screenCoords) / FLOATING_PERCISION
-			- vec2(gid);
+		vec2 dir = vec2(fragInfo.screenCoords) / FLOATING_PERCISION - vec2(gid);
 		float distCenter = dot(dir, dir);
 		float cocSq = localFragsInfo[i].w / FLOATING_PERCISION;
 		if (distCenter <= cocSq) {
@@ -105,8 +104,7 @@ void main() {
 		startLoadIndex += fragNum;
 		count -= fragNum;
 		fragNum = min(count, SHARED_SIZE);
-		break;
 	} while (count > 0);
 	
-	imageStore(finalImage, gid, color / (1-alpha_dest));
+	imageStore(finalImage, gid, color / ( 1.0f  - alpha_dest));
 }
