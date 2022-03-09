@@ -3,7 +3,7 @@
 #define MAX_FRAGMENT_COUNT 16
 #define MERGE_FACTOR 2
 #define MAX_FRAGMENT_TILE 8192
-#define TILE_SPREAD 1
+#define TILE_SPREAD 2
 
 struct fragmentColorDepth {
 	vec3 color;

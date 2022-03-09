@@ -58,7 +58,7 @@ namespace DoFRenderer {
 		int once = 0;
 
 		static const int tileSize = 16;
-		static const int tileSpread = 1;
+		static const int tileSpread = 2;
 		static const int mergeFactor = 2;
 	};
 }

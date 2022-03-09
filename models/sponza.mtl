@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\background.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\background.png
 
 newmtl Material__47
 Ns 96.078443
@@ -31,7 +31,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\vase_plant.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\vase_plant.png
 
 newmtl arch
 Ns 96.078443
@@ -42,7 +42,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_arch_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_arch_diff.png
 
 newmtl bricks
 Ns 96.078443
@@ -53,7 +53,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\spnza_bricks_a_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\spnza_bricks_a_diff.png
 
 newmtl ceiling
 Ns 96.078443
@@ -64,7 +64,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_ceiling_a_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_ceiling_a_diff.png
 
 newmtl chain
 Ns 96.078443
@@ -75,7 +75,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\chain_texture.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\chain_texture.png
 
 newmtl column_a
 Ns 96.078443
@@ -86,7 +86,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_column_a_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_column_a_diff.png
 
 newmtl column_b
 Ns 96.078443
@@ -97,7 +97,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_column_b_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_column_b_diff.png
 
 newmtl column_c
 Ns 96.078443
@@ -108,7 +108,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_column_c_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_column_c_diff.png
 
 newmtl details
 Ns 96.078443
@@ -119,7 +119,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_details_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_details_diff.png
 
 newmtl fabric_a
 Ns 96.078443
@@ -130,7 +130,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_fabric_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_fabric_diff.png
 
 newmtl fabric_c
 Ns 96.078443
@@ -141,7 +141,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_curtain_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_curtain_diff.png
 
 newmtl fabric_d
 Ns 96.078443
@@ -152,7 +152,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_fabric_blue_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_fabric_blue_diff.png
 
 newmtl fabric_e
 Ns 96.078443
@@ -163,7 +163,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_fabric_green_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_fabric_green_diff.png
 
 newmtl fabric_f
 Ns 96.078443
@@ -174,7 +174,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_curtain_green_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_curtain_green_diff.png
 
 newmtl fabric_g
 Ns 96.078443
@@ -185,7 +185,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_curtain_blue_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_curtain_blue_diff.png
 
 newmtl flagpole
 Ns 96.078443
@@ -196,8 +196,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_flagpole_diff.png
-
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_flagpole_diff.png
 
 newmtl floor
 Ns 96.078443
@@ -208,7 +207,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_floor_a_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_floor_a_diff.png
 
 newmtl leaf
 Ns 96.078443
@@ -219,7 +218,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_thorn_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_thorn_diff.png
 
 newmtl roof
 Ns 96.078443
@@ -230,7 +229,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\sponza_roof_diff.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\sponza_roof_diff.png
 
 newmtl vase
 Ns 96.078443
@@ -241,7 +240,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\vase_dif.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\vase_dif.png
 
 newmtl vase_hanging
 Ns 96.078443
@@ -252,15 +251,15 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\vase_hanging.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\vase_hanging.png
 
 newmtl vase_round
 Ns 96.078443
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.5880000 0.588000
+Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd ..\\textures\\vase_round.png
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\vase_round.png

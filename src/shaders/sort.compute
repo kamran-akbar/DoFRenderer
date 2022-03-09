@@ -1,7 +1,7 @@
 #version 450 core
 #define WORK_GROUP_SIZE 16
 #define MAX_FRAGMENT_TILE 8192
-#define FLOATING_PERCISION 1000
+#define FLOATING_PERCISION 100000.0f
 
 struct fragmentColorDepth {
 	vec3 color;

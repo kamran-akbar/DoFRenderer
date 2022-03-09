@@ -22,6 +22,6 @@ void main()
         FragColor = vec4(depth);
     }
     //imageStore(finalImage, ivec2(gl_FragCoord.xy), FragColor);
-    FragColor = imageLoad(finalImage, ivec2(gl_FragCoord.xy));
+    //FragColor = imageLoad(finalImage, ivec2(gl_FragCoord.xy));
     //FragColor = imageLoad(depthDisc, ivec2(gl_FragCoord.xy)).rrrr;
 } 

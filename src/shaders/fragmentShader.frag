@@ -51,7 +51,7 @@ vec4 phongShading(){
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec3 specular = light.specular * (spec * material.specular); 
 
-    vec3 finalColor =  ambient + diffuse + specular;
+    vec3 finalColor =  ambient + diffuse;
     return vec4(finalColor, 1.0);
 }
 

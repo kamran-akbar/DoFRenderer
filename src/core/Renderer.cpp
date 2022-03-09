@@ -247,7 +247,7 @@ namespace DoFRenderer {
         attachments[DEPTH_ATTACHMENT]->unbind();
         attachments[COLOR_ATTACHMENT]->unbind();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        //mergeTest();
+        //mergeTest(640, 451);
     }
 
     void renderer::splatFragments() {
@@ -274,7 +274,7 @@ namespace DoFRenderer {
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT); 
-        //sortTest(121, 26);
+        //sortTest(961, 414);
     }
 
     void renderer::accumulateFragment() {
@@ -322,20 +322,18 @@ namespace DoFRenderer {
         buffers[TEST_BUFFER]->bind();
         int y = (windowHeight - 1 - coordY) / mergeFactor , 
             x = coordX / mergeFactor;
-        if (once == 9) {
-            std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
-            for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
-                int idx = y * windowWidth * 0.5f * MAX_FRAGMENT_COUNT + 
-                    x * MAX_FRAGMENT_COUNT + el;
-                std::cout << "Color Depth: " << std::endl;
-                std::cout << colorDepth[idx].x << " " << colorDepth[idx].y << " " <<
-                    colorDepth[idx].z << " " << colorDepth[idx].w << std::endl;
-                std::cout << "Merging Data: " << std::endl;
-                std::cout << mergeData[idx].x << " " << mergeData[idx].y << " " <<
-                    mergeData[idx].z << std::endl;
-            }
+        std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
+        for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
+            int idx = y * windowWidth * 0.5f * MAX_FRAGMENT_COUNT + 
+                x * MAX_FRAGMENT_COUNT + el;
+            std::cout << "Color Depth: " << std::endl;
+            std::cout << colorDepth[idx].x << " " << colorDepth[idx].y << " " <<
+                colorDepth[idx].z << " " << colorDepth[idx].w << std::endl;
+            std::cout << "Merging Data: " << std::endl;
+            std::cout << mergeData[idx].x << " " << mergeData[idx].y << " " <<
+                mergeData[idx].z << std::endl;
         }
-        once++;
+        
     }
     
     void renderer::splatTest(int coordX, int coordY) {
@@ -355,21 +353,17 @@ namespace DoFRenderer {
         glm::uvec4* fragInfo = buffers[SPLATTED_FRAG_INFO_BUFFER]
             ->getBufferData<glm::uvec4>();
         buffers[SPLATTED_FRAG_INFO_BUFFER]->unbind();
-
-        if (once == 4) {
-            std::cout << counter[idx] << std::endl;
-            for (int i = 0; i < counter[idx]; i++) {
-                int buffIndex = y * tileWidth * MAX_FRAGMENT_TILE + x * MAX_FRAGMENT_TILE + i;
-                std::cout << "Color and Depth: " << std::endl;
-                std::cout << colorDepth[buffIndex].x << " " << colorDepth[buffIndex].y
-                    << " " << colorDepth[buffIndex].z << " " << colorDepth[buffIndex].w
-                    << std::endl;
-                std::cout << "Frag Info: " << std::endl;
-                std::cout << fragInfo[buffIndex].x << " " << fragInfo[buffIndex].y << " "
-                    << " " << fragInfo[buffIndex].z << std::endl;
-            }
+        std::cout << counter[idx] << std::endl;
+        for (int i = 0; i < counter[idx]; i++) {
+            int buffIndex = y * tileWidth * MAX_FRAGMENT_TILE + x * MAX_FRAGMENT_TILE + i;
+            std::cout << "Color and Depth: " << std::endl;
+            std::cout << colorDepth[buffIndex].x << " " << colorDepth[buffIndex].y
+                << " " << colorDepth[buffIndex].z << " " << colorDepth[buffIndex].w
+                << std::endl;
+            std::cout << "Frag Info: " << std::endl;
+            std::cout << fragInfo[buffIndex].x << " " << fragInfo[buffIndex].y << " "
+                << " " << fragInfo[buffIndex].z << std::endl;
         }
-        once++;
     }
 
     void renderer::sortTest(int coordX, int coordY) {
@@ -387,7 +381,7 @@ namespace DoFRenderer {
         glm::vec4* colorDepth = buffers[SORTED_COLOR_DEPTH_BUFFER]
             ->getBufferData<glm::vec4>();
         buffers[SORTED_COLOR_DEPTH_BUFFER]->unbind();
-        
+
         buffers[SORTED_FRAG_INFO_BUFFER]->bind();
         glm::uvec4* fragInfo = buffers[SORTED_FRAG_INFO_BUFFER]
             ->getBufferData<glm::uvec4>();
@@ -395,24 +389,23 @@ namespace DoFRenderer {
         int tileWidth = ceil(windowWidth / tileSize);
         int y = (windowHeight - 1 - coordY) / tileSize, x = coordX / tileSize;
         int idx = y * tileWidth + x;
-        if (once >= 4 && once <= 10) {
-            std::cout << "_____________________________________" << std::endl;
-            std::cout << counter[idx] << std::endl;
-            for (int i = 0; i < 1; i++) {
-                int buffIdx = y * tileWidth * MAX_FRAGMENT_TILE + x
-                    * MAX_FRAGMENT_TILE + i;
-                std::cout << "Fragment: " << i << std::endl;
-                std::cout << colorDepth[buffIdx].r << " " << colorDepth[buffIdx].g
-                    << " " << colorDepth[buffIdx].b << " " << colorDepth[buffIdx].a
-                    << std::endl;
-                std::cout  << fragInfo[buffIdx].x / FLOATING_PERCISION
-                    << " " << fragInfo[buffIdx].y / FLOATING_PERCISION
-                    << " " << fragInfo[buffIdx].z / FLOATING_PERCISION 
-                    << " " << fragInfo[buffIdx].w / FLOATING_PERCISION 
-                    << std::endl;
-            }
+
+        std::cout << counter[idx] << std::endl;
+        std::cout << "_____________________________________" << std::endl;
+        for (int i = 0; i < counter[idx]; i++) {
+            int buffIdx = y * tileWidth * MAX_FRAGMENT_TILE + x
+                * MAX_FRAGMENT_TILE + i;
+            std::cout << "Fragment: " << i << std::endl;
+            std::cout << colorDepth[buffIdx].r << " " << colorDepth[buffIdx].g
+                << " " << colorDepth[buffIdx].b << " " << colorDepth[buffIdx].a
+                << std::endl;
+            std::cout << fragInfo[buffIdx].x / FLOATING_PERCISION
+                << " " << fragInfo[buffIdx].y / FLOATING_PERCISION
+                << " " << fragInfo[buffIdx].z / FLOATING_PERCISION
+                << " " << fragInfo[buffIdx].w / FLOATING_PERCISION
+                << std::endl;
         }
-        once++;
+
     }
 
     void renderer::accumulationTest() {

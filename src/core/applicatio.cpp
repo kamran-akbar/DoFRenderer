@@ -38,14 +38,14 @@ namespace DoFRenderer {
         }
         else if (SCENE_NUM == 4) {
             cameraPtr = std::make_unique<camera>(camera(
-                45.0f, windowPtr->getAspectRatio(1.0f), 0.01f, 600.0f,
-                glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f),
+                50.0f, windowPtr->getAspectRatio(1.0f), 0.01f, 1500.0f,
+                glm::vec3(-43.0f, 40.0f, -230.0f), glm::vec3(0.55f, 0.0f, 1.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
             ));
-            cameraPtr->setLensVariable(50.0f, 500, 50);
+            cameraPtr->setLensVariable(11.0f, 226.0f, 500.0f);
         }
         
-        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 45.0f, 0.0),
+        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 75.0f, -100.0),
             glm::vec3(1.0f), glm::vec3(0.4f), glm::vec3(1.0f)));
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(),
             windowPtr->getHeight(), layerCount));
@@ -61,15 +61,18 @@ namespace DoFRenderer {
     
     void application::pipelineLoop() {
         rendererPtr->renderLoop(cameraPtr.get());
-        rendererPtr->renderLoop(cameraPtr.get());
-        if (frame == 10 || isFrameChanged) {
-            //isFrameChanged = true;
+        rendererPtr->generateDepthDiscMap();
+        if (frame == 4 || isFrameChanged) {
+            isFrameChanged = false;
             rendererPtr->mergeFragments();
             rendererPtr->splatFragments();
             rendererPtr->sortFragments();
             rendererPtr->accumulateFragment();
         }
         rendererPtr->quadRenderLoop();
+        if (frame == 4) {
+            rendererPtr->storeFrame(true, "capture2.png");
+        }
         /*this->sampleDenseParallelLightField(
             glm::vec3(5.0f, 0.0f, -7.5f),
             glm::vec3(-5.0f, 0.0f, -7.5f)
