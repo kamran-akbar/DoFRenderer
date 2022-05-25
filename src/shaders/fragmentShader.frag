@@ -25,7 +25,7 @@ in GS_OUT
 layout(binding = 1, r32i) restrict uniform iimage2D layerCount;
 
 uniform sampler2D depthDisc;
-uniform sampler2DArray prevDepthmap;
+uniform sampler2DMSArray prevDepthmap;
 
 
 uniform vec2 windowDimension;
@@ -34,6 +34,7 @@ uniform sampler2D diffuseTexture;
 uniform vec3 cameraPos;
 uniform Material material;
 uniform Light light;
+uniform int AA_samples;
 
 vec4 phongShading(){
     vec3 ambient = light.ambient * material.diffuse;
@@ -79,7 +80,8 @@ void main()
             discard;
             return;
         }
-        float prevDepth = linearizeDepth(texture(prevDepthmap, vec3(uv.xy, gl_Layer - 1)).r);
+        float prevDepth = texelFetch(prevDepthmap, ivec3(gl_FragCoord.xy, gl_Layer - 1), AA_samples / 2).r;
+        prevDepth = linearizeDepth(prevDepth);
         float currentDepth = linearizeDepth(gl_FragCoord.z);
         float deltaZ = 0.05;
         if(currentDepth <= prevDepth + deltaZ){
@@ -87,6 +89,6 @@ void main()
            return;
         }
     }
-    imageAtomicMax(layerCount, ivec2(gl_FragCoord.xy), gl_Layer + 1);
+    imageAtomicMax(layerCount, ivec2(gl_FragCoord.xy), gl_Layer);
     gl_FragColor = phongShading();
 }

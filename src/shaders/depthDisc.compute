@@ -2,7 +2,7 @@
 #define WORK_GROUP_SIZE 32
 
 layout(local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE) in;
-uniform sampler2DArray depthmap;
+uniform sampler2DMSArray depthmap;
 layout(r32f, binding = 0) writeonly uniform image2D depthDisc;
 
 
@@ -11,6 +11,7 @@ uniform int coc_max;
 uniform vec2 cameraFarNear;
 uniform vec3 eyeLens_focusDist_aperture;
 shared float localDepths[WORK_GROUP_SIZE + 2][WORK_GROUP_SIZE + 2];
+uniform int AA_samples;
 
 bool applySobelFilter() {
 	uvec2 p = gl_LocalInvocationID.xy + uvec2(1, 1);
@@ -45,33 +46,41 @@ float computeCoC(float depth) {
     return coc;
 }
 
+float computeMultiSampleDepthValue(ivec3 gid_layer) {
+    float depth = texelFetch(depthmap, gid_layer, AA_samples / 2).r;
+	/*for (int i = 0; i < AA_samples; i++) {
+		depth += texelFetch(depthmap, gid_layer, i).r;
+	}*/
+	return depth;
+}
+
 void main() {
 	vec2 gid = gl_GlobalInvocationID.xy;
 	uvec2 tid = gl_LocalInvocationID.xy;
 	vec2 dimension = imageSize(depthDisc);
     if (gid.x >= dimension.x || gid.y >= dimension.y) return;
 	vec2 uv = gid / dimension;
-	float depth = linearizeDepth(texture(depthmap, vec3(uv, 0)).r);
-	localDepths[tid.x + 1][tid.y + 1] = depth;
+    float depth = linearizeDepth(computeMultiSampleDepthValue(ivec3(gid.xy, 0)));
+    localDepths[tid.x + 1][tid.y + 1] = depth;
     imageStore(depthDisc, ivec2(gid.xy), vec4(0.0));
     // Handle the edges
     // Bottom edge
     if (tid.y == 0) {
         if (gid.y > 0) {
-            localDepths[tid.x + 1][0] = linearizeDepth(texture(depthmap,
-                vec3((gid.xy + vec2(0, -1)) / dimension, 0)).r);
+            localDepths[tid.x + 1][0] = linearizeDepth(computeMultiSampleDepthValue(
+                ivec3(gid.xy + vec2(0, -1), 0)));
             // Lower left corner
             if (tid.x == 0)
                 if (gid.x > 0)
-                    localDepths[0][0] = linearizeDepth(texture(depthmap,
-                        vec3((gid.xy + vec2(-1, -1)) / dimension, 0)).r);
+                    localDepths[0][0] = linearizeDepth(computeMultiSampleDepthValue(
+                        ivec3(gid.xy + vec2(-1, -1), 0)));
                 else
                     localDepths[0][0] = 0.0;
             // Lower right corner
             if (tid.x == WORK_GROUP_SIZE - 1)
                 if (gid.x < dimension.x - 1)
-                    localDepths[WORK_GROUP_SIZE + 1][0] = linearizeDepth(texture(depthmap,
-                        vec3((gid.xy + vec2(1, -1)) / dimension, 0)).r);
+                    localDepths[WORK_GROUP_SIZE + 1][0] = linearizeDepth(computeMultiSampleDepthValue(
+                        ivec3(gid.xy + vec2(1, -1), 0)));
                 else
                     localDepths[WORK_GROUP_SIZE + 1][0] = 0.0;
         }
@@ -81,20 +90,20 @@ void main() {
     // Top edge
     if (tid.y == WORK_GROUP_SIZE - 1) {
         if (gid.y < dimension.y - 1) {
-            localDepths[tid.x + 1][WORK_GROUP_SIZE + 1] = linearizeDepth(texture(depthmap,
-                vec3((gid.xy + vec2(0, 1)) / dimension, 0)).r);
+            localDepths[tid.x + 1][WORK_GROUP_SIZE + 1] = linearizeDepth(computeMultiSampleDepthValue(
+                ivec3(gid.xy + vec2(0, 1), 0)));
             // Upper left corner
             if (tid.x == 0)
                 if (gid.x > 0)
-                    localDepths[0][WORK_GROUP_SIZE + 1] = linearizeDepth(texture(depthmap,
-                        vec3((gid.xy + vec2(-1, 1)) / dimension, 0)).r);
+                    localDepths[0][WORK_GROUP_SIZE + 1] = linearizeDepth(computeMultiSampleDepthValue(
+                        ivec3(gid.xy + vec2(-1, 1), 0)));
                 else
                     localDepths[0][WORK_GROUP_SIZE + 1] = 0.0;
             // Upper right corner
             if (tid.x == WORK_GROUP_SIZE - 1)
                 if (gid.x < dimension.x - 1)
                     localDepths[WORK_GROUP_SIZE + 1][WORK_GROUP_SIZE + 1] =
-                    linearizeDepth(texture(depthmap, vec3((vec2(gid.xy) + vec2(1, 1)) / dimension, 0)).r);
+                    linearizeDepth(computeMultiSampleDepthValue(ivec3(gid.xy + vec2(1, 1), 0)));
                 else
                     localDepths[WORK_GROUP_SIZE + 1][WORK_GROUP_SIZE + 1] = 0.0;
         }
@@ -104,16 +113,16 @@ void main() {
     // Left edge
     if (tid.x == 0) {
         if (gid.x > 0)
-            localDepths[0][tid.y + 1] = linearizeDepth(texture(depthmap,
-                vec3((gid.xy + vec2(-1, 0)) / dimension, 0)).r);
+            localDepths[0][tid.y + 1] = linearizeDepth(computeMultiSampleDepthValue(
+                ivec3(gid.xy + vec2(-1, 0), 0)));
         else
             localDepths[0][tid.y + 1] = 0.0;
     }
     // Right edge
     if (tid.x == WORK_GROUP_SIZE - 1) {
         if (gid.x < dimension.x - 1)
-            localDepths[WORK_GROUP_SIZE + 1][tid.y + 1] = linearizeDepth(texture(depthmap,
-                vec3((gid.xy + vec2(1, 0)) / dimension, 0)).r);
+            localDepths[WORK_GROUP_SIZE + 1][tid.y + 1] = linearizeDepth(computeMultiSampleDepthValue(
+                ivec3(gid.xy + vec2(1, 0), 0)));
         else
             localDepths[WORK_GROUP_SIZE + 1][tid.y + 1] = 0.0;
     }

@@ -3,7 +3,7 @@
 #define TILE_SIZE 16
 #define MAX_FRAGMENT_TILE 8192
 #define FLOATING_PERCISION 100000.0f
-#define SHARED_SIZE 2048
+#define SHARED_SIZE 32
 
 struct fragmentColorDepth {
 	vec3 color;
@@ -33,9 +33,9 @@ layout(std430, binding = 10) buffer sortedFragInfoBuffer {
 	uvec4 sortedFragData[];
 };
 
-layout(rgba32f, binding = 3) restrict uniform image2D finalImage;
+layout(rgba32f, binding = 3) restrict uniform image2DArray finalImage;
 
-uniform float tileSize;
+uniform vec3 tileSize_adjacentViews_baseline;
 
 shared vec4 localFrags[SHARED_SIZE];
 shared uvec4 localFragsInfo[SHARED_SIZE];
@@ -45,6 +45,7 @@ void blendFragmentsData(inout vec4 color, inout float alpha_dest,
 {
 	int iterations = fragNumber / tileSizeSq;
 	int remainders = fragNumber % tileSizeSq;
+	float baseline = tileSize_adjacentViews_baseline.z;
 
 	for (int i = 0; i < iterations; i++) {
 		localFrags[i * tileSizeSq + tid_1D] =
@@ -58,7 +59,7 @@ void blendFragmentsData(inout vec4 color, inout float alpha_dest,
 		localFragsInfo[iterations * tileSizeSq + tid_1D] =
 			sortedFragData[startLoadIndex + iterations * tileSizeSq + tid_1D];
 	}
-	barrier();
+	barrier(); 
 	for (int i = 0; i < fragNumber; i++) {
 		fragmentColorDepth frag;
 		frag.color = localFrags[i].rgb;
@@ -82,7 +83,9 @@ void blendFragmentsData(inout vec4 color, inout float alpha_dest,
 }
 
 void main() {
-	ivec2 imgDim = imageSize(finalImage);
+	float tileSize = tileSize_adjacentViews_baseline.x;
+	float adjViews = tileSize_adjacentViews_baseline.y;
+	ivec2 imgDim = imageSize(finalImage).xy;
 	ivec2 tiledImgDim = ivec2(ceil(imgDim / tileSize));
 	ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
 	if (gid.x >= imgDim.x || gid.y >= imgDim.y) return;
@@ -106,5 +109,5 @@ void main() {
 		fragNum = min(count, SHARED_SIZE);
 	} while (count > 0);
 	
-	imageStore(finalImage, gid, color / ( 1.0f  - alpha_dest));
+	imageStore(finalImage, ivec3(gid, 0), color / ( 1.0f  - alpha_dest));
 }

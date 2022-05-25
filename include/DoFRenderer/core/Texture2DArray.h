@@ -9,13 +9,18 @@ namespace DoFRenderer {
 			unsigned int windowHeight, unsigned int layerCount, unsigned int wrapMode, 
 			unsigned int filterMode
 		);
+		Texture2DArray(
+			unsigned int format, unsigned int mipmapLevels, unsigned int windowWidth,
+			unsigned int windowHeight, unsigned int layerCount, unsigned int wrapMode,
+			unsigned int filterMode, unsigned int samples
+		);
 		~Texture2DArray() { }
 
-		void bind(int i);
-		void bindTextureImage(unsigned int binding, unsigned int accessMode, unsigned int format);
+		void bind(int i, bool sampled);
+		void bindImageTexture(unsigned int binding, unsigned int accessMode, unsigned int format);
 		void copy(const unsigned int destID, unsigned int destTarget, unsigned int width,
-			unsigned int height, unsigned int layerCount);
-		void unbind();
+			unsigned int height, unsigned int layerCount, bool sampled);
+		void unbind(bool sampled);
 		void deleteTexture();
 		
 

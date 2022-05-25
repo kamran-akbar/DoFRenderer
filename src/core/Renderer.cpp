@@ -11,11 +11,12 @@ namespace DoFRenderer {
     renderer::renderer(unsigned int width, unsigned int height, unsigned int layerCount) :
         windowWidth(width), windowHeight(height), layerCount(layerCount) {
         timer = new Timer();
+        timer2 = new Timer();
     }
     
     renderer::~renderer() {
-        for (auto attachment : attachments) {
-            delete attachment.second;
+        for (auto textureArray : textureArrays) {
+            delete textureArray.second;
         }
         for (auto texture : textures) {
             delete texture.second;
@@ -38,23 +39,22 @@ namespace DoFRenderer {
     }
 
     void renderer::generateFrameBuffers() {
-        attachments[COLOR_ATTACHMENT] = new Texture2DArray(
-            GL_RGBA8, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
+        textureArrays[MSAA_COLOR_ATTACHMENT] = new Texture2DArray(
+            GL_RGBA8, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR, AA_SAMPLES
         );
-        
-        attachments[DEPTH_ATTACHMENT] = new Texture2DArray(
-            GL_DEPTH_COMPONENT24, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
+        textureArrays[MSAA_DEPTH_ATTACHMENT] = new Texture2DArray(
+            GL_DEPTH_COMPONENT24, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR, AA_SAMPLES
         );
-
-        attachments[COPY_DEPTH_ATTACHMENT] = new Texture2DArray(
-            GL_DEPTH_COMPONENT24, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR
+        textureArrays[COPY_DEPTH_ATTACHMENT] = new Texture2DArray(
+            GL_DEPTH_COMPONENT24, 1, windowWidth, windowHeight, layerCount, GL_REPEAT, GL_LINEAR, AA_SAMPLES
         );
         glViewport(0, 0, windowWidth, windowHeight);
-        frameBuffers[FOCUS_FRAME] = new FrameBuffer();
-        frameBuffers[FOCUS_FRAME]->attachFrameBuffer(GL_COLOR_ATTACHMENT0,
-            attachments[COLOR_ATTACHMENT]->getID());
-        frameBuffers[FOCUS_FRAME]->attachFrameBuffer(GL_DEPTH_ATTACHMENT,
-            attachments[DEPTH_ATTACHMENT]->getID());
+        
+        frameBuffers[MSAA_FOCUS_FRAME] = new FrameBuffer();
+        frameBuffers[MSAA_FOCUS_FRAME]->attachFrameBuffer(GL_COLOR_ATTACHMENT0,
+            textureArrays[MSAA_COLOR_ATTACHMENT]->getID());
+        frameBuffers[MSAA_FOCUS_FRAME]->attachFrameBuffer(GL_DEPTH_ATTACHMENT,
+            textureArrays[MSAA_DEPTH_ATTACHMENT]->getID());
     }
 
 	void renderer::prepareRenderPassBuffers(const camera* cameraPtr, const light* lightPtr) {
@@ -94,6 +94,7 @@ namespace DoFRenderer {
             objects[i]->getShader()->setVec2("windowDimension", windowWidth, windowHeight);
             objects[i]->getShader()->setVec2("cameraFarNear", cameraPtr->getFar(), 
                 cameraPtr->getNear());
+            objects[i]->getShader()->setInt("AA_samples", AA_SAMPLES);
 		}
 	}
 
@@ -109,6 +110,7 @@ namespace DoFRenderer {
         shaders[DEPTH_DISC_SHADER]->setVec3("eyeLens_focusDist_aperture",
             cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
         shaders[DEPTH_DISC_SHADER]->setInt("coc_max", COC_MAX);
+        shaders[DEPTH_DISC_SHADER]->setInt("AA_samples", AA_SAMPLES);
     }
 
     void renderer::prepareMerging(const camera* cameraPtr) {
@@ -136,6 +138,7 @@ namespace DoFRenderer {
         //focal length and focus distance are in meter and aperture is in pixels
         shaders[MERGING_SHADER]->setVec3("eyeLens_focusDist_aperture",
             cameraPtr->getEyeLens(), cameraPtr->getFocusDist(), cameraPtr->getAperture());
+        shaders[MERGING_SHADER]->setInt("AA_samples", AA_SAMPLES);
     }
 
     void renderer::prepareSplatting(const camera* cameraPtr) {
@@ -183,12 +186,13 @@ namespace DoFRenderer {
     void renderer::prepareAccumulation() {
         shaders[ACCUMULATION_SHADER] = new shader("../src/shaders/accumulation.compute");
 
-        textures[FINAL_IMAGE] = new Texture(GL_RGBA32F, windowWidth, windowHeight,
-            GL_REPEAT, GL_LINEAR, GL_RGBA, GL_FLOAT);
-        textures[FINAL_IMAGE]->bindImageTexture(3, GL_READ_WRITE, GL_RGBA32F);
-
+        textureArrays[FINAL_IMAGE] = new Texture2DArray(GL_RGBA32F, 1, 
+            windowWidth, windowHeight, ADJACENT_VIEWS, GL_REPEAT, GL_LINEAR);
+        textureArrays[FINAL_IMAGE]->bindImageTexture(3, GL_READ_WRITE, GL_RGBA32F);
+        
         shaders[ACCUMULATION_SHADER]->use();
-        shaders[ACCUMULATION_SHADER]->setFloat("tileSize", tileSize);
+        shaders[ACCUMULATION_SHADER]->setVec3("tileSize_adjacentViews_baseline",
+            tileSize, ADJACENT_VIEWS, BASELINE);
     }
 
     void renderer::prepareScreenQuad() {
@@ -197,14 +201,14 @@ namespace DoFRenderer {
         
         quads[SCREEN_QUAD] = new Quad();
         shaders[SCREEN_SHADER]->use();
-        shaders[SCREEN_SHADER]->setInt("screenTexture", 0);
-        shaders[SCREEN_SHADER]->setInt("depthTexture", 1);
-        shaders[SCREEN_SHADER]->setInt("testTex", 2);
+        shaders[SCREEN_SHADER]->setInt("screenTextureMS", 0);
+        shaders[SCREEN_SHADER]->setBool("enableDoF", ENABLE_DOF);
     }
 	
 	void renderer::renderLoop(const camera* cameraPtr) {
         timer->tick();
-        frameBuffers[FOCUS_FRAME]->bind();
+        timer2->tick();
+        frameBuffers[MSAA_FOCUS_FRAME]->bind();
         glEnable(GL_DEPTH_TEST);
 		glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -212,45 +216,57 @@ namespace DoFRenderer {
         for (int i = 0; i < objects.size(); i++) {
             objects[i]->getShader()->use();
             objects[i]->setShaderCameraParams(cameraPtr);
-            attachments[COPY_DEPTH_ATTACHMENT]->bind(0);
-            textures[DEPTH_DISC_TEX]->bind(1);
+            textureArrays[COPY_DEPTH_ATTACHMENT]->bind(0, true);
+            if (ENABLE_DOF) textures[DEPTH_DISC_TEX]->bind(1);
             objects[i]->draw();   
-            attachments[COPY_DEPTH_ATTACHMENT]->unbind();
-            textures[DEPTH_DISC_TEX]->unbind();
+            textureArrays[COPY_DEPTH_ATTACHMENT]->unbind(true);
+            if (ENABLE_DOF) textures[DEPTH_DISC_TEX]->unbind();
 		}
-        attachments[DEPTH_ATTACHMENT]->copy(attachments["copyDepthAttachment"]->getID(), 
-            GL_TEXTURE_2D_ARRAY, windowWidth, windowHeight, layerCount);
-        frameBuffers[FOCUS_FRAME]->unbind();
+        textureArrays[MSAA_DEPTH_ATTACHMENT]->copy(textureArrays[COPY_DEPTH_ATTACHMENT]->getID(),
+            GL_TEXTURE_2D_MULTISAMPLE_ARRAY, windowWidth, windowHeight, layerCount, true);
+        frameBuffers[MSAA_FOCUS_FRAME]->unbind();
         glDisable(GL_DEPTH_TEST);
+        timer2->tock();
+        //std::cout << "render loop elapsed time: " << 
+        //    timer2->elapsedTime() << std::endl;
 	}
 
     void renderer::generateDepthDiscMap() {
+        timer2->tick();
         shaders[DEPTH_DISC_SHADER]->use();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
-        attachments[DEPTH_ATTACHMENT]->bind(0);
+        textureArrays[MSAA_DEPTH_ATTACHMENT]->bind(0, true);
         glDispatchCompute(
             ceil(windowWidth / DEPTH_DISC_WORK_GROUP_SIZE),
             ceil(windowHeight / DEPTH_DISC_WORK_GROUP_SIZE),
             1
         );
-        attachments[DEPTH_ATTACHMENT]->unbind();
+        textureArrays[MSAA_DEPTH_ATTACHMENT]->unbind(true);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+        timer2->tock();
+        //std::cout << "depthmap generation elapsed time: " <<
+        //    timer2->elapsedTime() << std::endl;
     }
 
     void renderer::mergeFragments() {
+        timer2->tick();
         shaders[MERGING_SHADER]->use();
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        attachments[DEPTH_ATTACHMENT]->bind(0);
-        attachments[COLOR_ATTACHMENT]->bind(1);
+        textureArrays[MSAA_DEPTH_ATTACHMENT]->bind(0, true);
+        textureArrays[MSAA_COLOR_ATTACHMENT]->bind(1, true);
         glDispatchCompute(ceil(windowWidth / mergeFactor), 
             ceil(windowHeight / mergeFactor), 1);
-        attachments[DEPTH_ATTACHMENT]->unbind();
-        attachments[COLOR_ATTACHMENT]->unbind();
+        textureArrays[MSAA_DEPTH_ATTACHMENT]->unbind(true);
+        textureArrays[MSAA_COLOR_ATTACHMENT]->unbind(true);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        //mergeTest(640, 451);
+        //mergeTest(781, 495);
+        timer2->tock();
+        //std::cout << "merge elapsed time: " <<
+        //    timer2->elapsedTime() << std::endl;
     }
 
     void renderer::splatFragments() {
+        timer2->tick();
         shaders[SPLATTING_SHADER]->use();
         unsigned int tilingSize =
             ceil(windowWidth / tileSize) * ceil(windowHeight / tileSize);
@@ -265,9 +281,13 @@ namespace DoFRenderer {
         );
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         //splatTest();
+        timer2->tock();
+        //std::cout << "splatt elapsed time: " << 
+        //    timer2->elapsedTime() << std::endl;
     }
 
     void renderer::sortFragments() {
+        timer2->tick();
         shaders[SORTING_SHADER]->use();
         glm::ivec2 tiledImSize = glm::ivec2(ceil(windowWidth / tileSize), 
             ceil(windowHeight / tileSize));
@@ -275,9 +295,13 @@ namespace DoFRenderer {
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT); 
         //sortTest(961, 414);
+        timer2->tock();
+        //std::cout << "sort elapsed time: " << 
+        //    timer2->elapsedTime() << std::endl;
     }
 
     void renderer::accumulateFragment() {
+        timer2->tick();
         shaders[ACCUMULATION_SHADER]->use();
         glm::ivec2 tiledImSize = glm::ivec2(ceil(windowWidth / tileSize),
             ceil(windowHeight / tileSize));
@@ -285,6 +309,9 @@ namespace DoFRenderer {
         glDispatchCompute(tiledImSize.x, tiledImSize.y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
         //accumulationTest();
+        timer2->tock();
+        //std::cout << "accumulation elapsed time: " << 
+        //    timer2->elapsedTime() << std::endl;
     }
     
     void renderer::storeFrame(bool shouldStore, std::string name) {
@@ -295,18 +322,20 @@ namespace DoFRenderer {
     }
 
     void renderer::quadRenderLoop() {
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        timer2->tick();
+        glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         shaders[SCREEN_SHADER]->use();
         quads[SCREEN_QUAD]->bindVertexArray();
-        attachments[COLOR_ATTACHMENT]->bind(0);
-        attachments[DEPTH_ATTACHMENT]->bind(1);
+        textureArrays[MSAA_DEPTH_ATTACHMENT]->bind(0, true);
         quads[SCREEN_QUAD]->draw();
-        attachments[COLOR_ATTACHMENT]->unbind();
-        attachments[DEPTH_ATTACHMENT]->unbind();
+        textureArrays[MSAA_DEPTH_ATTACHMENT]->unbind(true);
         quads[SCREEN_QUAD]->unbindVertexArray();
+        timer2->tock();
         timer->tock();
-        //std::cout << "fps: " << timer->fps() << std::endl;
+        //std::cout << " quad render loop elapsed time: " <<
+        //    timer2->elapsedTime() << std::endl;
+        //std::cout << "total time: " << timer->elapsedTime() << std::endl;
     }
 
     void renderer::mergeTest(int coordX, int coordY) {
@@ -322,9 +351,9 @@ namespace DoFRenderer {
         buffers[TEST_BUFFER]->bind();
         int y = (windowHeight - 1 - coordY) / mergeFactor , 
             x = coordX / mergeFactor;
-        std::cout << "x: " << x * 2 << " y: " << y * 2 << std::endl;
+        std::cout << "x: " << x * mergeFactor << " y: " << y * mergeFactor << std::endl;
         for (int el = 0; el < MAX_FRAGMENT_COUNT; el++) {
-            int idx = y * windowWidth * 0.5f * MAX_FRAGMENT_COUNT + 
+            int idx = y * windowWidth * 0.5f * MAX_FRAGMENT_COUNT +
                 x * MAX_FRAGMENT_COUNT + el;
             std::cout << "Color Depth: " << std::endl;
             std::cout << colorDepth[idx].x << " " << colorDepth[idx].y << " " <<
@@ -419,8 +448,8 @@ namespace DoFRenderer {
         for (auto frameBuffer : frameBuffers) {
             frameBuffer.second->deleteFrameBuffer();
         }
-        for (auto attachment : attachments) {
-            attachment.second->deleteTexture();
+        for (auto textureArray : textureArrays) {
+            textureArray.second->deleteTexture();
         }
         for (auto texture : textures) {
             texture.second->deleteTexture();

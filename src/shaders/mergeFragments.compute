@@ -31,10 +31,11 @@ layout(std430, binding = 8) buffer testBuffer {
 	int test[];
 };
 
-uniform sampler2DArray depthmap;
-uniform sampler2DArray colorTexture;
+uniform sampler2DMSArray depthmap;
+uniform sampler2DMSArray colorTexture;
 uniform vec2 cameraFarNear;
 uniform vec3 eyeLens_focusDist_aperture;
+uniform int AA_samples;
 
 shared vec4 localValues[WORK_GROUP_SIZE * MERGE_FACTOR ][WORK_GROUP_SIZE * MERGE_FACTOR];
 
@@ -96,6 +97,22 @@ float linearizeDepth(float depth)
 	return (2.0 * near * far) / (far + near - z * (far - near));
 }
 
+float computeMultiSampleDepthValue(ivec3 gid_layer) {
+	float depth = texelFetch(depthmap, gid_layer, AA_samples / 2).r;
+	/*for (int i = 0; i < AA_samples; i++) {
+		depth += texelFetch(depthmap, gid_layer, i).r;
+	}*/
+	return depth;
+}
+
+vec3 computeMultiSampleColorValue(ivec3 gid_layer) {
+	vec3 color = vec3(0.0);
+	for (int i = 0; i < AA_samples; i++) {
+		color += texelFetch(colorTexture, gid_layer, i).rgb;
+	}
+	return color / AA_samples;
+}
+
 void main() {
 	int count[2][2];
 	int nextIndex[2][2];
@@ -107,30 +124,30 @@ void main() {
 	uvec2 threadSize = (gl_NumWorkGroups * gl_WorkGroupSize).xy;
 	vec2 dimension = imageSize(layerCount).xy;
 	if (gid.x >= dimension.x || gid.y >= dimension.y) return;
-	vec2 uv00 = gid / dimension;
-	vec2 uv01 = vec2(gid.x + 1, gid.y) / dimension;
-	vec2 uv10 = vec2(gid.x, gid.y + 1) / dimension;
-	vec2 uv11 = vec2(gid.x + 1, gid.y + 1) / dimension;
+	ivec2 uv00 = ivec2(gid);
+	ivec2 uv01 = ivec2(gid.x + 1, gid.y);
+	ivec2 uv10 = ivec2(gid.x, gid.y + 1);
+	ivec2 uv11 = ivec2(gid.x + 1, gid.y + 1);
 	//fragment counts in each pixel
-	count[0][0] = imageLoad(layerCount, ivec2(gid.x, gid.y)).r + 1;
-	count[0][1] = imageLoad(layerCount, ivec2(gid.x + 1, gid.y)).r + 1;
-	count[1][0] = imageLoad(layerCount, ivec2(gid.x, gid.y + 1)).r + 1;
-	count[1][1] = imageLoad(layerCount, ivec2(gid.x + 1, gid.y + 1)).r + 1;
+	count[0][0] = imageLoad(layerCount, uv00).r + 1;
+	count[0][1] = imageLoad(layerCount, uv01).r + 1;
+	count[1][0] = imageLoad(layerCount, uv10).r + 1;
+	count[1][1] = imageLoad(layerCount, uv11).r + 1;
 	//load color values
-	localValues[tid.y][tid.x].rgb = texture(colorTexture, vec3(uv00, 0)).rgb;
-	localValues[tid.y][tid.x + 1].rgb = texture(colorTexture, vec3(uv01, 0)).rgb;
-	localValues[tid.y + 1][tid.x].rgb = texture(colorTexture, vec3(uv10, 0)).rgb;
-	localValues[tid.y + 1][tid.x + 1].rgb = texture(colorTexture, vec3(uv11, 0)).rgb;
+	localValues[tid.y][tid.x].rgb = computeMultiSampleColorValue(ivec3(uv00, 0));
+	localValues[tid.y][tid.x + 1].rgb = computeMultiSampleColorValue(ivec3(uv01, 0));
+	localValues[tid.y + 1][tid.x].rgb = computeMultiSampleColorValue(ivec3(uv10, 0));
+	localValues[tid.y + 1][tid.x + 1].rgb = computeMultiSampleColorValue(ivec3(uv11, 0));
 
 	//load depth values
 	localValues[tid.y][tid.x].a = linearizeDepth(
-		texture(depthmap, vec3(uv00, 0)).r);
+		computeMultiSampleDepthValue(ivec3(uv00, 0)));
 	localValues[tid.y][tid.x + 1].a = linearizeDepth(
-		texture(depthmap, vec3(uv01, 0)).r);
+		computeMultiSampleDepthValue(ivec3(uv01, 0)));
 	localValues[tid.y + 1][tid.x].a = linearizeDepth(
-		texture(depthmap, vec3(uv10, 0)).r);
+		computeMultiSampleDepthValue(ivec3(uv10, 0)));
 	localValues[tid.y + 1][tid.x + 1].a = linearizeDepth(
-		texture(depthmap, vec3(uv11, 0)).r);
+		computeMultiSampleDepthValue(ivec3(uv11, 0)));
 	//next fragment index
 	nextIndex[0][0] = 1;
 	nextIndex[0][1] = 1;
@@ -154,7 +171,6 @@ void main() {
 					mergedCol += col;
 				}
 			}
-			
 			mergedCol *= 0.25;
 			colorDepth_out.color = mergedCol;
 			colorDepth_out.depth = maxDepth + 0.01;
@@ -167,14 +183,14 @@ void main() {
 				for (int j = 0; j < 2; j++) {
 					if (count[i][j] >= nextIndex[i][j]) {
 						do {
-							vec3 uvz = vec3(
-								(gid.x + j) / dimension.x,
-								(gid.y + i) / dimension.y,
+							ivec3 uvz = ivec3(
+								gid.x + j,
+								gid.y + i,
 								nextIndex[i][j]
 							);
-							localValues[tid.y + i][tid.x + j].rgb = texture(colorTexture, uvz).rgb;
+							localValues[tid.y + i][tid.x + j].rgb = computeMultiSampleColorValue(uvz);
 							localValues[tid.y + i][tid.x + j].a = 
-								linearizeDepth(texture(depthmap, uvz).r);
+								linearizeDepth(computeMultiSampleDepthValue(uvz));
 							nextIndex[i][j] += 1;
 							allfragmentsCount -= 1;
 						} while (localValues[tid.y + i][tid.x + j].a < (lastDepth + deltaZ)
@@ -203,15 +219,15 @@ void main() {
 			mergingData_out.mergeID = 1;
 			mergingData_out.screenCoords = ivec2(gid.x + minDepthIdx.x, 
 				gid.y + minDepthIdx.y);
-			vec3 uvz = vec3(
-				(gid.x + minDepthIdx.x) / dimension.x,
-				(gid.y + minDepthIdx.y) / dimension.y,
+			ivec3 uvz = ivec3(
+				gid.x + minDepthIdx.x,
+				gid.y + minDepthIdx.y,
 				nextIndex[minDepthIdx.y][minDepthIdx.x]
 			);
 			localValues[tid.y + minDepthIdx.y][tid.x + minDepthIdx.x].rgb = 
-				texture(colorTexture, uvz).rgb;
+				computeMultiSampleColorValue(uvz);
 			localValues[tid.y + minDepthIdx.y][tid.x + minDepthIdx.x].a =
-				linearizeDepth(texture(depthmap, uvz).r);
+				linearizeDepth(computeMultiSampleDepthValue(uvz));
 			nextIndex[minDepthIdx.y][minDepthIdx.x] += 1;
 			allfragmentsCount -= 1;
 		}
@@ -222,7 +238,7 @@ void main() {
 			colorDepth[writingIdx] = vec4(colorDepth_out.color.xyz, colorDepth_out.depth);
 			mergingData[writingIdx] = uvec4(mergingData_out.screenCoords.xy, 
 				mergingData_out.mergeID, 0.0f);
-		}
+		} 
 		fragCount += 1;
 	}
 	imageStore(mergedFragCount, ivec2(out_gid), ivec4(fragCount));

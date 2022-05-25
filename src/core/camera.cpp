@@ -1,4 +1,5 @@
 #include "DoFRenderer/core/camera.h"
+#include "DoFRenderer/core/utils.h"
 
 namespace DoFRenderer {
 	
@@ -26,10 +27,10 @@ namespace DoFRenderer {
 			near, far);
 	}
 
-	void camera::setLensVariable(float eyeLens, float focus, int aperture) {
+	void camera::setLensVariable(float eyeLens, float focus, float aperture) {
 		this->eyeLens = eyeLens;
 		this->focusDist = focus;
-		this->aperture = aperture;
+		this->aperture = aperture * RESOLUTION_X / SENSOR_WIDTH;
 	}
 
 	void camera::setPosition(glm::vec3 position) {

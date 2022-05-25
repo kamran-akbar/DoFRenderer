@@ -1,6 +1,9 @@
 #define FOCUS_FRAME "focusFrame"
+#define MSAA_FOCUS_FRAME "MSAA_FOCUS_FRAME"
 #define COLOR_ATTACHMENT "colorAttachment" 
+#define MSAA_COLOR_ATTACHMENT "MSAA_COLOR_ATTACHMENT"
 #define DEPTH_ATTACHMENT "depthAttachment"
+#define MSAA_DEPTH_ATTACHMENT "MSAA_DEPTH_ATTACHMENT"
 #define COPY_DEPTH_ATTACHMENT "copyDepthAttachment"
 #define LAYER_COUNT_TEX "layerCountsTex"
 #define DEPTH_DISC_SHADER "depthDiscShader"
@@ -24,7 +27,14 @@
 #define MAX_FRAGMENT_COUNT 16
 #define MAX_FRAGMENT_TILE 8192
 #define FLOATING_PERCISION 100000.0f
-#define COC_MAX 1
+#define COC_MAX 30
 #define SPLAT_WORK_GROUP_SIZE 8
 #define DEPTH_DISC_WORK_GROUP_SIZE 32
-#define SCENE_NUM 4
+#define SCENE_NUM 3
+#define AA_SAMPLES 8
+#define ENABLE_DOF true
+#define SENSOR_WIDTH 0.064
+#define RESOLUTION_X 1280
+#define RESOLUTION_Y 720
+#define ADJACENT_VIEWS 5
+#define BASELINE 0.1

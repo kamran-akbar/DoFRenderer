@@ -26,35 +26,41 @@ namespace DoFRenderer {
 	}
 
     void application::pipelineInitialization() {
-        windowPtr = std::make_unique<window>(window(1280, 720, "DoF Renderer"));
+        windowPtr = std::make_unique<window>(window(RESOLUTION_X, 
+            RESOLUTION_Y, "DoF Renderer"));
         windowPtr->createWindow();
         if (SCENE_NUM >= 1 && SCENE_NUM <= 3) {
             cameraPtr = std::make_unique<camera>(camera(
-                20, windowPtr->getAspectRatio(1.0f), 0.01f, 100.0f, 
-                glm::vec3(0.0f, 0.0f, -7.5f), glm::vec3(0.0f, 0.0f, 1.0f),
+                50, windowPtr->getAspectRatio(1.0f), 0.1, 100.0f, 
+                glm::vec3(0.0, 0.0f, -6.0f), glm::vec3(0.0f, 0.0f, 1.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
             ));
-            cameraPtr->setLensVariable(3.0f, 6.0f, 50.0f);
+            cameraPtr->setLensVariable(cameraPtr->getNear(), 
+                7.0f, 0.128f);
         }
         else if (SCENE_NUM == 4) {
             cameraPtr = std::make_unique<camera>(camera(
-                50.0f, windowPtr->getAspectRatio(1.0f), 0.01f, 1500.0f,
+                50.0f, windowPtr->getAspectRatio(1.0f), 0.1, 1500.0f,
                 glm::vec3(-43.0f, 40.0f, -230.0f), glm::vec3(0.55f, 0.0f, 1.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
             ));
-            cameraPtr->setLensVariable(11.0f, 226.0f, 500.0f);
+            cameraPtr->setLensVariable(cameraPtr->getNear(),
+                600.0f, 4.0f);
         }
         
         lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 75.0f, -100.0),
             glm::vec3(1.0f), glm::vec3(0.4f), glm::vec3(1.0f)));
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(),
             windowPtr->getHeight(), layerCount));
+
         rendererPtr->generateFrameBuffers();
-        rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
-        rendererPtr->prepareMerging(cameraPtr.get());
-        rendererPtr->prepareSplatting(cameraPtr.get());
-        rendererPtr->prepareSorting(cameraPtr.get());
-        rendererPtr->prepareAccumulation();
+        if (ENABLE_DOF) {
+            rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
+            rendererPtr->prepareMerging(cameraPtr.get());
+            rendererPtr->prepareSplatting(cameraPtr.get());
+            rendererPtr->prepareSorting(cameraPtr.get());
+            rendererPtr->prepareAccumulation();
+        }
         rendererPtr->prepareRenderPassBuffers(cameraPtr.get(), lightPtr.get());
         rendererPtr->prepareScreenQuad();
     }
@@ -62,17 +68,17 @@ namespace DoFRenderer {
     void application::pipelineLoop() {
         rendererPtr->renderLoop(cameraPtr.get());
         rendererPtr->generateDepthDiscMap();
-        if (frame == 4 || isFrameChanged) {
-            isFrameChanged = false;
+        if (ENABLE_DOF && frame > 2) {
+            //isFrameChanged = true;
             rendererPtr->mergeFragments();
             rendererPtr->splatFragments();
             rendererPtr->sortFragments();
             rendererPtr->accumulateFragment();
         }
         rendererPtr->quadRenderLoop();
-        if (frame == 4) {
-            rendererPtr->storeFrame(true, "capture2.png");
-        }
+        /*if (frame == 4) {
+            rendererPtr->storeFrame(true, "capture_AA_8.png");
+        }*/
         /*this->sampleDenseParallelLightField(
             glm::vec3(5.0f, 0.0f, -7.5f),
             glm::vec3(-5.0f, 0.0f, -7.5f)

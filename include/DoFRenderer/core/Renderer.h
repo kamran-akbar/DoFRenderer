@@ -47,7 +47,8 @@ namespace DoFRenderer {
 	private:
 		std::vector<Object*> objects;
 		Timer* timer;
-		std::unordered_map<std::string, Texture2DArray*> attachments;
+		Timer* timer2;
+		std::unordered_map<std::string, Texture2DArray*> textureArrays;
 		std::unordered_map<std::string, shader*> shaders;
 		std::unordered_map<std::string, Texture*> textures;
 		std::unordered_map<std::string, StorageBuffer*> buffers;

@@ -12,7 +12,8 @@ namespace DoFRenderer {
 			float focal, float focus, int aperture, glm::vec3 forward, glm::vec3 up);
 		~camera() {}
 
-		void setLensVariable(float focal, float focus, int aperture);
+		//eyeLens, focuse distance, and aperture are in meters
+		void setLensVariable(float eyeLens, float focus, float aperture);
 		void setPosition(glm::vec3 position);
 		void setPositionForward(glm::vec3 position, glm::vec3 forward);
 		void interpPosition(glm::vec3 start, glm::vec3 end, float step);
