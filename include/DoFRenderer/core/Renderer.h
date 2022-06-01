@@ -28,7 +28,7 @@ namespace DoFRenderer {
 		void prepareMerging(const camera* cameraPtr);
 		void prepareSplatting(const camera* cameraPtr);
 		void prepareSorting(const camera* cameraPtr);
-		void prepareAccumulation();
+		void prepareAccumulation(const camera* cameraPtr);
 		void prepareScreenQuad();
 		void renderLoop(const camera* cameraPtr);
 		void generateDepthDiscMap();

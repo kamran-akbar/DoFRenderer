@@ -1,36 +1,29 @@
 #include "DoFRenderer/core/camera.h"
 #include "DoFRenderer/core/utils.h"
 
+#include <iostream>
+
 namespace DoFRenderer {
 	
 	camera::camera() : fov(45.0f), aspectRatio(1.0f), near(0.1f), far(10.0f), position(glm::vec3(0.0f)),
 		forward(glm::vec3(0.0f)), up(glm::vec3(0.0f)), viewMatrix(glm::mat4(1.0f)),
 		projectionMatrix(glm::mat4(1.0f)) {}
 
-	camera::camera(float fov, float aspectRatio, float near, float far, glm::vec3 position, glm::vec3 forward,
-		glm::vec3 up) : aspectRatio(aspectRatio), near(near), far(far), position(position),
+	camera::camera(float aspectRatio, float near, float far, glm::vec3 position,
+		 glm::vec3 forward, glm::vec3 up) : 
+		aspectRatio(aspectRatio), near(near), far(far), position(position), 
 		forward(glm::normalize(forward)), up(glm::normalize(up)) {
-		this->fov = glm::radians(fov);
 		viewMatrix = glm::lookAt(position, position + forward, up);
-		projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, 
-			near, far);
-	}
-
-	camera::camera(float fov, float aspectRatio, float near, float far, glm::vec3 position,
-		float eyeLens, float focus, int aperture, glm::vec3 forward, glm::vec3 up) : 
-		aspectRatio(aspectRatio), near(near), far(far), position(position),
-		eyeLens(eyeLens), focusDist(focus), aperture(aperture), forward(glm::normalize(forward)), 
-		up(glm::normalize(up)) {
-		this->fov = glm::radians(fov);
-		viewMatrix = glm::lookAt(position, position + forward, up);
-		projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, 
-			near, far);
 	}
 
 	void camera::setLensVariable(float eyeLens, float focus, float aperture) {
 		this->eyeLens = eyeLens;
 		this->focusDist = focus;
 		this->aperture = aperture * RESOLUTION_X / SENSOR_WIDTH;
+		float focal = 1 / (1 / eyeLens + 1 / focus) * RESOLUTION_X / SENSOR_WIDTH;
+		this->fov = glm::atan(RESOLUTION_X * 0.5f / focal) * 2;
+		this->projectionMatrix = glm::perspective(this->fov, this->aspectRatio,
+			this->near, this->far);
 	}
 
 	void camera::setPosition(glm::vec3 position) {

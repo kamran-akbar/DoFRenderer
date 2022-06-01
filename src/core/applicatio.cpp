@@ -31,16 +31,16 @@ namespace DoFRenderer {
         windowPtr->createWindow();
         if (SCENE_NUM >= 1 && SCENE_NUM <= 3) {
             cameraPtr = std::make_unique<camera>(camera(
-                50, windowPtr->getAspectRatio(1.0f), 0.1, 100.0f, 
-                glm::vec3(0.0, 0.0f, -6.0f), glm::vec3(0.0f, 0.0f, 1.0f),
+                windowPtr->getAspectRatio(1.0f), 0.125, 100.0f, 
+                glm::vec3(0.0f, 0.0f, -6.0f), glm::vec3(0.0f, 0.0f, 1.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
             ));
             cameraPtr->setLensVariable(cameraPtr->getNear(), 
-                7.0f, 0.128f);
+                8.0f, 0.128f);
         }
         else if (SCENE_NUM == 4) {
             cameraPtr = std::make_unique<camera>(camera(
-                50.0f, windowPtr->getAspectRatio(1.0f), 0.1, 1500.0f,
+                windowPtr->getAspectRatio(1.0f), 0.1, 1500.0f,
                 glm::vec3(-43.0f, 40.0f, -230.0f), glm::vec3(0.55f, 0.0f, 1.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
             ));
@@ -54,12 +54,12 @@ namespace DoFRenderer {
             windowPtr->getHeight(), layerCount));
 
         rendererPtr->generateFrameBuffers();
+        rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
         if (ENABLE_DOF) {
-            rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
-            rendererPtr->prepareMerging(cameraPtr.get());
+           rendererPtr->prepareMerging(cameraPtr.get());
             rendererPtr->prepareSplatting(cameraPtr.get());
             rendererPtr->prepareSorting(cameraPtr.get());
-            rendererPtr->prepareAccumulation();
+            rendererPtr->prepareAccumulation(cameraPtr.get());
         }
         rendererPtr->prepareRenderPassBuffers(cameraPtr.get(), lightPtr.get());
         rendererPtr->prepareScreenQuad();
@@ -76,9 +76,9 @@ namespace DoFRenderer {
             rendererPtr->accumulateFragment();
         }
         rendererPtr->quadRenderLoop();
-        /*if (frame == 4) {
-            rendererPtr->storeFrame(true, "capture_AA_8.png");
-        }*/
+        if (frame == 4) {
+            rendererPtr->storeFrame(true, "capture_AA_off.png");
+        }
         /*this->sampleDenseParallelLightField(
             glm::vec3(5.0f, 0.0f, -7.5f),
             glm::vec3(-5.0f, 0.0f, -7.5f)

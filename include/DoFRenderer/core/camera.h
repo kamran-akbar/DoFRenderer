@@ -6,10 +6,8 @@ namespace DoFRenderer {
 	class camera {
 	public:
 		camera();
-		camera(float fov, float aspectRatio, float near, float far, glm::vec3 position, 
-			glm::vec3 forward, glm::vec3 up);
-		camera(float fov, float aspectRatio, float near, float far, glm::vec3 position,
-			float focal, float focus, int aperture, glm::vec3 forward, glm::vec3 up);
+		camera(float aspectRatio, float near, float far, glm::vec3 position,
+			 glm::vec3 forward, glm::vec3 up);
 		~camera() {}
 
 		//eyeLens, focuse distance, and aperture are in meters

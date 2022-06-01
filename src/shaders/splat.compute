@@ -98,7 +98,7 @@ void main() {
 			}
 		}
 		may[tileSpread][tileSpread] = true;
-		float coc = abs(computeCoC(colorDepthElement.depth));
+		float coc = abs(computeCoC(colorDepthElement.depth)) * 2.0f;
 		coc = min(coc * 0.5f + 0.5f, coc_max);
 		vec2 fragCenter = vec2(coord.x + (mergeID - 1.0f) * 0.5f,
 			coord.y + (mergeID - 1.0f) * 0.5f);

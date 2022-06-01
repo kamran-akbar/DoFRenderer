@@ -37,4 +37,4 @@
 #define RESOLUTION_X 1280
 #define RESOLUTION_Y 720
 #define ADJACENT_VIEWS 5
-#define BASELINE 0.1
+#define BASELINE 0.032

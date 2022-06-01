@@ -64,9 +64,9 @@ namespace DoFRenderer {
         std::vector<std::string> modelsPath;
         switch (SCENE_NUM) {
         case 1:
-            objects.push_back(new Object(glm::vec3(0.0f, 0.0f, 0.0f), 
-                glm::vec3(0.0f, 90, 0.0f), glm::vec3(1.0f)));
-            modelsPath.push_back("../models/bar_plane.obj");
+            objects.push_back(new Object(glm::vec3(-1.0f, 0.0f, 10.0f), 
+                glm::vec3(0.0f, 0.0, 0.0f), glm::vec3(1.0f)));
+            modelsPath.push_back("../models/simpleScene.obj");
             break;
         case 2:
             objects.push_back(new Object(glm::vec3(0.0f, -0.2f, 2.0f), 
@@ -183,22 +183,27 @@ namespace DoFRenderer {
         shaders[SORTING_SHADER]->setFloat("coc_max", COC_MAX);
     }
     
-    void renderer::prepareAccumulation() {
+    void renderer::prepareAccumulation(const camera* cameraPtr) {
         shaders[ACCUMULATION_SHADER] = new shader("../src/shaders/accumulation.compute");
 
         textureArrays[FINAL_IMAGE] = new Texture2DArray(GL_RGBA32F, 1, 
             windowWidth, windowHeight, ADJACENT_VIEWS, GL_REPEAT, GL_LINEAR);
         textureArrays[FINAL_IMAGE]->bindImageTexture(3, GL_READ_WRITE, GL_RGBA32F);
-        
         shaders[ACCUMULATION_SHADER]->use();
         shaders[ACCUMULATION_SHADER]->setVec3("tileSize_adjacentViews_baseline",
             tileSize, ADJACENT_VIEWS, BASELINE);
+        shaders[ACCUMULATION_SHADER]->setVec2("eyeLens_focusDist",
+            cameraPtr->getEyeLens(), cameraPtr->getFocusDist());
+        shaders[ACCUMULATION_SHADER]->setFloat("invPixelSize", RESOLUTION_X / SENSOR_WIDTH);
+
     }
 
     void renderer::prepareScreenQuad() {
         shaders[SCREEN_SHADER] = new shader("../src/shaders/screenShader.vert",
             "../src/shaders/screenShader.frag");
-        
+        textures[FINAL_IMAGE] = new Texture(GL_RGBA32F, windowWidth, windowHeight,
+            GL_REPEAT, GL_LINEAR, GL_RGBA, GL_FLOAT);
+        textures[FINAL_IMAGE]->bindImageTexture(4, GL_READ_WRITE, GL_RGBA32F);
         quads[SCREEN_QUAD] = new Quad();
         shaders[SCREEN_SHADER]->use();
         shaders[SCREEN_SHADER]->setInt("screenTextureMS", 0);
@@ -327,9 +332,9 @@ namespace DoFRenderer {
         glClear(GL_COLOR_BUFFER_BIT);
         shaders[SCREEN_SHADER]->use();
         quads[SCREEN_QUAD]->bindVertexArray();
-        textureArrays[MSAA_DEPTH_ATTACHMENT]->bind(0, true);
+        textureArrays[MSAA_COLOR_ATTACHMENT]->bind(0, true);
         quads[SCREEN_QUAD]->draw();
-        textureArrays[MSAA_DEPTH_ATTACHMENT]->unbind(true);
+        textureArrays[MSAA_COLOR_ATTACHMENT]->unbind(true);
         quads[SCREEN_QUAD]->unbindVertexArray();
         timer2->tock();
         timer->tock();
