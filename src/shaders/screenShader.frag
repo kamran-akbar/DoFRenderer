@@ -25,7 +25,7 @@ float linearizeDepth(float depth)
 void main()
 {
     if(enableDoF){
-        FragColor = imageLoad(finalImage, ivec3(gl_FragCoord.xy, 2));
+        FragColor = imageLoad(finalImage, ivec3(gl_FragCoord.xy, 0));
         imageStore(result, ivec2(gl_FragCoord.xy), FragColor);
     }
     else{

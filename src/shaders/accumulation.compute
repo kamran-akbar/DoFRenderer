@@ -110,7 +110,7 @@ void main() {
 
 	int tileSizeSq = int(tileSize * tileSize);
 	
-	for (int view = 0; view < adjViews; view++) {
+	for (int view = 0; view < 1; view++) {
 		int count = min(int(tilingCounter[wid.y * tiledImgDim.x + wid.x]), MAX_FRAGMENT_TILE);
 		int startLoadIndex = wid.y * tiledImgDim.x * MAX_FRAGMENT_TILE
 			+ wid.x * MAX_FRAGMENT_TILE;

@@ -264,7 +264,7 @@ namespace DoFRenderer {
         textureArrays[MSAA_DEPTH_ATTACHMENT]->unbind(true);
         textureArrays[MSAA_COLOR_ATTACHMENT]->unbind(true);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-        //mergeTest(781, 495);
+        //mergeTest(766, 440);
         timer2->tock();
         //std::cout << "merge elapsed time: " <<
         //    timer2->elapsedTime() << std::endl;
@@ -340,7 +340,7 @@ namespace DoFRenderer {
         timer->tock();
         //std::cout << " quad render loop elapsed time: " <<
         //    timer2->elapsedTime() << std::endl;
-        //std::cout << "total time: " << timer->elapsedTime() << std::endl;
+        std::cout << "total time: " << timer->elapsedTime() << std::endl;
     }
 
     void renderer::mergeTest(int coordX, int coordY) {

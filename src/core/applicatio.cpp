@@ -76,9 +76,9 @@ namespace DoFRenderer {
             rendererPtr->accumulateFragment();
         }
         rendererPtr->quadRenderLoop();
-        if (frame == 4) {
-            rendererPtr->storeFrame(true, "capture_AA_off.png");
-        }
+        //if (frame == 4) {
+        //    rendererPtr->storeFrame(true, "baseline_3.png");
+        //}
         /*this->sampleDenseParallelLightField(
             glm::vec3(5.0f, 0.0f, -7.5f),
             glm::vec3(-5.0f, 0.0f, -7.5f)
