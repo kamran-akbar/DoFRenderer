@@ -153,9 +153,7 @@ namespace DoFRenderer {
                 meshes[meshes.size() - 1]->setTexture(allTextures[material_id]);
             }
             meshes[meshes.size() - 1]->setMaterial(allMaterials[material_id]);
-            
         }
-
     }
     
     void Object::prepareObject() {

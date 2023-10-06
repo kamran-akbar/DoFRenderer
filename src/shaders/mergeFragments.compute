@@ -118,8 +118,11 @@ void main() {
 	int nextIndex[2][2];
 	float cameraFar = cameraFarNear.x;
 	float cameraNear = cameraFarNear.y;
+	 
+	//multiply by merge factor?
 	vec2 gid = gl_GlobalInvocationID.xy * 2;
 	uvec2 tid = gl_LocalInvocationID.xy * 2;
+
 	uvec2 out_gid = gl_GlobalInvocationID.xy;
 	uvec2 threadSize = (gl_NumWorkGroups * gl_WorkGroupSize).xy;
 	vec2 dimension = imageSize(layerCount).xy;

@@ -34,6 +34,7 @@ void main()
             FragColor += texelFetch(screenTextureMS, ivec3(gl_FragCoord.xy, 0), i);
         }
         FragColor /= 8;
+        imageStore(result, ivec2(gl_FragCoord.xy), FragColor);
     }
     //imageStore(finalImage, ivec2(gl_FragCoord.xy), FragColor);
     //FragColor = imageLoad(depthDisc, ivec2(gl_FragCoord.xy)).rrrr;

@@ -27,14 +27,23 @@
 #define MAX_FRAGMENT_COUNT 16
 #define MAX_FRAGMENT_TILE 8192
 #define FLOATING_PERCISION 100000.0f
-#define COC_MAX 30
+#define COC_MAX 32
 #define SPLAT_WORK_GROUP_SIZE 8
 #define DEPTH_DISC_WORK_GROUP_SIZE 32
-#define SCENE_NUM 3
+#define SCENE_NUM 6
 #define AA_SAMPLES 8
 #define ENABLE_DOF true
 #define SENSOR_WIDTH 0.064
-#define RESOLUTION_X 1280
-#define RESOLUTION_Y 720
-#define ADJACENT_VIEWS 5
-#define BASELINE 0.032
+#define RESOLUTION_X 1328
+#define RESOLUTION_Y 768
+#define ADJACENT_VIEWS glm::uvec2(1, 1)
+#define BASELINE 0.042
+#define CAMERA_START glm::vec3(-1.32f, -0.105f, -6.0f)
+#define CAMERA_END glm::vec3(1.32f, 0.105f, -6.0f)
+#define CAMERA_POS glm::vec3(0.042f, 0.042f, -6.0f)
+#define CROSS_RENDER false
+#define SAMPLE_FULL_PARALLAX_LIGHT_FIELD false
+#define SAMPLE_HORIZONTAL_ONLY_PARALLAX_LIGHT_FIELD false
+#define STORE_FRAME true
+#define STORE_FRAMES false
+#define TIME_AVERAGE false

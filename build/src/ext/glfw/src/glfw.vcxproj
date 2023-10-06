@@ -23,8 +23,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A659F65E-F665-35A9-BD7A-1D5A4797194B}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
     <ProjectName>glfw</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>

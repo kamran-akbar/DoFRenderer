@@ -74,14 +74,24 @@ namespace DoFRenderer {
             modelsPath.push_back("../models/viking_room.obj");
             break;
         case 3:
-            objects.push_back(new Object(glm::vec3(0.0f),
-                glm::vec3(-7.0f, 0.0f, 0.0f), glm::vec3(25.0f)));
-            modelsPath.push_back("../models/untitled2.obj");
+            objects.push_back(new Object(glm::vec3(0.0f, 0.0f, 0.0f),
+                glm::vec3(-8.0f, 0.0f, 0.0f), glm::vec3(30.0f)));
+            modelsPath.push_back("../models/vessels.obj");
             break;
         case 4:
             objects.push_back(new Object(glm::vec3(0.0f), 
                 glm::vec3(0.0f, 270, 0.0f), glm::vec3(1.0f)));
             modelsPath.push_back("../models/sponza.obj");
+            break;
+        case 5:
+            objects.push_back(new Object(glm::vec3(0.0f, 0.1f, 0.0f),
+                glm::vec3(-3.0f, 0.0f, 0.0f), glm::vec3(2.8f)));
+            modelsPath.push_back("../models/Branches.obj");
+            break;
+        case 6:
+            objects.push_back(new Object(glm::vec3(0.0f, 0.0f, 0.0f),
+                glm::vec3(0.0f, 0.0, 0.0f), glm::vec3(3.0f)));
+            modelsPath.push_back("../models/Elephant.obj");
             break;
         }
         
@@ -186,16 +196,16 @@ namespace DoFRenderer {
     void renderer::prepareAccumulation(const camera* cameraPtr) {
         shaders[ACCUMULATION_SHADER] = new shader("../src/shaders/accumulation.compute");
 
-        textureArrays[FINAL_IMAGE] = new Texture2DArray(GL_RGBA32F, 1, 
-            windowWidth, windowHeight, ADJACENT_VIEWS, GL_REPEAT, GL_LINEAR);
+        textureArrays[FINAL_IMAGE] = new Texture2DArray(GL_RGBA32F, 1, windowWidth, windowHeight, ADJACENT_VIEWS.x 
+            * ADJACENT_VIEWS.y, GL_REPEAT, GL_LINEAR);
         textureArrays[FINAL_IMAGE]->bindImageTexture(3, GL_READ_WRITE, GL_RGBA32F);
         shaders[ACCUMULATION_SHADER]->use();
-        shaders[ACCUMULATION_SHADER]->setVec3("tileSize_adjacentViews_baseline",
-            tileSize, ADJACENT_VIEWS, BASELINE);
+        shaders[ACCUMULATION_SHADER]->setVec4("tileSize_adjacentViews_baseline",
+            tileSize, ADJACENT_VIEWS.x, ADJACENT_VIEWS.y, BASELINE);
         shaders[ACCUMULATION_SHADER]->setVec2("eyeLens_focusDist",
             cameraPtr->getEyeLens(), cameraPtr->getFocusDist());
         shaders[ACCUMULATION_SHADER]->setFloat("invPixelSize", RESOLUTION_X / SENSOR_WIDTH);
-
+        shaders[ACCUMULATION_SHADER]->setFloat("crossRender", CROSS_RENDER);
     }
 
     void renderer::prepareScreenQuad() {
@@ -232,8 +242,7 @@ namespace DoFRenderer {
         frameBuffers[MSAA_FOCUS_FRAME]->unbind();
         glDisable(GL_DEPTH_TEST);
         timer2->tock();
-        //std::cout << "render loop elapsed time: " << 
-        //    timer2->elapsedTime() << std::endl;
+        //std::cout << "render loop elapsed time: " << timer2->elapsedTime() << std::endl;
 	}
 
     void renderer::generateDepthDiscMap() {
@@ -321,12 +330,18 @@ namespace DoFRenderer {
     
     void renderer::storeFrame(bool shouldStore, std::string name) {
         if (shouldStore) {
-            textures[FINAL_IMAGE]->saveImagePNG("../samples/" + name, 
-                windowWidth, windowHeight, 4);
+            textures[FINAL_IMAGE]->saveImagePNG("../samples/" + name, windowWidth, windowHeight, 4);
         }
     }
 
-    void renderer::quadRenderLoop() {
+    void renderer::storeFrames(bool shouldStore, std::string prefix, std::string suffix) {
+        if (shouldStore) {
+            int views = ADJACENT_VIEWS.x * ADJACENT_VIEWS.y;
+            textureArrays[FINAL_IMAGE]->saveImagesPNG("../samples/" + prefix, suffix, windowWidth, windowHeight, 4, views);
+        }
+    }
+
+    float renderer::quadRenderLoop() {
         timer2->tick();
         glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -340,7 +355,7 @@ namespace DoFRenderer {
         timer->tock();
         //std::cout << " quad render loop elapsed time: " <<
         //    timer2->elapsedTime() << std::endl;
-        std::cout << "total time: " << timer->elapsedTime() << std::endl;
+        return timer->elapsedTime();
     }
 
     void renderer::mergeTest(int coordX, int coordY) {

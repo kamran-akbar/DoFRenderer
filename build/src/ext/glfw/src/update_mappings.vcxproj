@@ -23,8 +23,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1B219415-1A9B-3E44-8EFC-A587786E4BB8}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
     <ProjectName>update_mappings</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>

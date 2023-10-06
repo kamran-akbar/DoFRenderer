@@ -37,7 +37,8 @@ namespace DoFRenderer {
 		void sortFragments();
 		void accumulateFragment();
 		void storeFrame(bool shouldStore, std::string name);
-		void quadRenderLoop();
+		void storeFrames(bool shouldStore, std::string prefix, std::string suffix);
+		float quadRenderLoop();
 		void releaseMemory();
 
 		void mergeTest(int coordX, int coordY);

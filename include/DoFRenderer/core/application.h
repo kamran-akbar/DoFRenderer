@@ -14,15 +14,13 @@ namespace DoFRenderer {
 		void run();
 		void pipelineInitialization();
 		void pipelineLoop();
-		void sampleDenseParallelLightField(
+		void sampleHorizontalParallaxLightField(
 			glm::vec3 cameraStart, 
 			glm::vec3 cameraEnd
 		);
-		void sampleDenseShearedLightField(
-			glm::vec3 cameraStart, 
-			glm::vec3 cameraEnd, 
-			glm::vec3 forwardStart,
-			glm::vec3 forwardEnd
+		void sampleFullParallaxLightfield(
+			glm::vec3 cameraStart,
+			glm::vec3 cameraEnd
 		);
 
 	private:
@@ -32,11 +30,21 @@ namespace DoFRenderer {
 		std::unique_ptr<renderer> rendererPtr;
 		std::unique_ptr<camera> cameraPtr;
 		std::unique_ptr<light> lightPtr;
-		float step = 0.0f;
+		glm::vec3 step = glm::vec3(0.004f);
 		bool storingFrame = false;
 		bool isFrameChanged = false;
+		float accTime = 0.0f;
+		float timeAverage = 0.0f;
 		unsigned int frame = 0;
-		int counter = -1;
+		glm::ivec2 counter = glm::ivec2(0);
+
+		std::vector<glm::vec3> cameraPositions{
+			glm::vec3(0.1f, 0.0f, -6.0f),
+			glm::vec3(-0.1f, 0.0f, -6.0f),
+			glm::vec3(0.0f, 0.1f, -6.0f),
+			glm::vec3(0.0f, -0.1f, -6.0f)
+		};
+		float camNum = 0;
 	};
 
 }

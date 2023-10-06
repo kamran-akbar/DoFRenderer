@@ -1,6 +1,8 @@
 #include "DoFRenderer/core/Texture2DArray.h"
 #include "glad/glad.h"
 #include <iostream>
+#include "stb/stb_image.h"
+#include "stb/stb_image_write.h"
 
 namespace DoFRenderer {
 
@@ -38,6 +40,28 @@ namespace DoFRenderer {
 
 	void Texture2DArray::bindImageTexture(unsigned int binding, unsigned int accessMode, unsigned int format) {
 		glBindImageTexture(binding, id, 0, GL_TRUE, 0, accessMode, format);
+	}
+
+	void Texture2DArray::getTextureImage(unsigned int format, unsigned int type, unsigned int level,
+		unsigned int bufferSize, void* data) {
+		glGetTextureImage(id, level, format, type, bufferSize, data);
+	}
+
+	void Texture2DArray::saveImagesPNG(std::string prefix, std::string suffix, unsigned int width, unsigned int height,
+		unsigned int channel, unsigned int frames) {
+		unsigned int buffSize = frames * width * height * channel * sizeof(unsigned char);
+		unsigned char* pixel_frames = new unsigned char[buffSize / sizeof(unsigned char)];
+		unsigned char* pixel_frame = new unsigned char[buffSize / (sizeof(unsigned char) * frames)];
+		getTextureImage(GL_RGBA, GL_UNSIGNED_BYTE, 0, buffSize, pixel_frames);
+		for (int i = 0; i < frames; i++) {
+			stbi_flip_vertically_on_write(true);
+			std::string filename = prefix + std::to_string(i / 3) + std::to_string(i % 3) + suffix;
+			std::memcpy(&pixel_frame[0], &pixel_frames[unsigned int(i * width * height * channel)], unsigned int(width * height * channel)
+				* sizeof(unsigned char));
+			stbi_write_png(filename.c_str(), width, height, channel, pixel_frame, width * channel);
+		}
+		stbi_image_free(pixel_frames);
+		stbi_image_free(pixel_frame);
 	}
 
 	void Texture2DArray::copy(const unsigned int destID, unsigned int destTarget,

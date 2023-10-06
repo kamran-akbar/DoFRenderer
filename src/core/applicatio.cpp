@@ -29,14 +29,22 @@ namespace DoFRenderer {
         windowPtr = std::make_unique<window>(window(RESOLUTION_X, 
             RESOLUTION_Y, "DoF Renderer"));
         windowPtr->createWindow();
-        if (SCENE_NUM >= 1 && SCENE_NUM <= 3) {
+        glm::vec3 a, b;
+        if (SCENE_NUM == 1 && SCENE_NUM == 2) {
             cameraPtr = std::make_unique<camera>(camera(
                 windowPtr->getAspectRatio(1.0f), 0.125, 100.0f, 
-                glm::vec3(0.0f, 0.0f, -6.0f), glm::vec3(0.0f, 0.0f, 1.0f),
+                CAMERA_START, glm::vec3(0.0f, 0.0f, 1.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
             ));
-            cameraPtr->setLensVariable(cameraPtr->getNear(), 
-                8.0f, 0.128f);
+            cameraPtr->setLensVariable(cameraPtr->getNear(), 6.0f, 0.112f);
+        }
+        else if (SCENE_NUM == 3) {
+            cameraPtr = std::make_unique<camera>(camera(
+                windowPtr->getAspectRatio(1.0f), 0.125, 100.0f,
+                CAMERA_POS, glm::vec3(0.0f, 0.0f, 1.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f)
+            ));
+            cameraPtr->setLensVariable(cameraPtr->getNear(), 7.0f, BASELINE * 2);
         }
         else if (SCENE_NUM == 4) {
             cameraPtr = std::make_unique<camera>(camera(
@@ -44,19 +52,34 @@ namespace DoFRenderer {
                 glm::vec3(-43.0f, 40.0f, -230.0f), glm::vec3(0.55f, 0.0f, 1.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
             ));
-            cameraPtr->setLensVariable(cameraPtr->getNear(),
-                600.0f, 4.0f);
+            cameraPtr->setLensVariable(cameraPtr->getNear(), 300.0f, 4.0f);
+        }
+        else if (SCENE_NUM == 5) {
+            cameraPtr = std::make_unique<camera>(camera(
+                windowPtr->getAspectRatio(1.0f), 0.125, 100.0f,
+                CAMERA_POS, glm::vec3(0.0f, 0.0f, 1.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f)
+            ));
+            cameraPtr->setLensVariable(cameraPtr->getNear(), 6.0f, BASELINE * 2);
+        }
+        else if (SCENE_NUM == 6) {
+            cameraPtr = std::make_unique<camera>(camera(
+                windowPtr->getAspectRatio(1.0f), 0.125, 100.0f,
+                CAMERA_POS, glm::vec3(0.0f, 0.0f, 1.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f)
+            ));
+            cameraPtr->setLensVariable(cameraPtr->getNear(), 6.0f, BASELINE * 2);
         }
         
-        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 75.0f, -100.0),
-            glm::vec3(1.0f), glm::vec3(0.4f), glm::vec3(1.0f)));
+        lightPtr = std::make_unique<light>(light(glm::vec3(0.0f, 20.0f, -100.0),
+            glm::vec3(1.0f), glm::vec3(0.2f), glm::vec3(0.0f)));
         rendererPtr = std::make_unique<renderer>(renderer(windowPtr->getWidth(),
             windowPtr->getHeight(), layerCount));
 
         rendererPtr->generateFrameBuffers();
         rendererPtr->prepareDepthDiscontinuity(cameraPtr.get());
         if (ENABLE_DOF) {
-           rendererPtr->prepareMerging(cameraPtr.get());
+            rendererPtr->prepareMerging(cameraPtr.get());
             rendererPtr->prepareSplatting(cameraPtr.get());
             rendererPtr->prepareSorting(cameraPtr.get());
             rendererPtr->prepareAccumulation(cameraPtr.get());
@@ -75,59 +98,100 @@ namespace DoFRenderer {
             rendererPtr->sortFragments();
             rendererPtr->accumulateFragment();
         }
-        rendererPtr->quadRenderLoop();
-        //if (frame == 4) {
-        //    rendererPtr->storeFrame(true, "baseline_3.png");
-        //}
-        /*this->sampleDenseParallelLightField(
-            glm::vec3(5.0f, 0.0f, -7.5f),
-            glm::vec3(-5.0f, 0.0f, -7.5f)
-        );*/
-        /*this->sampleDenseShearedLightField(
-            glm::vec3(4.1f, 0.0f, -7.5f),
-            glm::vec3(-4.1f, 0.0f, -7.5f),
-            glm::vec3(-0.45f, 0.0f, 1.0f),
-            glm::vec3(0.45f, 0.0f, 1.0f)
-        );*/
+        float time = rendererPtr->quadRenderLoop();
+
+        if (STORE_FRAME && frame == 4) {
+            rendererPtr->storeFrame(STORE_FRAME, "DoF_mid_big_aperture.png");
+        }
+        if (STORE_FRAMES && frame == 4) {
+            rendererPtr->storeFrames(STORE_FRAMES, "view", ".png");
+        }
+        if (SAMPLE_HORIZONTAL_ONLY_PARALLAX_LIGHT_FIELD) {
+            this->sampleHorizontalParallaxLightField(
+                glm::vec3(-1.32f, 0.0f, -6.0f),
+                glm::vec3(1.32f, 0.0f, -6.0f)
+            );
+        }
+        if (SAMPLE_FULL_PARALLAX_LIGHT_FIELD) {
+            this->sampleFullParallaxLightfield(
+                CAMERA_START, CAMERA_END
+            );
+        }
         frame++;
+        if (TIME_AVERAGE) {
+            if (frame > 5 && frame <= 10 && camNum <= cameraPositions.size()) {
+                accTime += time;
+            }
+            else if (frame > 10 && camNum <= cameraPositions.size()) {
+                std::cout << "camera number : " << camNum - 1 << std::endl;
+                std::cout << "accumulated time : " << accTime / (frame - 5) << " Last time stance: " << time << std::endl;
+                timeAverage += accTime / (frame - 5);
+                frame = 0;
+                accTime = 0.0f;
+                if (camNum < cameraPositions.size()) {
+                    cameraPtr->setPosition(cameraPositions[camNum]);
+                }
+                camNum++;
+            }
+            if (camNum > cameraPositions.size()) {
+                std::cout << "Final time average is: " << timeAverage / (cameraPositions.size() + 1) << std::endl;
+            }
+        }
     }
 
-    void application::sampleDenseParallelLightField(
-        glm::vec3 cameraStart, 
-        glm::vec3 cameraEnd) {
-        if (step < 1.0f) counter++;
-        cameraPtr->interpPosition(cameraStart, cameraEnd, step);
-        step += 0.0015f;
-        step = glm::max(glm::min(step, 1.0f), 0.0f);
-        storingFrame = step >= 1.0f ? false : true;
-        counter = glm::min(counter, int(2.64f / 0.004f));
-        std::stringstream ss;
-        ss << std::setfill('0') << std::setw(4) << counter;
-        std::cout << ss.str() << std::endl;
-        rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
-        isFrameChanged = true;
+    void application::sampleHorizontalParallaxLightField(
+        glm::vec3 cameraStart, glm::vec3 cameraEnd) {
+        if (counter.x >= int(abs(cameraStart.x - cameraEnd.x) / step.x) + 1) {
+            std::cout << "camera exceed the baseline!" << std::endl;
+            return;
+        }
+        else {
+            storingFrame = true;
+            cameraPtr->setPosition(cameraStart + glm::vec3(counter.x, counter.y, 0.0f) * step);
+            std::stringstream ss;
+            ss << std::setfill('0') << std::setw(4) << counter.x;
+            std::cout << ss.str() << std::endl;
+            rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
+            isFrameChanged = true;
+            counter.x++;
+        }
     }
 
-    void application::sampleDenseShearedLightField(
-        glm::vec3 cameraStart,
-        glm::vec3 cameraEnd,
-        glm::vec3 forwardStart,
-        glm::vec3 forwardEnd) {
-        if (step < 1.0f) counter++;
-        cameraPtr->interpPosition(
-            cameraStart, cameraEnd, 
-            glm::normalize(forwardStart),
-            glm::normalize(forwardEnd), step
-        );
-        step += 0.0015f;
-        step = glm::max(glm::min(step, 1.0f), 0.0f);
-        storingFrame = step >= 1.0f ? false : true;
-        counter = glm::min(counter, 660);
-        std::stringstream ss;
-        ss << std::setfill('0') << std::setw(4) << counter;
-        std::cout << ss.str() << std::endl;
-        rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
-        isFrameChanged = true;
-    }
 
+    void application::sampleFullParallaxLightfield(
+            glm::vec3 cameraStart, glm::vec3 cameraEnd) {
+        float depth = cameraStart.z;
+        glm::vec3 bottomLeft = glm::vec3(cameraStart.x, cameraStart.y, depth);
+        glm::vec3 bottomRight = glm::vec3(cameraEnd.x, cameraStart.y, depth);
+        glm::vec3 topLeft = glm::vec3(cameraStart.x, cameraEnd.y, depth);
+        glm::vec3 topRight = glm::vec3(cameraEnd.x, cameraEnd.y, depth);
+
+        int cameraNumX = int(abs(cameraStart.x - cameraEnd.x) / step.x) + 1;
+        int cameraNumY = int(abs(cameraStart.y - cameraEnd.y) / step.y);
+
+        glm::vec3 currentPosition = bottomLeft;
+        if (counter.y > cameraNumY) {
+            std::cout << "camera exceed the vertical baseline!" << std::endl;
+            return;
+        }
+        else if (counter.x > cameraNumX) {
+            counter = glm::ivec2(0, counter.y + 1);
+            currentPosition = bottomLeft;
+            cameraPtr->setPosition(currentPosition + glm::vec3(counter.x, counter.y, 0.0f) * step);
+        }
+        else if(counter.y > -1){
+            storingFrame = true;
+            cameraPtr->setPosition(currentPosition + glm::vec3(counter.x, counter.y, 0.0f) * step);
+            std::stringstream ss;
+            ss << "V_" << std::setfill('0') << std::setw(4) << counter.y << "_H_" << std::setfill('0') << std::setw(4) << counter.x;
+            std::cout << ss.str() << std::endl;
+            rendererPtr->storeFrame(storingFrame, ss.str() + ".png");
+            isFrameChanged = true;
+            counter.x++;
+        }
+        else {
+            counter.x++;
+            cameraPtr->setPosition(currentPosition + glm::vec3(counter.x, counter.y, 0.0f) * step);
+        }
+    }
 }

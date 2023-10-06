@@ -21,7 +21,9 @@ namespace DoFRenderer {
 		this->focusDist = focus;
 		this->aperture = aperture * RESOLUTION_X / SENSOR_WIDTH;
 		float focal = 1 / (1 / eyeLens + 1 / focus) * RESOLUTION_X / SENSOR_WIDTH;
+		std::cout << 1 / (1 / eyeLens + 1 / focus) << std::endl;
 		this->fov = glm::atan(RESOLUTION_X * 0.5f / focal) * 2;
+		std::cout << this->fov << std::endl;
 		this->projectionMatrix = glm::perspective(this->fov, this->aspectRatio,
 			this->near, this->far);
 	}

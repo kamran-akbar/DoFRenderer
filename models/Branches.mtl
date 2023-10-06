@@ -1,0 +1,155 @@
+# Blender MTL File: 'None'
+# Material Count: 14
+
+newmtl 12161_Cat.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\cat_diffuse.jpg
+
+newmtl 12161_Cat_mustache.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.090000 0.090000 0.090000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\cat_diffuse.jpg
+
+newmtl 12213_bird.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\bird_diffuse.jpg
+
+newmtl 12213_bird.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\bird_diffuse.jpg
+
+newmtl 1500.005
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\obj_f_8500_v_4242.jpg
+
+newmtl 1500.006
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\obj_f_8500_v_4242.jpg
+
+newmtl 1500.007
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\obj_f_8500_v_4242.jpg
+
+newmtl 1500.008
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\obj_f_8500_v_4242.jpg
+
+newmtl L1.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\L1_diff.jpg
+
+newmtl Material.001
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.350000 0.350000 0.350000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl material0.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\obj_f_8500_v_4242.jpg
+
+newmtl material0.004
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\obj_f_8500_v_4242.jpg
+
+newmtl material0.005
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\obj_f_8500_v_4242.jpg
+
+newmtl sticks.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\cpkaak\\Desktop\\CIVIT\\CIVIT2\\Light field\\Read\\DoF\\DoFRenderer\\textures\\L1_diff.jpg
